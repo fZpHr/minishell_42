@@ -6,17 +6,18 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:53:49 by hbelle            #+#    #+#             */
-/*   Updated: 2024/01/29 18:14:44 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/01/29 19:25:05 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-void	ft_exec(char **cmd)
+void	ft_exec(t_mini *m, char **cmd)
 {
 	pid_t	pid;
 	int		status;
 
+	(void)m;
 	pid = fork();
 	if (pid == 0)
 	{
@@ -29,8 +30,9 @@ void	ft_exec(char **cmd)
 		wait(&status);
 }
 
-void	ft_cd(char **cmd)
+void	ft_cd(t_mini *m, char **cmd)
 {
+	(void)m;
 	if (cmd[1] == NULL)
 		chdir(getenv("HOME"));
 	else
@@ -40,53 +42,37 @@ void	ft_cd(char **cmd)
 	}
 }
 
-/*void	ft_env(char **cmd)
+void	ft_env(t_mini *m , char **env)
 {
 	int		i;
-	char	**env;
-
+	
 	i = 0;
-	env = (char **)malloc(sizeof(char *) * 100);
-	while (environ[i])
-	{
-		env[i] = ft_strdup(environ[i]);
-		i++;
-	}
-	env[i] = NULL;
-	i = 0;
+	m->cur_env = (char **)malloc(sizeof(char *) * 10000);
 	while (env[i])
 	{
-		printf("%s\n", env[i]);
+		m->cur_env[i] = ft_strdup(env[i]);
+		i++;
+	}
+	m->cur_env[i] = NULL;
+	i = 0;
+	while (m->cur_env[i])
+	{
+		printf("%s\n", m->cur_env[i]);
 		i++;
 	}
 }
 
-void	ft_setenv(char **cmd)
-{
-	int		i;
-	char	**env;
 
-	i = 0;
-	env = (char **)malloc(sizeof(char *) * 100);
-	while (environ[i])
-	{
-		env[i] = ft_strdup(environ[i]);
-		i++;
-	}
-	env[i] = NULL;
-	i = 0;
-	while (env[i])
-	{
-		printf("%s\n", env[i]);
-		i++;
-	}
-}*/
 
-void	start_term(void)
+int	main(int ac, char **av, char **env)
 {
+
 	char	*input;
 	char 	**cmd;
-
+	
+	ac = 0;
+	av = NULL;
+	t_mini	m;
 	while (1)
 	{
 		ft_printf("$> ");
@@ -95,25 +81,13 @@ void	start_term(void)
 		if (ft_strcmp(cmd[0], "exit") == 0)
 			exit(0);
 		else if (ft_strcmp(cmd[0], "cd") == 0)
-			ft_cd(cmd);
+			ft_cd(&m, cmd);
 		else if (ft_strcmp(cmd[0], "env") == 0)
-			ft_env(cmd);
-		else if (ft_strcmp(cmd[0], "setenv") == 0)
-			ft_setenv(cmd);
-		else if (ft_strcmp(cmd[0], "unsetenv") == 0)
-			ft_unsetenv(cmd);
+			ft_env(&m, env);
 		else
-			ft_exec(cmd);
+			ft_exec(&m ,cmd);
 		free(input);
 	}
-}
-
-int	main(int ac, char **av, char **env)
-{
-
-	ac = 0;
-	av = NULL;
-	start_term();
 	
 	return (0);
 }

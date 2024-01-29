@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:54:01 by hbelle            #+#    #+#             */
-/*   Updated: 2024/01/29 14:09:46 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/01/29 18:58:12 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,12 @@
 #include <stdlib.h>    // Pour getenv
 #include <readline/readline.h> // Pour readline
 #include <readline/history.h> // Pour add_history, rl_clear_history, rl_on_new_line, rl_replace_line, rl_redisplay
-
 #include "../libft/libft.h"
+
+typedef struct s_mini
+{
+	char	**cur_env;
+	char	*value;
+}				t_mini;
 
 #endif
