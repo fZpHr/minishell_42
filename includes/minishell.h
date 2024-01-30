@@ -47,6 +47,8 @@ void	free_end(t_mini *m, int status);
 void	free_split(t_mini *m);
 void	init(t_mini *m);
 void	here_doc(t_mini *m, char *end);
-void	handle_stdin_stdout(t_mini *m, int status);
+void	stdin_stdout_handle(t_mini *m, int status);
+void	ft_env(char **env);
+void	ft_pwd(t_mini *m);
 
 #endif

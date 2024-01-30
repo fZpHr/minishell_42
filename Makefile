@@ -19,7 +19,8 @@ SRCS	=	main.c \
 		srcs/utils/init.c \
 		srcs/utils/free_end.c \
 		srcs/data/here_doc.c \
-		srcs/utils/handle_stdin_stdout.c \
+		srcs/utils/stdin_stdout_handle.c \
+		srcs/data/env_pwd.c \
 
 SRCS_BONUS = 
 
@@ -33,7 +34,7 @@ RM	=	rm -f
 HEADER =	-I includes
 LIBS =	-Llibft/ -lft
 
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g -lreadline
 
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(@D)

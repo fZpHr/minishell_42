@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-void	handle_stdin_stdout(t_mini *m, int status)
+void	stdin_stdout_handle(t_mini *m, int status)
 {
     if (status == 0)
     {
