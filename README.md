@@ -13,8 +13,8 @@ unset with no options<br>
 " inhibit all interpretation of a sequence of characters except for $.<br>
 <br>
 Redirections:<br>
-< redirect input.<br>
-> redirect output.<br>
+redirect input <  .<br>
+redirect output > .<br>
 “<<” read input from the current source until a line containing only the delimiter is seen.<br>
 “>>” redirect output with append mode.<br>
 Pipes | The output of each command in the pipeline is connected via a pipe to the input of the next command.<br>
