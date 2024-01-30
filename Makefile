@@ -18,6 +18,8 @@ SRCS	=	main.c \
 		srcs/utils/error_handle.c \
 		srcs/utils/init.c \
 		srcs/utils/free_end.c \
+		srcs/data/here_doc.c \
+		srcs/utils/handle_stdin_stdout.c \
 
 SRCS_BONUS = 
 
@@ -45,7 +47,7 @@ $(OBJ_DIR)/%.o: %.c
 
 $(NAME): $(OBJTS) $(LIBFT)
 	@cc -o $(NAME) $(OBJTS) $(CFLAGS) $(HEADER) $(LIBS)
-	@echo "\033[01m\033[4;33mCompilation done\033[00m\033[1;31m ✒▶\033[00m\033[1;32m ./${NAME}\033[00m"
+	@echo "\033[01m\033[4;33mCompilation done\033[00m\033[1;31m =▶\033[00m\033[1;32m ./${NAME}\033[00m"
 
 $(LIBFT):
 	@make -C libft/ -s

@@ -7,7 +7,7 @@ Search and launch the right executable (based on the PATH variable or by using r
 The builtins:<br>
 echo with option -n<br>
 cd with only a relative or absolute path<br>
-pwd with no options<br>
+~~pwd with no options<br>~~
 export with no options<br>
 unset with no options<br>
 ~~env with no options or arguments~~ <br>
@@ -18,7 +18,7 @@ unset with no options<br>
 Redirections:<br>
 redirect input <  .<br>
 redirect output > .<br>
-“<<” read input from the current source until a line containing only the delimiter is seen.<br>
+*“<<” read input from the current source until a line containing only the delimiter is seen.* leak jcomprends pas d'ou  ??? <br>
 “>>” redirect output with append mode.<br>
 Pipes | The output of each command in the pipeline is connected via a pipe to the input of the next command.<br>
 Environment variables ($ followed by characters) expand to their values.<br>

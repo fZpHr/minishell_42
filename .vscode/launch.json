@@ -1,24 +1,28 @@
 {
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "C/C++ Runner: Debug Session",
+      "name": "Debug minishell",
       "type": "cppdbg",
       "request": "launch",
+      "program": "${workspaceFolder}",
       "args": [],
       "stopAtEntry": false,
-      "externalConsole": true,
-      "cwd": "//wsl.localhost/Debian/home/zeph/minishell_42",
-      "program": "//wsl.localhost/Debian/home/zeph/minishell_42/build/Debug/outDebug",
+      "cwd": "${workspaceFolder}/minishell",
+      "environment": [],
+      "externalConsole": false,
       "MIMode": "gdb",
-      "miDebuggerPath": "gdb",
       "setupCommands": [
         {
           "description": "Enable pretty-printing for gdb",
           "text": "-enable-pretty-printing",
           "ignoreFailures": true
         }
-      ]
+      ],
+      "preLaunchTask": "build"
     }
   ]
 }

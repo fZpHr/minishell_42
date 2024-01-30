@@ -37,6 +37,8 @@ typedef struct s_mini
 {
 	char	**cmd;
 	char	*input;
+	int		saved_stdin;
+   	int		saved_stdout;
 }				t_mini;
 
 
@@ -44,5 +46,7 @@ void 	error_handle(t_mini *m, char *str, int status);
 void	free_end(t_mini *m, int status);
 void	free_split(t_mini *m);
 void	init(t_mini *m);
+void	here_doc(t_mini *m, char *end);
+void	handle_stdin_stdout(t_mini *m, int status);
 
 #endif

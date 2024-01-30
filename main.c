@@ -28,7 +28,7 @@
 		printf("error\n");
 	else
 		wait(&status);
-}*/
+}
 
 void	ft_cd(t_mini *m)
 {
@@ -36,9 +36,21 @@ void	ft_cd(t_mini *m)
 		chdir(getenv("HOME"));
 	else
 	{
+		if ()
 		if (chdir(m->cmd[1]) == -1)
 			printf("error\n");
 	}
+}*/
+
+void	ft_pwd(t_mini *m)
+{
+	char	*pwd;
+
+	pwd = getcwd(NULL, 0);
+	if (pwd == NULL)
+		error_handle(m, "error\n", 1);
+	printf("%s\n", pwd);
+	free(pwd);
 }
 
 void	ft_env(char **env)
@@ -53,6 +65,7 @@ void	ft_env(char **env)
 	}
 }
 
+
 int	main(int ac, char **av, char **env)
 {
 	(void)ac;
@@ -66,11 +79,20 @@ int	main(int ac, char **av, char **env)
 		m.cmd = ft_split(m.input, ' ');
 		if (ft_strcmp(m.cmd[0], "exit\n") == 0)
 			error_handle(&m, "", 0);
-		else if (ft_strcmp(m.cmd[0], "cd\n") == 0)
-			ft_cd(&m);
+		else if (ft_strcmp(m.cmd[0], "pwd\n") == 0)
+			ft_pwd(&m);
 		else if (ft_strcmp(m.cmd[0], "env\n") == 0)
 			ft_env(env);
-		/*else
+		else if (ft_strcmp(m.cmd[0], "<<") == 0)
+		{
+			handle_stdin_stdout(&m, 0);
+			here_doc(&m, m.cmd[1]);
+			//chose a faire avec le heredoc
+			handle_stdin_stdout(&m, 1);
+		}
+		/*else if (ft_strcmp(m.cmd[0], "cd\n") == 0)
+			ft_cd(&m);
+		elseg
 			ft_exec(&m);*/
 		free_split(&m);
 		free(m.input);
