@@ -1,7 +1,7 @@
 TO DO   <br> <br>
 
 
-Show a prompt when waiting for a new command. <br>
+~~Show a prompt when waiting for a new command.~~  <br>
 Have a working History.<br>
 Search and launch the right executable (based on the PATH variable or by using relative or absolute path)<br>
 The builtins:<br>
@@ -10,8 +10,8 @@ cd with only a relative or absolute path<br>
 pwd with no options<br>
 export with no options<br>
 unset with no options<br>
-~~env with no options or arguments~~ ENV DONE<br>
-~~exit with no options~~ EXIT DONE<br>
+~~env with no options or arguments~~ <br>
+~~exit with no options~~ <br>
 ’ inhibit all interpretation of a sequence of characters.<br>
 " inhibit all interpretation of a sequence of characters except for $.<br>
 <br>
