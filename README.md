@@ -18,7 +18,7 @@ unset with no options<br>
 Redirections:<br>
 redirect input <  .<br>
 redirect output > .<br>
-*“<<” read input from the current source until a line containing only the delimiter is seen.* leak jcomprends pas d'ou  ??? <br>
+~~“<<” read input from the current source until a line containing only the delimiter is seen.~~ fonctionn mais leak??? <br>
 “>>” redirect output with append mode.<br>
 Pipes | The output of each command in the pipeline is connected via a pipe to the input of the next command.<br>
 Environment variables ($ followed by characters) expand to their values.<br>
