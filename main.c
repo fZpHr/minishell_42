@@ -12,7 +12,7 @@
 
 #include "includes/minishell.h"
 
-void	ft_exec(t_mini *m, char **cmd)
+/*void	ft_exec(t_mini *m, char **cmd)
 {
 	pid_t	pid;
 	int		status;
@@ -28,66 +28,52 @@ void	ft_exec(t_mini *m, char **cmd)
 		printf("error\n");
 	else
 		wait(&status);
-}
+}*/
 
-void	ft_cd(t_mini *m, char **cmd)
+void	ft_cd(t_mini *m)
 {
-	(void)m;
-	if (cmd[1] == NULL)
+	if (m->cmd[1] == NULL)
 		chdir(getenv("HOME"));
 	else
 	{
-		if (chdir(cmd[1]) == -1)
+		if (chdir(m->cmd[1]) == -1)
 			printf("error\n");
 	}
 }
 
-void	ft_env(t_mini *m , char **env)
+void	ft_env(char **env)
 {
 	int		i;
 	
 	i = 0;
-	m->cur_env = (char **)malloc(sizeof(char *) * 10000);
 	while (env[i])
 	{
-		m->cur_env[i] = ft_strdup(env[i]);
-		i++;
-	}
-	m->cur_env[i] = NULL;
-	i = 0;
-	while (m->cur_env[i])
-	{
-		printf("%s\n", m->cur_env[i]);
+		printf("%s\n", env[i]);
 		i++;
 	}
 }
 
-
-
 int	main(int ac, char **av, char **env)
 {
-
-	char	*input;
-	char 	**cmd;
-	
-	ac = 0;
-	av = NULL;
+	(void)ac;
+	(void)av;
 	t_mini	m;
+	init(&m);
 	while (1)
 	{
 		ft_printf("$> ");
-		input = get_next_line(0);
-		cmd = ft_split(input, ' ');
-		if (ft_strcmp(cmd[0], "exit") == 0)
-			exit(0);
-		else if (ft_strcmp(cmd[0], "cd") == 0)
-			ft_cd(&m, cmd);
-		else if (ft_strcmp(cmd[0], "env") == 0)
-			ft_env(&m, env);
-		else
-			ft_exec(&m ,cmd);
-		free(input);
+		m.input = get_next_line(0);
+		m.cmd = ft_split(m.input, ' ');
+		if (ft_strcmp(m.cmd[0], "exit\n") == 0)
+			error_handle(&m, "", 0);
+		else if (ft_strcmp(m.cmd[0], "cd\n") == 0)
+			ft_cd(&m);
+		else if (ft_strcmp(m.cmd[0], "env\n") == 0)
+			ft_env(env);
+		/*else
+			ft_exec(&m);*/
+		free_split(&m);
+		free(m.input);
 	}
-	
 	return (0);
 }

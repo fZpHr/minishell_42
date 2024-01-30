@@ -14,7 +14,10 @@ NAME	=	minishell
 
 NAME_BONUS	=	
 
-SRCS	=	main.c\
+SRCS	=	main.c \
+		srcs/utils/error_handle.c \
+		srcs/utils/init.c \
+		srcs/utils/free_end.c \
 
 SRCS_BONUS = 
 
