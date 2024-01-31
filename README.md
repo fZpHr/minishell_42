@@ -23,4 +23,4 @@ redirect output > .<br>
 Pipes | The output of each command in the pipeline is connected via a pipe to the input of the next command.<br>
 Environment variables ($ followed by characters) expand to their values.<br>
 $? expand to the exit status of the most recently executed foreground pipeline.<br>
-~~ctrl-C ctrl-D~~ ctrl-\ work like in bash. <sub>fonctionne vite fait mais j'ai R compris</sub> <br>
+~~ctrl-C ctrl-D~~ ctrl-\ work like in bash. <sub> fonctionn mais je sais pas si resultat attendu </sub> <br>

@@ -12,15 +12,12 @@
 
 #include "includes/minishell.h"
 
+
 void	interrupt_handle(int sig)
 {
     if (sig == SIGINT)
     {
-        write(1, "\n$> ", 4);
-    }
-    else if (sig == SIGQUIT)
-    {
-        // Handle SIGQUIT here
+        write(1, "\n$>", 4);
     }
 }
 
@@ -29,9 +26,9 @@ int	main(int ac, char **av, char **env)
     struct sigaction sa;
     sa.sa_handler = interrupt_handle;
     sa.sa_flags = SA_RESTART; // to restart functions if interrupted
-    sigemptyset(&sa.sa_mask);
-    sigaction(SIGINT, &sa, NULL);
-    sigaction(SIGQUIT, &sa, NULL);
+    sigemptyset(&sa.sa_mask); // to empty the signal set
+    sigaction(SIGINT, &sa, NULL); // ctrl + c
+  	signal(SIGQUIT, SIG_IGN); // ignore ctrl + backslash
 
 	(void)ac;
 	(void)av;
@@ -39,22 +36,24 @@ int	main(int ac, char **av, char **env)
 	init(&m);
 	while (1)
 	{
-   	 	m.input = readline("$> ");
+		write(1, "$>", 3);
+   	 	m.input = get_next_line(0);
     	if (m.input == NULL) // ctrl + d
     	{
+			printf("\n");
         	free(m.input);
-        	continue;
+        	exit(0);
    		}
-    	if (m.input && *m.input)
-       		add_history(m.input);
+    	/*if (m.input && *m.input)
+       		add_history(m.input);*/
     	m.cmd = ft_split(m.input, ' ');
-    	if (ft_strcmp(m.cmd[0], "exit") == 0)
+    	if (ft_strcmp(m.cmd[0], "exit\n") == 0)
         	error_handle(&m, "", 0);
-    	else if (ft_strcmp(m.cmd[0], "pwd") == 0)
+    	else if (ft_strcmp(m.cmd[0], "pwd\n") == 0)
         	ft_pwd(&m);
-    	else if (ft_strcmp(m.cmd[0], "env") == 0)
+    	else if (ft_strcmp(m.cmd[0], "env\n") == 0)
         	ft_env(env);
-    	else if (ft_strcmp(m.cmd[0], "<<") == 0)
+    	else if (ft_strcmp(m.cmd[0], "<<\n") == 0)
     	{
         	stdin_stdout_handle(&m, 0);
         	here_doc(&m, m.cmd[1]);
