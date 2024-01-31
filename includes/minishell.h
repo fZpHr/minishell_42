@@ -50,5 +50,7 @@ void	here_doc(t_mini *m, char *end);
 void	stdin_stdout_handle(t_mini *m, int status);
 void	ft_env(char **env);
 void	ft_pwd(t_mini *m);
+void	ft_echo(t_mini *m);
+void	interrupt_handle(int sig);
 
 #endif

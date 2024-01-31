@@ -30,7 +30,7 @@ foreground pipeline.<br><br>
 ~~◦ ctrl-D exits the shell.~~ <br>
 ~~◦ ctrl-\ does nothing.~~  Fonctionne mais je sais pas si c'est comme demande <br><br>
 • Your shell must implement the following builtins:<br>
-◦ echo with option -n<br>
+~~◦ echo with option -n~~<br>
 ◦ cd with only a relative or absolute path<br>
 ~~◦ pwd with no options~~ <br>
 ◦ export with no options<br>

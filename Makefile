@@ -20,7 +20,8 @@ SRCS	=	main.c \
 		srcs/utils/free_end.c \
 		srcs/data/here_doc.c \
 		srcs/utils/stdin_stdout_handle.c \
-		srcs/data/env_pwd.c \
+		srcs/data/env_pwd_echo.c \
+		srcs/data/signal.c \
 
 SRCS_BONUS = 
 

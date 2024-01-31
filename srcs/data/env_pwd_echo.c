@@ -34,3 +34,30 @@ void	ft_env(char **env)
 		i++;
 	}
 }
+
+void	ft_echo(t_mini *m)
+{
+	int		i;
+
+	if (m->cmd[1] == NULL)
+	{
+		printf("\n");
+		return ;
+	}
+	if (ft_strcmp(m->cmd[1], "-n") == 0)
+	{
+		i = 2;
+		while (m->cmd[i])
+		{
+			write(1, m->cmd[i], ft_strlen(m->cmd[i]));
+			i++;
+		}
+	}
+	else
+	{
+		i = 1;
+		while (m->cmd[i])
+			printf("%s ", m->cmd[i++]);
+		printf("\nla");
+	}
+}

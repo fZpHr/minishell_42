@@ -12,13 +12,43 @@
 
 #include "includes/minishell.h"
 
-
-void	interrupt_handle(int sig)
+void	cut_newline(char **str)
 {
-    if (sig == SIGINT)
-    {
-        write(1, "\n$>", 4);
-    }
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i][ft_strlen(str[i]) - 1] == '\n')
+			str[i][ft_strlen(str[i]) - 1] = '\0';
+		i++;
+	}
+}
+
+void 	ft_export(t_mini *m)
+{
+	int		i;
+	int		j;
+	char	*tmp;
+
+	i = 1;
+	while (m->cmd[i])
+	{
+		j = 0;
+		while (m->cmd[i][j])
+		{
+			if (m->cmd[i][j] == '=')
+			{
+				tmp = ft_substr(m->cmd[i], 0, j);
+				if (ft_isalpha(tmp[0]) == 0)
+					error_handle(m, "export: not an identifier\n", 1);
+				free(tmp);
+				break ;
+			}
+			j++;
+		}
+		i++;
+	}
 }
 
 int	main(int ac, char **av, char **env)
@@ -47,53 +77,25 @@ int	main(int ac, char **av, char **env)
     	/*if (m.input && *m.input)
        		add_history(m.input);*/
     	m.cmd = ft_split(m.input, ' ');
-    	if (ft_strcmp(m.cmd[0], "exit\n") == 0)
+		cut_newline(m.cmd);
+    	if (ft_strcmp(m.cmd[0], "exit") == 0)
         	error_handle(&m, "", 0);
-    	else if (ft_strcmp(m.cmd[0], "pwd\n") == 0)
+    	else if (ft_strcmp(m.cmd[0], "pwd") == 0)
         	ft_pwd(&m);
-    	else if (ft_strcmp(m.cmd[0], "env\n") == 0)
+    	else if (ft_strcmp(m.cmd[0], "env") == 0)
         	ft_env(env);
-    	else if (ft_strcmp(m.cmd[0], "<<\n") == 0)
+    	else if (ft_strcmp(m.cmd[0], "<<") == 0)
     	{
         	stdin_stdout_handle(&m, 0);
         	here_doc(&m, m.cmd[1]);
         	stdin_stdout_handle(&m, 1);
     	}
+		else if (ft_strcmp(m.cmd[0], "echo") == 0)
+			ft_echo(&m);
+		else if (ft_strcmp(m.cmd[0], "export") == 0)
+			ft_export(&m);
     	free_split(&m);
     	free(m.input);
 	}
 	return (0);
 }
-
-
-
-
-/*while (1)
-	{
-		m.input = readline("$> ");
-		if (interrupted)
-    	{
-        	interrupted = 0;
-        	continue ;
-    	}
-		if (m.input && *m.input)
-			add_history(m.input);
-		m.cmd = ft_split(m.input, ' ');
-		if (ft_strcmp(m.cmd[0], "exit\n") == 0)
-			error_handle(&m, "", 0);
-		else if (ft_strcmp(m.cmd[0], "") == 0)
-			error_handle(&m, "\nCtrl+D détecté. Sortie.\n", 0);
-		else if (ft_strcmp(m.cmd[0], "pwd\n") == 0)
-			ft_pwd(&m);
-		else if (ft_strcmp(m.cmd[0], "env\n") == 0)
-			ft_env(env);
-		else if (ft_strcmp(m.cmd[0], "<<") == 0)
-		{
-			stdin_stdout_handle(&m, 0);
-			here_doc(&m, m.cmd[1]);
-			//chose a faire avec le heredoc
-			stdin_stdout_handle(&m, 1);
-		}
-		free_split(&m);
-		free(m.input);
-	}*/
