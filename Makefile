@@ -6,7 +6,7 @@
 #    By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/05 17:52:23 by hbelle            #+#    #+#              #
-#    Updated: 2024/01/29 14:24:34 by hbelle           ###   ########.fr        #
+#    Updated: 2024/02/01 19:52:51 by hbelle           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,9 @@ SRCS	=	main.c \
 		srcs/utils/stdin_stdout_handle.c \
 		srcs/data/env_pwd_echo.c \
 		srcs/data/signal.c \
+		srcs/utils/function.c \
+		srcs/data/pipex.c \
+		srcs/data/found_path.c \
 
 SRCS_BONUS = 
 
@@ -32,10 +35,10 @@ OBJTS_BONUS = $(addprefix $(OBJ_DIR)/, $(SRCS_BONUS:%.c=%.o))
 LIBFT	=	libft/libft.a
 
 RM	=	rm -f
-HEADER =	-I includes
+HEADER =	-I includes 
 LIBS =	-Llibft/ -lft
 
-CFLAGS = -Wall -Wextra -Werror -g -lreadline
+CFLAGS = -Wall -Wextra -Werror -g
 
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(@D)
@@ -48,7 +51,7 @@ $(OBJ_DIR)/%.o: %.c
 			\033[36m$*.c\033[00m\  [Error] ❌ \033[00m"; fi
 
 $(NAME): $(OBJTS) $(LIBFT)
-	@cc -o $(NAME) $(OBJTS) $(CFLAGS) $(HEADER) $(LIBS)
+	@cc -o $(NAME) $(OBJTS) $(CFLAGS) $(HEADER) $(LIBS) -lreadline
 	@echo "\033[01m\033[4;33mCompilation done\033[00m\033[1;31m =▶\033[00m\033[1;32m ./${NAME}\033[00m"
 
 $(LIBFT):

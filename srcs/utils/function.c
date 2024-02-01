@@ -1,31 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   function.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/16 14:36:39 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/01 19:30:09 by hbelle           ###   ########.fr       */
+/*   Created: 2024/02/01 19:17:21 by hbelle            #+#    #+#             */
+/*   Updated: 2024/02/01 19:17:53 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	init(t_mini *m)
+int	ft_double_char_len(char **env)
 {
-	m->cmd = NULL;
-	m->input = NULL;
-	m->env_md = 0;
+	int		i;
+
+	i = 0;
+	while (env[i])
+		i++;
+	return (i);
 }
 
-void	init_p(t_pipex *p)
+void cp_env(char **env, char **env_cp)
 {
-	p->cmd1 = NULL;
-	p->cmd2 = NULL;
-	p->envp = NULL;
-	p->tmp = NULL;
-	p->ac = 0;
-	p->tmp_end = NULL;
-	p->tmp_child = NULL;
+	int		i;
+
+	i = 0;
+	while (env[i])
+	{
+		env_cp[i] = ft_strdup(env[i]);
+		i++;
+	}
+	env_cp[i] = NULL;
 }

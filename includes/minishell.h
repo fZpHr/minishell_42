@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:54:01 by hbelle            #+#    #+#             */
-/*   Updated: 2024/01/29 18:58:12 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/01 19:53:21 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,21 +36,46 @@
 typedef struct s_mini
 {
 	char	**cmd;
+	char	**envm;
+	char 	**env_path;
+	char	*path;
 	char	*input;
 	int		saved_stdin;
    	int		saved_stdout;
+	int 	env_md;
 }				t_mini;
 
+typedef struct s_pipex
+{
+	char	**cmd1;
+	char	**cmd2;
+	char	**envp;
+	char	*tmp;
+	char	*tmp_child;
+	char	*tmp_end;
+	int		exec;
+	int		ac;
 
-void 	error_handle(t_mini *m, char *str, int status);
+}			t_pipex;
+
+void	handle_error(t_pipex *p, char *str, char *target, int status);
+void	error_handle(t_mini *m, char *str, char *target, int status);
 void	free_end(t_mini *m, int status);
-void	free_split(t_mini *m);
+void	free_split(char **cmd);
 void	init(t_mini *m);
+void	init_p(t_pipex *p);
 void	here_doc(t_mini *m, char *end);
 void	stdin_stdout_handle(t_mini *m, int status);
-void	ft_env(char **env);
+void	ft_env(t_mini *m, char **env, int status);
 void	ft_pwd(t_mini *m);
 void	ft_echo(t_mini *m);
+void	ft_export(t_mini *m, char **env);
 void	interrupt_handle(int sig);
+char	*found_path(char **envp);
+char	*found_cmd(t_pipex *p, char **envp, char *cmd);
+char	*found_var(char **envp, char *target);
+int		ft_double_char_len(char **env);
+void	cp_env(char **env, char **env_cp);
+int		ft_exec(int argc, char **argv, char **envp);
 
 #endif

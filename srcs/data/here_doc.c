@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:31:16 by hbelle            #+#    #+#             */
-/*   Updated: 2024/01/30 17:31:16 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/01 19:33:25 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ void	here_doc(t_mini *m, char *end)
 	int	pid;
 
 	if (pipe(fd) == -1)
-		error_handle(m, "pipex: error pipe", 1);
+		error_handle(m, "pipex: error pipe", "", 1);
 	pid = fork();
 	if (pid == -1)
-		error_handle(m, "pipex: error fork", 1);
+		error_handle(m, "pipex: error fork", "", 1);
 	if (pid == 0)
 		infinite_loop(fd, end);
 	else
