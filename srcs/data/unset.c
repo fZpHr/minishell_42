@@ -1,35 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/16 14:36:39 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/02 16:02:18 by hbelle           ###   ########.fr       */
+/*   Created: 2024/02/02 14:10:17 by hbelle            #+#    #+#             */
+/*   Updated: 2024/02/02 14:13:30 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	init(t_mini *m)
+void	ft_unset(t_mini *m)
 {
-	m->old_pwd_cd = NULL;
-	m->pwd_cd = NULL;
-	m->cmd = NULL;
-	m->input = NULL;
-	m->env_md = 0;
+	int		i;
+	int		j;
+	char	**env_cp;
+
+	i = 0;
+	j = 0;
+	env_cp = (char **)malloc(sizeof(char *) * (ft_double_char_len(m->envm) + 1));
+	while (m->envm[i])
+	{
+		if (ft_strncmp(m->envm[i], m->cmd[1], ft_strlen(m->cmd[1])) != 0)
+		{
+			env_cp[j] = ft_strdup(m->envm[i]);
+			j++;
+		}
+		i++;
+	}
+	env_cp[j] = NULL;
+	free_split(m->envm);
+	m->envm = env_cp;
 }
-
-void	init_p(t_pipex *p)
-{
-	p->cmd1 = NULL;
-	p->cmd2 = NULL;
-	p->envp = NULL;
-	p->tmp = NULL;
-	p->ac = 0;
-	p->tmp_end = NULL;
-	p->tmp_child = NULL;
-}
-
-

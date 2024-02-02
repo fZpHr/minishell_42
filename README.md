@@ -23,10 +23,14 @@ should expand to their values. IN PROGRESS <br>
 ~~◦ ctrl-D exits the shell.~~ <br>
 ~~◦ ctrl-\ does nothing.~~  Fonctionne mais je sais pas si c'est comme demande <br><br>
 • Your shell must implement the following builtins:<br>
-~~◦ echo with option -n~~<br>
-◦ cd with only a relative or absolute path<br>
+~~◦ echo with option -n~~ PARSING A FAIRE<br>
+~~◦ cd with only a relative or absolute path~~  FONCTIONNE A VERIFIER<br>
 ~~◦ pwd with no options~~ <br>
-◦ export with no options IN PROGRESS <br>
-◦ unset with no options<br>
+~~◦ export with no options~~ PARSING A FAIRE <br>
+~~◦ unset with no options~~<br>
 ~~◦ env with no options or arguments~~ <br>
 ~~◦ exit with no options~~ <br>
+
+
+
+PARSING GLOBAL / GESTION ERREUR CORRECT / LEAK / SEGFAULT / NORME

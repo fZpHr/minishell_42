@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:53:49 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/01 19:54:03 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/02 15:53:41 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,15 @@ int	main(int ac, char **av, char **env)
     sigaction(SIGINT, &sa, NULL); // ctrl + c
   	signal(SIGQUIT, SIG_IGN); // ignore ctrl + backslash
 
+	(void)ac;
+	(void)av;
 	t_mini	m;
 	init(&m);
-	rl_clear_history();
+	ft_env(&m, env, 0);
 	while (1)
 	{
    	 	m.input = readline("$>");
+
     	if (m.input == NULL) // ctrl + d
     	{
         	free(m.input);
@@ -51,6 +54,11 @@ int	main(int ac, char **av, char **env)
 			ft_echo(&m);
 		else if (ft_strcmp(m.cmd[0], "export") == 0)
 			ft_export(&m, env);
+		else if (ft_strcmp(m.cmd[0], "unset") == 0)
+			ft_unset(&m);
+		else if (ft_strcmp(m.cmd[0], "cd") == 0)
+			ft_cd(&m);
+
 		/*else
 			ft_exec(ac, av, env);*/
 		free_split(m.cmd);

@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 19:17:21 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/01 19:17:53 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/02 14:45:50 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,22 @@ void cp_env(char **env, char **env_cp)
 		i++;
 	}
 	env_cp[i] = NULL;
+}
+
+char	*target_path(char **envp, char *target)
+{
+	int		i;
+	char	*path;
+
+	i = 0;
+	while (envp[i])
+	{
+		if (ft_strncmp(envp[i], target, ft_strlen(target)) == 0)
+		{
+			path = ft_substr(envp[i], ft_strlen(target), ft_strlen(envp[i]));
+			return (path);
+		}
+		i++;
+	}
+	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:54:01 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/01 19:53:21 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/02 16:22:26 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,9 @@ typedef struct s_mini
 	int		saved_stdin;
    	int		saved_stdout;
 	int 	env_md;
+	char	*pwd_cd;
+	char	*old_pwd_cd;
+	
 }				t_mini;
 
 typedef struct s_pipex
@@ -58,6 +61,11 @@ typedef struct s_pipex
 
 }			t_pipex;
 
+void	error_handle_str2(t_mini *m, char *str, char *target, char *str2);
+void	ft_cd(t_mini *m);
+char	*target_path(char **envp, char *target);
+void	ft_unset(t_mini *m);
+void	ft_export(t_mini *m, char **env);
 void	handle_error(t_pipex *p, char *str, char *target, int status);
 void	error_handle(t_mini *m, char *str, char *target, int status);
 void	free_end(t_mini *m, int status);

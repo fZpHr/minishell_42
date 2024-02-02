@@ -3,7 +3,8 @@
     "minish.h": "c",
     "readline.h": "c",
     "builtins.h": "c",
-    "exec.h": "c"
+    "exec.h": "c",
+    "minishell.h": "c"
   },
   "C_Cpp_Runner.msvcBatchPath": "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Auxiliary/Build/vcvarsall.bat",
   "C_Cpp_Runner.cCompilerPath": "gcc",
