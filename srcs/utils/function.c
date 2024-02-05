@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 19:17:21 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/02 14:45:50 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/05 15:52:47 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,25 @@ char	*target_path(char **envp, char *target)
 		i++;
 	}
 	return (NULL);
+}
+
+int 	ft_count_cmd(char *str, char c)
+{
+	int		i;
+	int		count;
+
+	i = 0;
+	count = 0;
+	while (str[i])
+	{
+		if (str[i] != c)
+		{
+			count++;
+			while (str[i] != c && str[i])
+				i++;
+		}
+		else
+			i++;
+	}
+	return (count);
 }

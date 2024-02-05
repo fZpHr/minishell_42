@@ -13,11 +13,11 @@ TO DO   <br> <br>
 ◦ > should redirect output.<br>
 ~~◦ << should be given a delimiter, then read the input until a line containing the delimiter is seen. However, it doesn’t have to update the history!~~ y a des leaks jspa pk <br>
 ◦ >> should redirect output in append mode.<br>
-• Implement pipes (| character). The output of each command in the pipeline is connected to the input of the next command via a pipe. IN PROGRESS <br>
+~~• Implement pipes (| character). The output of each command in the pipeline is connected to the input of the next command via a pipe.~~ IN PROGRESS <br>
 • Handle environment variables ($ followed by a sequence of characters) which
 should expand to their values. IN PROGRESS <br>
 • Handle $? which should expand to the exit status of the most recently executed foreground pipeline.<br><br>
-• Handle ctrl-C, ctrl-D and ctrl-\ which should behave like in bash.<br>
+~~• Handle ctrl-C, ctrl-D and ctrl-\ which should behave like in bash.~~ MAYBE ?<br>
 • In interactive mode:<br>
 ~~◦ ctrl-C displays a new prompt on a new line.~~ <br>
 ~~◦ ctrl-D exits the shell.~~ <br>

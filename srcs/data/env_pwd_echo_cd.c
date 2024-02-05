@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 19:51:19 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/02 16:18:59 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/05 15:02:25 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	ft_echo(t_mini *m)
 	}
 }
 
-void	ft_cd(t_mini *m)
+int	ft_cd(t_mini *m)
 {
 	char	*home;
 
@@ -114,7 +114,11 @@ void	ft_cd(t_mini *m)
 	else
 	{
 		if (chdir(m->cmd[1]) == -1)
-			error_handle(m, "cd :", m->cmd[1], "No such file or directory");
+		{
+			printf("cd : no such file or directory: %s\n", m->cmd[1]);
+			return (1);
+		}
 	}
 	m->old_pwd_cd = m->pwd_cd;
+	return (0);
 }
