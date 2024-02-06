@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:54:01 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/05 15:52:55 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/06 18:52:37 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,19 @@ typedef struct s_mini
 	char	*pwd_cd;
 	char	*old_pwd_cd;
 	int 	status;
+	char	**cmd1;
+	char	**cmd2;
+	char	**envp;
+	char	*tmp;
+	char	*tmp_child;
+	char	*tmp_end;
+	int		exec;
+	int		ac;
+	int		exit_status;
 	
 }				t_mini;
 
-typedef struct s_pipex
+/*typedef struct s_pipex
 {
 	char	**cmd1;
 	char	**cmd2;
@@ -60,21 +69,19 @@ typedef struct s_pipex
 	int		exec;
 	int		ac;
 
-}			t_pipex;
+}			t_pipex;*/
 
-
+void	here_doc(t_mini *m, char *end);
+void	ft_exec(t_mini *m, char *input, char **envp);
 int 	ft_count_cmd(char *str, char c);
-int		ft_cd(t_mini *m);
+void	ft_cd(t_mini *m);
 char	*target_path(char **envp, char *target);
 void	ft_unset(t_mini *m);
 void	ft_export(t_mini *m, char **env);
-void	handle_error(t_pipex *p, char *str, char *target, int status);
 void	error_handle(t_mini *m, char *str, char *target, int status);
 void	free_end(t_mini *m, int status);
 void	free_split(char **cmd);
 void	init(t_mini *m);
-void	init_p(t_pipex *p);
-void	here_doc(t_mini *m, char *end);
 void	stdin_stdout_handle(t_mini *m, int status);
 void	ft_env(t_mini *m, char **env, int status);
 void	ft_pwd(t_mini *m);
@@ -82,10 +89,9 @@ void	ft_echo(t_mini *m);
 void	ft_export(t_mini *m, char **env);
 void	interrupt_handle(int sig);
 char	*found_path(char **envp);
-char	*found_cmd(t_pipex *p, char **envp, char *cmd);
+char	*found_cmd(t_mini *m, char **envp, char *cmd);
 char	*found_var(char **envp, char *target);
 int		ft_double_char_len(char **env);
 void	cp_env(char **env, char **env_cp);
-int		ft_exec(int argc, char **argv, char **envp);
 
 #endif

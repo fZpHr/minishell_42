@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:58:56 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/05 15:04:04 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/06 19:19:51 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,19 @@
 
 void	error_handle(t_mini *m, char *str, char *target, int status)
 {
-	//char *error_message;
-
     ft_putstr_fd("\033[0;31m", 2);
+	if (status >= 1000)
+		m->exit_status = status - 1000;
+	else
+		m->exit_status = status;
 	if (status > 0)
-	{
-		printf("%s", str);
-		printf("%s\n", target);
-   		/*error_message = strerror(status);
-    	if (error_message != NULL)
-    	    printf("%s", error_message);
-  		else
-    	    perror(NULL);*/
-	}
+		printf("%s %s\n", str, target);
     ft_putstr_fd("\033[0m", 2);
-    free_end(m, status);
+	if (status >= 1000)
+    	free_end(m, m->exit_status);
 }
 
-void handle_error(t_pipex *p, char *str, char *target, int status)
+/*void handle_error(t_pipex *p, char *str, char *target, int status)
 {
 	//char *error_message;
 
@@ -41,16 +36,16 @@ void handle_error(t_pipex *p, char *str, char *target, int status)
 	{
 		printf("%s", str);
 		printf("%s\n", target);
-   		/*error_message = strerror(status);
+   		error_message = strerror(status);
    		printf("%s: ", str);
     	if (error_message != NULL)
     	    printf("%s", error_message);
   		else
     	    perror(NULL);*/
-	}
+	/**}
     ft_putstr_fd("\033[0m", 2);
 	exit (status);
     //free_end(p, status);
-}
+}*/
 
 

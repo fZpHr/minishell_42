@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 19:51:19 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/05 15:02:25 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/06 19:05:55 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,11 @@ void	ft_pwd(t_mini *m)
 
 	pwd = getcwd(NULL, 0);
 	if (pwd == NULL)
-		error_handle(m, "error\n", "", 1);
+	{
+		error_handle(m, "error", "", 1);
+		return ;
+	}
 	printf("%s\n", pwd);
-	free(pwd);
 }
 
 void	ft_env(t_mini *m, char **env, int status)
@@ -55,7 +57,7 @@ void	ft_env(t_mini *m, char **env, int status)
 void	ft_echo(t_mini *m)
 {
 	int		i;
-
+	
 	if (m->cmd[1] == NULL)
 	{
 		printf("\n");
@@ -70,6 +72,23 @@ void	ft_echo(t_mini *m)
 			i++;
 		}
 	}
+	else if (ft_strchr(m->cmd[1], 36) != 0)
+	{
+		i = 1;
+		if (ft_strncmp(m->cmd[1], "$?", 3) == 0)
+			printf("%d\n", m->exit_status);
+		else
+		{
+			while (m->cmd[i])
+			{
+				if (target_path(m->envm, m->cmd[i] + 1) != NULL)
+					printf("%s\n", target_path(m->envm, m->cmd[i] + 1));
+				else
+					printf("\n");
+				i++;
+			}
+		}
+	}
 	else
 	{
 		i = 1;
@@ -78,7 +97,7 @@ void	ft_echo(t_mini *m)
 	}
 }
 
-int	ft_cd(t_mini *m)
+void	ft_cd(t_mini *m)
 {
 	char	*home;
 
@@ -89,11 +108,17 @@ int	ft_cd(t_mini *m)
 	{
 		home = target_path(m->envm, "HOME=");
 		if (home == NULL)
-			error_handle(m, "error ", "", 1);
+		{
+			error_handle(m, "env error", "", 1);
+			return ;
+		}
 		else
 		{
 			if (chdir(home) == -1)
-				error_handle(m, "error ", "", 1);
+			{
+				error_handle(m, "chdir error", "", 1);
+				return ;
+			}
 		}
 		free(home);
 	}
@@ -101,11 +126,17 @@ int	ft_cd(t_mini *m)
 	{
 		home = m->old_pwd_cd;
 		if (home == NULL)
-			error_handle(m, "error ", "", 1);
+		{
+			error_handle(m, "env error", "", 1);
+			return ;
+		}
 		else
 		{
 			if (chdir(home) == -1)
-				error_handle(m, "error ", "", 1);
+			{
+				error_handle(m, "chdir error", "", 1);
+				return ;
+			}
 			else
 				printf("%s\n", home);
 		}
@@ -115,10 +146,10 @@ int	ft_cd(t_mini *m)
 	{
 		if (chdir(m->cmd[1]) == -1)
 		{
-			printf("cd : no such file or directory: %s\n", m->cmd[1]);
-			return (1);
+			error_handle(m, "cd : no such file or directory:", m->cmd[1], 1);
+			return ;
 		}
 	}
 	m->old_pwd_cd = m->pwd_cd;
-	return (0);
+	error_handle(m, "", "", 0);
 }

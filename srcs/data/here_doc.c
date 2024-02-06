@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:31:16 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/01 19:33:25 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/06 18:20:25 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	infinite_loop(int fd[2], char *end)
 		if (ft_strncmp(input, end, ft_strlen(end)) == 0)
 		{
 			free(input);
-			exit(-1);
+			break;
 		}
 		write(fd[1], input, ft_strlen(input));
 		free(input);
@@ -35,13 +35,27 @@ void	here_doc(t_mini *m, char *end)
 	int	fd[2];
 	int	pid;
 
+	if (end == NULL)
+	{
+		error_handle(m, "syntax error near unexpected token `newline'\n", "", 1);
+		return ;
+	}
 	if (pipe(fd) == -1)
-		error_handle(m, "pipex: error pipe", "", 1);
+	{
+		error_handle(m, "pipe error\n", "", 1);
+		return ;
+	}
 	pid = fork();
 	if (pid == -1)
-		error_handle(m, "pipex: error fork", "", 1);
+	{
+		error_handle(m, "pipe error\n", "", 1);
+		return ;
+	}
 	if (pid == 0)
+	{
 		infinite_loop(fd, end);
+		error_handle(m, "", "", 0);
+	}
 	else
 	{
 		dup2(fd[0], 0);

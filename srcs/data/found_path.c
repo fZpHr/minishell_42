@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:07:23 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/01 19:53:13 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/06 17:35:42 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,20 +82,20 @@ char	*loop_found_cmd(char **path_split, char *path, char *cmd)
 	return (NULL);
 }
 
-char	*found_cmd(t_pipex *p, char **envp, char *cmd)
+char	*found_cmd(t_mini *m, char **envp, char *cmd)
 {
 	char	*path;
 	char	**path_split;
 	char	*res;
 
-	p->cmd1 = ft_split(cmd, ' ');
+	m->cmd1 = ft_split(cmd, ' ');
 	path = found_path(envp);
 	if (!path)
 		return (NULL);
 	path_split = ft_split(path, ':');
 	if (!path_split)
 		return (NULL);
-	res = loop_found_cmd(path_split, path, p->cmd1[0]);
+	res = loop_found_cmd(path_split, path, m->cmd1[0]);
 	if (res)
 		return (res);
 	return (NULL);
