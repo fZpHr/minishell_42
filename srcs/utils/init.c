@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:36:39 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/06 17:38:08 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/07 16:55:58 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@ void	init(t_mini *m)
 	m->tmp_end = NULL;
 	m->tmp_child = NULL;
 	m->exit_status = 0;
+	m->append_left = 0;
+	m->append_right = 0;
+	m->redi_left = 0;
+	m->redi_right = 0;
 }
 
 

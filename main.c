@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:53:49 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/06 19:23:18 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/07 14:22:55 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,11 @@ int	main(int ac, char **av, char **env)
 		if (m.input)
 			add_history(m.input);
     	if (m.input == NULL) // ctrl + d
-    	{
 			error_handle(&m, "", "", 1000);
-   		}
-		if (ft_strcmp(m.input, "") != 0)
+		else if (ft_strcmp(m.input, "") != 0)
 		{
 			m.cmd = ft_split(m.input, ' ');
+			check_input(&m);
     		if (ft_strcmp(m.cmd[0], "exit") == 0)
         		error_handle(&m, "", "", 1000);
     		else if (ft_strcmp(m.cmd[0], "pwd") == 0)

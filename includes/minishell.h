@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:54:01 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/06 18:52:37 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/07 16:58:03 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,13 @@ typedef struct s_mini
 	int		exec;
 	int		ac;
 	int		exit_status;
-	
+	int		status_append;
+	char	*out;
+	int		append_left;
+	int		append_right;
+	int		redi_left;
+	int		redi_right;
+	int		intern_last;
 }				t_mini;
 
 /*typedef struct s_pipex
@@ -71,6 +77,7 @@ typedef struct s_mini
 
 }			t_pipex;*/
 
+void	check_input(t_mini *m);
 void	here_doc(t_mini *m, char *end);
 void	ft_exec(t_mini *m, char *input, char **envp);
 int 	ft_count_cmd(char *str, char c);

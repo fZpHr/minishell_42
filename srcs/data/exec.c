@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 14:15:51 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/06 19:22:29 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/07 16:46:11 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	end(t_mini *m, char *cmd, char **envp)
 {
+	int	fd;
 	int	exec;
 
 	m->tmp_end = found_cmd(m, envp, cmd);
@@ -21,6 +22,12 @@ void	end(t_mini *m, char *cmd, char **envp)
 	{
 		error_handle(m, "command not found: ", cmd, 126);
 		return ;
+	}
+	if (m->status_append == 1)
+	{
+		fd = open(m->out, O_WRONLY | O_CREAT | O_APPEND, 0777);
+		dup2(fd, 1);
+		close(fd);
 	}
 	m->cmd1 = ft_split(cmd, ' ');
 	exec = execve(m->tmp_end, m->cmd1, envp);
@@ -125,11 +132,17 @@ void	ft_exec(t_mini *m, char *input, char **envp)
 			error_handle(m, "error fork", "", 1);
 		if (pid == 0)
 		{
+			signal(SIGINT, SIG_IGN);
 			m->tmp = found_cmd(m, envp, argv[0]);
 			if (!m->tmp)
 			{
 				error_handle(m, "command not found: ", argv[0], 127);
 				return;
+			}
+			if (m->status_append == 1)
+			{
+				m->out = ft_strjoin(m->out, ".txt");
+				m->status_append = 0;
 			}
 			m->cmd1 = ft_split(argv[0], ' ');	
 			i = execve(m->tmp, m->cmd1, envp);
