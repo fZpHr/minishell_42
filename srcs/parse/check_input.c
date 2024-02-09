@@ -6,46 +6,68 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:56:21 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/07 17:00:38 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/09 15:56:49 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	ft_cut_useless(t_mini *m)
+/*void	ft_cut_useless(t_mini *m)
 {
-	while (m->cmd[m->intern_last--] != 0)
-	{
-		free(m->cmd[m->intern_last]);
-		m->cmd[m->intern_last] = NULL;
-	}
-}
+	ft_memmove(&m->cmd[0], &m->cmd[m->intern_last], (m->count_cmd - m->intern_last) * sizeof(m->cmd[0]));
+	ft_memset(&m->cmd[m->count_cmd - m->intern_last], 0, m->intern_last * sizeof(m->cmd[0]));
+}*/
 
-int		build_intern(char *c)
+int		build_intern(t_mini *m, char *c)
 {
-	if (ft_strcmp(c, "echo") == 0)
+	char **tmp;
+
+	tmp = ft_split(c, " ");
+	if (ft_strcmp(tmp[0], "echo") == 0)
+	{
+		free_split(tmp);
 		return (1);
-	else if (ft_strcmp(c, "cd") == 0)
+	}
+	else if (ft_strcmp(tmp[0], "cd") == 0)
+	{
+		free_split(tmp);
 		return (1);
-	else if (ft_strcmp(c, "pwd") == 0)
+	}
+	else if (ft_strcmp(tmp[0], "pwd") == 0)
+	{
+		free_split(tmp);
 		return (1);
-	else if (ft_strcmp(c, "export") == 0)
+	}
+	else if (ft_strcmp(tmp[0], "env") == 0)
+	{
+		free_split(tmp);
 		return (1);
-	else if (ft_strcmp(c, "unset") == 0)
+	}
+	else if (ft_strcmp(tmp[0], "export") == 0)
+	{
+		free_split(tmp);
 		return (1);
-	else if (ft_strcmp(c, "env") == 0)
+	}
+	else if (ft_strcmp(tmp[0], "unset") == 0)
+	{
+		free_split(tmp);
 		return (1);
-	else if (ft_strcmp(c, "exit") == 0)
-		return (1);
+	}
+	else if (ft_strcmp(tmp[0], "exit") == 0)
+	{
+		free_split(tmp);
+		error_handle(m, "", "", 1000);
+	}
 	return (0);
 }
 
-void	check_input(t_mini *m)
+/*void	check_input(t_mini *m)
 {
 	int i;
 	i = 0;
 	while (m->cmd[i])
 	{
+		m->count_cmd++;
 		if (ft_strcmp(m->cmd[i], ">>") == 0)
 			m->append_right = i;
 		else if (ft_strcmp(m->cmd[i], "<<") == 0)
@@ -58,5 +80,6 @@ void	check_input(t_mini *m)
 			m->intern_last = i;
 		i++;
 	}
-	ft_cut_useless(m);
-}
+	if (i > 1 && m->intern_last > 0)
+		ft_cut_useless(m);
+}*/

@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:53:49 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/07 14:22:55 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/09 15:55:17 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ int	main(int ac, char **av, char **env)
    	 	m.input = readline("$>");
 		if (m.input)
 			add_history(m.input);
-    	if (m.input == NULL) // ctrl + d
-			error_handle(&m, "", "", 1000);
+		if (m.input == NULL) // ctrl + d
+				error_handle(&m, "", "", 1000);
 		else if (ft_strcmp(m.input, "") != 0)
 		{
-			m.cmd = ft_split(m.input, ' ');
-			check_input(&m);
+			m.cmd = ft_split(m.input, " ");
+			/*check_input(&m);
     		if (ft_strcmp(m.cmd[0], "exit") == 0)
         		error_handle(&m, "", "", 1000);
     		else if (ft_strcmp(m.cmd[0], "pwd") == 0)
@@ -57,8 +57,8 @@ int	main(int ac, char **av, char **env)
 				ft_unset(&m);
 			else if (ft_strcmp(m.cmd[0], "cd") == 0)
 				ft_cd(&m);
-			else
-				ft_exec(&m, m.input, env);
+			else*/
+			ft_exec(&m, m.input, env);
 			free_split(m.cmd);
     		free(m.input);
 		}

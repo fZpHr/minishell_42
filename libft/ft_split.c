@@ -3,24 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 12:49:22 by hbelle            #+#    #+#             */
-/*   Updated: 2023/11/06 13:53:43 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/09 15:54:41 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
 
-static int	separator(char c, char charset)
+# include <stdlib.h>
+
+int	separator(char c, char *charset)
 {
-	if (c == charset)
-		return (1);
+	int	i;
+
+	i = 0;
+	while (charset[i] != 0)
+	{
+		if (c == charset[i])
+			return (1);
+		i++;
+	}
 	if (c == 0)
 		return (1);
 	return (0);
 }
 
-static int	count(char *str, char charset)
+int	count(char *str, char *charset)
 {
 	int	i;
 	int	count;
@@ -37,7 +45,7 @@ static int	count(char *str, char charset)
 	return (count);
 }
 
-static void	putword(char *dest, char *src, char charset)
+void	putword(char *dest, char *src, char *charset)
 {
 	int	i;
 
@@ -50,7 +58,7 @@ static void	putword(char *dest, char *src, char charset)
 	dest[i] = 0;
 }
 
-static void	putsplit(char **split, char *str, char charset)
+void	putsplit(char **split, char *str, char *charset)
 {
 	int	i;
 	int	j;
@@ -68,8 +76,6 @@ static void	putsplit(char **split, char *str, char charset)
 			while (separator(str[i + j], charset) == 0)
 				j++;
 			split[count] = (char *)malloc(sizeof(char) * (j + 1));
-			if (!split[count])
-				return ;
 			putword(split[count], str + i, charset);
 			i = i + j;
 			count++;
@@ -77,18 +83,16 @@ static void	putsplit(char **split, char *str, char charset)
 	}
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(char *str, char *charset)
 {
 	char	**data;
 	int		i;
 
-	if (!s)
-		return (NULL);
-	i = count((char *)s, c);
+	i = count(str, charset);
 	data = (char **) malloc(sizeof(char *) * (i + 1));
 	if (data == NULL)
 		return (NULL);
 	data[i] = 0;
-	putsplit(data, (char *)s, c);
+	putsplit(data, str, charset);
 	return (data);
 }

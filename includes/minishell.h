@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:54:01 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/07 16:58:03 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/09 15:46:41 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ typedef struct s_mini
 	char	*input;
 	int		saved_stdin;
    	int		saved_stdout;
-	int 	env_md;
 	char	*pwd_cd;
 	char	*old_pwd_cd;
 	int 	status;
@@ -62,6 +61,13 @@ typedef struct s_mini
 	int		redi_left;
 	int		redi_right;
 	int		intern_last;
+	int		count_cmd;
+	int 	alloc_env;
+	int 	alloc_cmd;
+	int		alloc_cmd1;
+	int 	alloc_path;
+	int 	alloc_pwd;
+
 }				t_mini;
 
 /*typedef struct s_pipex
@@ -77,6 +83,7 @@ typedef struct s_mini
 
 }			t_pipex;*/
 
+int		build_intern(t_mini *m, char *c);
 void	check_input(t_mini *m);
 void	here_doc(t_mini *m, char *end);
 void	ft_exec(t_mini *m, char *input, char **envp);

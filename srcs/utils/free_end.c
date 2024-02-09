@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:01:42 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/07 12:56:31 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/08 18:59:21 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,15 @@ void	free_split(char **cmd)
 
 void	free_end(t_mini *m, int status)
 {
+	if (m->alloc_env == 1)
+		free_split(m->envm);
+	if (m->alloc_cmd1 == 1)
+		free_split(m->cmd1);
 	if (m->cmd)
 		free_split(m->cmd);
 	if (m->input)
 		free(m->input);
+	if (m->tmp)
+		free(m->tmp);
 	error_status(status);
 }

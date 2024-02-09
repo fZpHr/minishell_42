@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:36:39 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/07 16:55:58 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/08 15:16:35 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	init(t_mini *m)
 	m->pwd_cd = NULL;
 	m->cmd = NULL;
 	m->input = NULL;
-	m->env_md = 0;
+	m->alloc_env = 0;
 	m->cmd1 = NULL;
 	m->cmd2 = NULL;
 	m->envp = NULL;
@@ -31,6 +31,22 @@ void	init(t_mini *m)
 	m->append_right = 0;
 	m->redi_left = 0;
 	m->redi_right = 0;
+	m->count_cmd = 0;
+	m->intern_last = 0;
+	m->alloc_cmd = 0;
+	m->alloc_cmd1 = 0;
+	m->alloc_path = 0;
+	m->alloc_pwd = 0;
+	m->status_append = 0;
+	m->out = NULL;
+	m->exec = 0;
+	m->envm = NULL;
+	m->env_path = NULL;
+	m->path = NULL;
+	m->status = 0;
+	m->saved_stdin = 0;
+	m->saved_stdout = 0;
+	
 }
 
 

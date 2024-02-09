@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 19:51:19 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/06 19:05:55 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/08 15:06:07 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	ft_env(t_mini *m, char **env, int status)
 {
 	int		i;
 	
-	if (m->env_md == 1)
+	if (m->alloc_env == 1)
 	{
 		i = 0;
 		if (status == 1)
@@ -38,7 +38,7 @@ void	ft_env(t_mini *m, char **env, int status)
 	}
 	else
 	{
-		m->env_md = 1;
+		m->alloc_env = 1;
 		i = 0;
 		m->envm = (char **)malloc(sizeof(char *) * (ft_double_char_len(env) + 1));
 		while (env[i])
