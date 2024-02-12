@@ -1,6 +1,6 @@
 
 <h1 align="center">
-	📖 MINISHELL
+	 MINISHELL
 </h1>
 <h2 align="center">
 	<b><i>A project to introduce you to depression</a></a></i></b><br>
