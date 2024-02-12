@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:56:21 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/12 18:55:33 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/12 19:27:00 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,14 @@ void	ft_exec_builtin(t_mini *m, char *cmd, char **envp)
 		ft_unset(m);
 	else if (ft_strcmp(m->cmd1[0], "exit") == 0)
 	{
-		printf("exit\n");
-		error_handle(m, "", "", 1000);
+		error_handle(m, "", "", 9);
 	}
 }
 int		build_intern(t_mini *m, char *c)
 {
 	char **tmp;
 
+	(void)m;
 	tmp = ft_split(c, " ");
 	if (ft_strcmp(tmp[0], "echo") == 0)
 	{
@@ -77,7 +77,7 @@ int		build_intern(t_mini *m, char *c)
 	else if (ft_strcmp(tmp[0], "exit") == 0)
 	{
 		free_split(tmp);
-		error_handle(m, "", "", 1000);
+		return (1);
 	}
 	return (0);
 }

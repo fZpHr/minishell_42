@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:58:56 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/12 18:54:35 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/12 19:37:45 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,18 @@
 void	error_handle(t_mini *m, char *str, char *target, int status)
 {
     ft_putstr_fd("\033[0;31m", 2);
+	if (status == 9)
+		m->exit = 1;
+	printf("slt");
 	if (status >= 1000)
 		m->exit_status = status - 1000;
 	else
 		m->exit_status = status;
+	printf("slst");
 	if (status > 0)
 		printf("%s %s\n", str, target);
     ft_putstr_fd("\033[0m", 2);
+		printf("slstslt");
 	if (status >= 1000)
     	free_end(m, m->exit_status);
 }

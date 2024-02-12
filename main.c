@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:53:49 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/12 18:53:34 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/12 19:39:59 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,16 @@ int	main(int ac, char **av, char **env)
 				error_handle(&m, "", "", 1000);
 		else if (ft_strcmp(m.input, "") != 0)
 		{
+			m.cmd = ft_split(m.input, " ");
 			ft_exec(&m, m.input, env);
 			//free_split(m.cmd);
     		free(m.input);
+		}
+		printf("exit_status = %d\n", m.exit);
+		if (m.exit == 0)
+		{
+			printf("aled");
+			exit(0);
 		}
 	}
 	return (0);
