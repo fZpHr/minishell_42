@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 14:15:51 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/09 18:09:06 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/12 17:30:18 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,77 +15,91 @@
 void	end(t_mini *m, char *cmd, char **envp)
 {
 	int	fd;
+	int	pid;
 	int	exec;
 
-	m->tmp_end = found_cmd(m, envp, cmd);
-	if (!m->tmp_end)
-	{
-		error_handle(m, "command not found: ", cmd, 126);
+	pid = fork();
+	if (pid < 0)
 		return ;
-	}
-	if (m->status_append == 1)
+	if (pid == 0)
 	{
-		fd = open(m->out, O_WRONLY | O_CREAT | O_APPEND, 0777);
-		dup2(fd, 1);
-		close(fd);
+		m->tmp_end = found_cmd(m, envp, cmd);
+		if (!m->tmp_end)
+		{
+			error_handle(m, "command not found: ", cmd, 126);
+			return ;
+		}
+		if (m->status_append == 1)
+		{
+			fd = open(m->out, O_WRONLY | O_CREAT | O_APPEND, 0777);
+			dup2(fd, 1);
+			close(fd);
+		}
+		m->cmd1 = ft_split(cmd, " ");
+		exec = execve(m->tmp_end, m->cmd1, envp);
+		if (exec == -1)
+		{
+			error_handle(m, "error execve", cmd, 127);
+			return ;
+		}
 	}
-	m->cmd1 = ft_split(cmd,  " ");
-	exec = execve(m->tmp_end, m->cmd1, envp);
-	if (exec == -1)
-	{
-		error_handle(m, "error execve", cmd, 127);
-		return ;
-	}
+	else
+		waitpid(pid, NULL, 0);
 }
-
 
 void	child_process(t_mini *m, int fd[2], char **envp, char *cmd)
 {
 	int	exec;
+	int	pid;
 
 	exec = 0;
-	if (build_intern(m, cmd) == 1)
+	pid = fork();
+	if (pid < 0)
+		return;
+	if (pid == 0)
 	{
-		/*close(fd[0]);
-		dup2(fd[1], 1);
-		close(fd[1]);*/
-		m->cmd1 = ft_split(cmd, " ");
-		if (ft_strcmp(m->cmd1[0], "echo") == 0)
-			ft_echo(m);
-		else if (ft_strcmp(m->cmd1[0], "cd") == 0)
-			ft_cd(m);
-		else if (ft_strcmp(m->cmd1[0], "pwd") == 0)
-			ft_pwd(m);
-		else if (ft_strcmp(m->cmd1[0], "env") == 0)
-			ft_env(m, envp, 1);
-		else if (ft_strcmp(m->cmd1[0], "export") == 0)
-			ft_export(m, envp);
-		else if (ft_strcmp(m->cmd1[0], "unset") == 0)
-			ft_unset(m);
-		else if (ft_strcmp(m->cmd1[0], "exit") == 0)
-			error_handle(m, "", "", 1000);
+		if (build_intern(m, cmd) == 1)
+		{
+			m->cmd1 = ft_split(cmd, " ");
+			if (ft_strcmp(m->cmd1[0], "echo") == 0)
+				ft_echo(m);
+			else if (ft_strcmp(m->cmd1[0], "cd") == 0)
+				ft_cd(m);
+			else if (ft_strcmp(m->cmd1[0], "pwd") == 0)
+				ft_pwd(m);
+			else if (ft_strcmp(m->cmd1[0], "env") == 0)
+				ft_env(m, envp, 1);
+			else if (ft_strcmp(m->cmd1[0], "export") == 0)
+				ft_export(m, envp);
+			else if (ft_strcmp(m->cmd1[0], "unset") == 0)
+				ft_unset(m);
+			else if (ft_strcmp(m->cmd1[0], "exit") == 0)
+				error_handle(m, "", "", 1000);
+		}
+		else
+		{
+			m->tmp_child = found_cmd(m, envp, cmd);
+			if (!m->tmp_child)
+			{
+				close(fd[1]);
+				close(fd[0]);
+				error_handle(m, "command not found: ", cmd, 127);
+				return ;
+			}
+			close(fd[0]);
+			dup2(fd[1], 1);
+			close(fd[1]);
+			m->cmd1 = ft_split(cmd, " ");
+			exec = execve(m->tmp_child, m->cmd1, envp);
+			if(exec == -1)
+			{
+				error_handle(m, "error execve", cmd, 126);
+				return ;
+			}
+		}
 	}
 	else
-	{
-		m->tmp_child = found_cmd(m, envp, cmd);
-		if (!m->tmp_child)
-		{
-			close(fd[1]);
-			close(fd[0]);
-			error_handle(m, "command not found: ", cmd, 127);
-			return ;
-		}
-		close(fd[0]);
-		dup2(fd[1], 1);
-		close(fd[1]);
-		m->cmd1 = ft_split(cmd, " ");
-		exec = execve(m->tmp_child, m->cmd1, envp);
-		if(exec == -1)
-		{
-			error_handle(m, "error execve", cmd, 126);
-			return ;
-		}
-	}
+		waitpid(pid, NULL, 0);
 }
 
 void	pipex(t_mini *m, char *cmd, char **envp)
@@ -112,6 +126,7 @@ void	pipex(t_mini *m, char *cmd, char **envp)
 		child_process(m, fd, envp, cmd);
 	else
 	{
+		waitpid(pid, NULL, 0);
 		close(fd[1]);
 		dup2(fd[0], 0);
 		close(fd[0]);
@@ -122,39 +137,29 @@ int pipex_multi(t_mini *m, int argc, char **argv, char **envp)
 	int		i;
 
 	i = 0;
-	while (i < argc - 1)
-		pipex(m, argv[i++], envp);
+	if (argc > 1)
+		while (i < argc - 1)
+			pipex(m, argv[i++], envp);
 	end(m, argv[i], envp);
 	return (0);
 }
+
 void	ft_exec(t_mini *m, char *input, char **envp)
 {
 	int		i;
-	int	pid;
 	int argc;
 	char **argv;
 
-	argv = ft_split(input, " | ");
-	argc = ft_count_cmd(input, '|');
-	pid = fork();
 	i = 0;
-	if (argc > 1)
-	{
-		if (pid == -1)
-		{
-			error_handle(m, "error fork", "", 1);
-			free_split(argv);
-			return;
-		}
-		if (pid == 0)
-		{
-			pipex_multi(m, argc, argv, envp);
-			m->alloc_cmd1 = 1;
-		}
-		else
-			waitpid(pid, NULL, 0);
-	}
-	else
+	argv = ft_split(input, "|");
+	argc = ft_count_cmd(input, '|');
+	pipex_multi(m, argc, argv, envp);
+	error_handle(m, "", "", 0);
+	free_split(argv);
+	printf("\n");
+}
+
+	/*else
 	{
 		if (pid == -1)
 		{
@@ -212,8 +217,4 @@ void	ft_exec(t_mini *m, char *input, char **envp)
 		{
 			waitpid(pid, NULL, 0);
 		}
-	}
-	error_handle(m, "", "", 0);
-	free_split(argv);
-	printf("\n");
-}
+	}*/

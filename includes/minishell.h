@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:54:01 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/09 15:46:41 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/12 15:17:43 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct s_mini
 	int		alloc_cmd1;
 	int 	alloc_path;
 	int 	alloc_pwd;
+	int		heredoc_status;
 
 }				t_mini;
 
