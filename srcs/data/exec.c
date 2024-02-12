@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 14:15:51 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/12 19:49:11 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/12 20:12:05 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	end(t_mini *m, char *cmd, char **envp)
 			return ;
 		}
 	}
-	printf("aaaaa\n");
 }
 
 void	child_process(t_mini *m, int fd[2], char **envp, char *cmd)
@@ -129,10 +128,10 @@ void	pipex_multi(t_mini *m, int argc, char **argv, char **envp)
 			while (i < argc - 1)
 				pipex(m, argv[i++], envp);
 		end(m, argv[i], envp);
+		exit(0);
 	}
 	else
 		waitpid(pid, NULL, 0);
-	return ;
 }
 
 void	ft_exec(t_mini *m, char *input, char **envp)
@@ -145,11 +144,6 @@ void	ft_exec(t_mini *m, char *input, char **envp)
 	argv = ft_split(input, "|");
 	argc = ft_count_cmd(input, '|');
 	pipex_multi(m, argc, argv, envp);
-	printf("%d", m->exit_status);
-	if (m->exit == 1)
-	{
-		exit(0);
-	}
 	error_handle(m, "", "", 0);
 	free_split(argv);
 }

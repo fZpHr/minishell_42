@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:54:01 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/12 18:50:52 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/12 20:01:30 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 
 typedef struct s_mini
 {
-	int 	exit;
+	int 	exit_fork;
 	char	**cmd;
 	char	**envm;
 	char 	**env_path;
