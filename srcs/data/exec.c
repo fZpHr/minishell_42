@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 14:15:51 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/12 17:30:18 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/12 18:54:31 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,14 @@
 void	end(t_mini *m, char *cmd, char **envp)
 {
 	int	fd;
-	int	pid;
 	int	exec;
 
-	pid = fork();
-	if (pid < 0)
-		return ;
-	if (pid == 0)
+	if (build_intern(m, cmd) == 1)
+	{
+		ft_exec_builtin(m, cmd, envp);
+		exit(0);
+	}
+	else
 	{
 		m->tmp_end = found_cmd(m, envp, cmd);
 		if (!m->tmp_end)
@@ -43,63 +44,40 @@ void	end(t_mini *m, char *cmd, char **envp)
 			return ;
 		}
 	}
-	else
-		waitpid(pid, NULL, 0);
+
 }
 
 void	child_process(t_mini *m, int fd[2], char **envp, char *cmd)
 {
 	int	exec;
-	int	pid;
 
 	exec = 0;
-	pid = fork();
-	if (pid < 0)
-		return;
-	if (pid == 0)
+	if (build_intern(m, cmd) == 1)
 	{
-		if (build_intern(m, cmd) == 1)
-		{
-			m->cmd1 = ft_split(cmd, " ");
-			if (ft_strcmp(m->cmd1[0], "echo") == 0)
-				ft_echo(m);
-			else if (ft_strcmp(m->cmd1[0], "cd") == 0)
-				ft_cd(m);
-			else if (ft_strcmp(m->cmd1[0], "pwd") == 0)
-				ft_pwd(m);
-			else if (ft_strcmp(m->cmd1[0], "env") == 0)
-				ft_env(m, envp, 1);
-			else if (ft_strcmp(m->cmd1[0], "export") == 0)
-				ft_export(m, envp);
-			else if (ft_strcmp(m->cmd1[0], "unset") == 0)
-				ft_unset(m);
-			else if (ft_strcmp(m->cmd1[0], "exit") == 0)
-				error_handle(m, "", "", 1000);
-		}
-		else
-		{
-			m->tmp_child = found_cmd(m, envp, cmd);
-			if (!m->tmp_child)
-			{
-				close(fd[1]);
-				close(fd[0]);
-				error_handle(m, "command not found: ", cmd, 127);
-				return ;
-			}
-			close(fd[0]);
-			dup2(fd[1], 1);
-			close(fd[1]);
-			m->cmd1 = ft_split(cmd, " ");
-			exec = execve(m->tmp_child, m->cmd1, envp);
-			if(exec == -1)
-			{
-				error_handle(m, "error execve", cmd, 126);
-				return ;
-			}
-		}
+		ft_exec_builtin(m, cmd, envp);
+		exit(0);
 	}
 	else
-		waitpid(pid, NULL, 0);
+	{
+		m->tmp_child = found_cmd(m, envp, cmd);
+		if (!m->tmp_child)
+		{
+			close(fd[1]);
+			close(fd[0]);
+			error_handle(m, "command not found: ", cmd, 127);
+			return ;
+		}
+		close(fd[0]);
+		dup2(fd[1], 1);
+		close(fd[1]);
+		m->cmd1 = ft_split(cmd, " ");
+		exec = execve(m->tmp_child, m->cmd1, envp);
+		if(exec == -1)
+		{
+			error_handle(m, "error execve", cmd, 126);
+			return ;
+		}
+	}
 }
 
 void	pipex(t_mini *m, char *cmd, char **envp)
@@ -132,16 +110,29 @@ void	pipex(t_mini *m, char *cmd, char **envp)
 		close(fd[0]);
 	}
 }
-int pipex_multi(t_mini *m, int argc, char **argv, char **envp)
+
+void	pipex_multi(t_mini *m, int argc, char **argv, char **envp)
 {
 	int		i;
+	int		pid;
 
-	i = 0;
-	if (argc > 1)
-		while (i < argc - 1)
-			pipex(m, argv[i++], envp);
-	end(m, argv[i], envp);
-	return (0);
+	pid = fork();
+	if (pid == -1)
+	{
+		error_handle(m, "error fork", "", 1);
+		return ;
+	}
+	if (pid == 0)
+	{
+		i = 0;
+		if (argc > 1)
+			while (i < argc - 1)
+				pipex(m, argv[i++], envp);
+		end(m, argv[i], envp);
+	}
+	else
+		waitpid(pid, NULL, 0);
+	return ;
 }
 
 void	ft_exec(t_mini *m, char *input, char **envp)
@@ -156,7 +147,6 @@ void	ft_exec(t_mini *m, char *input, char **envp)
 	pipex_multi(m, argc, argv, envp);
 	error_handle(m, "", "", 0);
 	free_split(argv);
-	printf("\n");
 }
 
 	/*else

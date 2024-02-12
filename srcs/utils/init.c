@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:36:39 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/08 15:16:35 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/12 18:51:20 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ void	init(t_mini *m)
 	m->status = 0;
 	m->saved_stdin = 0;
 	m->saved_stdout = 0;
-	
+	m->heredoc_status = 0;
+	m->exit = 0;
 }
 
 

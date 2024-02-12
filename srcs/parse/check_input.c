@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:56:21 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/12 16:37:28 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/12 18:55:33 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,27 @@
 	ft_memset(&m->cmd[m->count_cmd - m->intern_last], 0, m->intern_last * sizeof(m->cmd[0]));
 }*/
 
+void	ft_exec_builtin(t_mini *m, char *cmd, char **envp)
+{
+	m->cmd1 = ft_split(cmd, " ");
+	if (ft_strcmp(m->cmd1[0], "echo") == 0)
+		ft_echo(m);
+	else if (ft_strcmp(m->cmd1[0], "cd") == 0)
+		ft_cd(m);
+	else if (ft_strcmp(m->cmd1[0], "pwd") == 0)
+		ft_pwd(m);
+	else if (ft_strcmp(m->cmd1[0], "env") == 0)
+		ft_env(m, envp, 1);
+	else if (ft_strcmp(m->cmd1[0], "export") == 0)
+		ft_export(m, envp);
+	else if (ft_strcmp(m->cmd1[0], "unset") == 0)
+		ft_unset(m);
+	else if (ft_strcmp(m->cmd1[0], "exit") == 0)
+	{
+		printf("exit\n");
+		error_handle(m, "", "", 1000);
+	}
+}
 int		build_intern(t_mini *m, char *c)
 {
 	char **tmp;
