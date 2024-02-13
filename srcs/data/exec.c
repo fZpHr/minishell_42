@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 14:15:51 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/13 17:20:38 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/13 18:02:45 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ void	ft_exec(t_mini *m, char *input, char **envp)
 		}
 	}
 	stdin_stdout_handle(m, 1);
-	error_handle(m, "", "", 0);
+	//error_handle(m, "", "", 0);
 	free_split(argv);
 }
 

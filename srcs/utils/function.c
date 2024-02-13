@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 19:17:21 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/05 18:40:44 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/13 18:42:33 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*target_path(char **envp, char *target)
 	{
 		if (ft_strncmp(envp[i], target, ft_strlen(target)) == 0)
 		{
-			path = ft_substr(envp[i], ft_strlen(target) + 1, ft_strlen(envp[i]));
+			path = ft_substr(envp[i], ft_strlen(target), ft_strlen(envp[i]));
 			return (path);
 		}
 		i++;
