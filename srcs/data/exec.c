@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 14:15:51 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/13 15:38:55 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/13 17:20:38 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	end(t_mini *m, char *cmd, char **envp)
 	int	fd;
 	int	exec;
 	int pid;
-
 
 	if (build_intern(m, cmd) == 1)
 		ft_exec_builtin(m, cmd, envp);
@@ -62,19 +61,25 @@ void	child_process(t_mini *m, int fd[2], char **envp, char *cmd)
 	int pid;
 
 	exec = 0;
-	if (build_intern(m, cmd) == 1)
-		ft_exec_builtin(m, cmd, envp);
-	else
-	{
-		pid = fork();
-		if (pid == -1)
+	pid = fork();
+	if (pid == -1)
 		{
 			close(fd[0]);
 			close(fd[1]);
 			error_handle(m, "error fork", "", 1);
 			return ;
 		}
-		if (pid == 0)
+	if (pid == 0)
+	{
+		if (build_intern(m, cmd) == 1)
+		{
+			close(fd[0]);
+			dup2(fd[1], 1);
+			close(fd[1]);
+			ft_exec_builtin(m, cmd, envp);
+			exit(0);
+		}
+		else
 		{
 			m->tmp_child = found_cmd(m, envp, cmd);
 			if (!m->tmp_child)
@@ -95,9 +100,8 @@ void	child_process(t_mini *m, int fd[2], char **envp, char *cmd)
 				return ;
 			}
 		}
-		else
-			waitpid(pid, NULL, 0);
 	}
+	waitpid(pid, NULL, 0);
 }
 
 void	pipex(t_mini *m, char *cmd, char **envp)
