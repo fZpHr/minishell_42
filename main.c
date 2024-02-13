@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:53:49 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/12 20:11:41 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/13 15:28:23 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int	main(int ac, char **av, char **env)
 	ft_env(&m, env, 0);
 	while (1)
 	{
+		//m.input = get_next_line(0);
    	 	m.input = readline("$>");
 		if (m.input)
 			add_history(m.input);
@@ -92,7 +93,7 @@ int	main(int ac, char **av, char **env)
 			m.cmd = ft_split(m.input, " ");
 			if (ft_strcmp(m.cmd[0], "exit") == 0)
 					error_handle(&m, "", "", 1000);
-			else 
+			else
 				ft_exec(&m, m.input, env);
 			free_split(m.cmd);
     		free(m.input);

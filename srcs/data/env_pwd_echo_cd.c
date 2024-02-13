@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 19:51:19 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/08 15:06:07 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/13 14:32:46 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,14 +97,14 @@ void	ft_echo(t_mini *m)
 	}
 }
 
-void	ft_cd(t_mini *m)
+void	ft_cd(t_mini *m, char **cmd)
 {
 	char	*home;
 
 	if (!m->old_pwd_cd)
 		m->old_pwd_cd = getcwd(NULL, 0);
 	m->pwd_cd = getcwd(NULL, 0);
-	if (m->cmd[1] == NULL)
+	if (cmd[1] == NULL)
 	{
 		home = target_path(m->envm, "HOME=");
 		if (home == NULL)
@@ -122,7 +122,7 @@ void	ft_cd(t_mini *m)
 		}
 		free(home);
 	}
-	else if (ft_strcmp(m->cmd[1], "-") == 0)
+	else if (ft_strcmp(cmd[1], "-") == 0)
 	{
 		home = m->old_pwd_cd;
 		if (home == NULL)
@@ -144,9 +144,9 @@ void	ft_cd(t_mini *m)
 	}
 	else
 	{
-		if (chdir(m->cmd[1]) == -1)
+		if (chdir(cmd[1]) == -1)
 		{
-			error_handle(m, "cd : no such file or directory:", m->cmd[1], 1);
+			error_handle(m, "cd : no such file or directory:", cmd[1], 1);
 			return ;
 		}
 	}

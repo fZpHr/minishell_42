@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:54:01 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/12 20:01:30 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/13 13:52:56 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	check_input(t_mini *m);
 void	here_doc(t_mini *m, char *end);
 void	ft_exec(t_mini *m, char *input, char **envp);
 int 	ft_count_cmd(char *str, char c);
-void	ft_cd(t_mini *m);
+void	ft_cd(t_mini *m, char **cmd);
 char	*target_path(char **envp, char *target);
 void	ft_unset(t_mini *m);
 void	ft_export(t_mini *m, char **env);

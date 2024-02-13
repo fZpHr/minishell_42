@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:56:21 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/12 19:27:00 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/13 14:31:27 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,24 @@
 
 void	ft_exec_builtin(t_mini *m, char *cmd, char **envp)
 {
-	m->cmd1 = ft_split(cmd, " ");
-	if (ft_strcmp(m->cmd1[0], "echo") == 0)
+	char **tmp;
+
+	tmp = ft_split(cmd, " ");
+	if (ft_strcmp(tmp[0], "echo") == 0)
 		ft_echo(m);
-	else if (ft_strcmp(m->cmd1[0], "cd") == 0)
-		ft_cd(m);
-	else if (ft_strcmp(m->cmd1[0], "pwd") == 0)
+	else if (ft_strcmp(tmp[0], "cd") == 0)
+		ft_cd(m, tmp);
+	else if (ft_strcmp(tmp[0], "pwd") == 0)
 		ft_pwd(m);
-	else if (ft_strcmp(m->cmd1[0], "env") == 0)
+	else if (ft_strcmp(tmp[0], "env") == 0)
 		ft_env(m, envp, 1);
-	else if (ft_strcmp(m->cmd1[0], "export") == 0)
+	else if (ft_strcmp(tmp[0], "export") == 0)
 		ft_export(m, envp);
-	else if (ft_strcmp(m->cmd1[0], "unset") == 0)
+	else if (ft_strcmp(tmp[0], "unset") == 0)
 		ft_unset(m);
-	else if (ft_strcmp(m->cmd1[0], "exit") == 0)
+	else if (ft_strcmp(tmp[0], "exit") == 0)
 	{
-		error_handle(m, "", "", 9);
+		error_handle(m, "", "", 9999);
 	}
 }
 int		build_intern(t_mini *m, char *c)
