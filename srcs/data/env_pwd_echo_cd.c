@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 19:51:19 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/13 17:54:37 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/13 18:01:51 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	ft_pwd(t_mini *m)
 		return ;
 	}
 	printf("%s\n", pwd);
+	error_handle(m, "", "", 0);
 }
 
 void	ft_env(t_mini *m, char **env, int status)
@@ -52,6 +53,7 @@ void	ft_env(t_mini *m, char **env, int status)
 			while (m->envm[i])
 				printf("%s\n", m->envm[i++]);
 	}
+	error_handle(m, "", "", 0);
 }
 
 void	ft_echo(t_mini *m)
