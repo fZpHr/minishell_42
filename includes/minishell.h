@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:54:01 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/13 17:20:35 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/14 19:15:13 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ typedef struct s_mini
 	int 	alloc_path;
 	int 	alloc_pwd;
 	int		heredoc_status;
+	int		end_status;
+	char	**current_input;
 
 }				t_mini;
 
@@ -85,6 +87,8 @@ typedef struct s_mini
 
 }			t_pipex;*/
 
+int		here_doc_check(t_mini *m, char *cmd);
+void	ft_echo(t_mini *m, char **cmd);
 void	ft_exec_builtin(t_mini *m, char *cmd, char **envp);
 int		build_intern(t_mini *m, char *c);
 void	check_input(t_mini *m);
@@ -102,7 +106,6 @@ void	init(t_mini *m);
 void	stdin_stdout_handle(t_mini *m, int status);
 void	ft_env(t_mini *m, char **env, int status);
 void	ft_pwd(t_mini *m);
-void	ft_echo(t_mini *m);
 void	ft_export(t_mini *m, char **env);
 void	interrupt_handle(int sig);
 char	*found_path(char **envp);

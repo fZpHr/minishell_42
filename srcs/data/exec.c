@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 14:15:51 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/13 18:02:45 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/14 19:26:38 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,11 @@ void	end(t_mini *m, char *cmd, char **envp)
 	int	exec;
 	int pid;
 
+	m->end_status = 1;
 	if (build_intern(m, cmd) == 1)
+	{
 		ft_exec_builtin(m, cmd, envp);
+	}
 	else
 	{
 		pid = fork();
@@ -30,19 +33,25 @@ void	end(t_mini *m, char *cmd, char **envp)
 		}
 		if (pid == 0)
 		{
-			m->tmp_end = found_cmd(m, envp, cmd);
-			if (!m->tmp_end)
+			m->cmd1 = ft_split(cmd, " ");
+			if (access(m->cmd1[0], F_OK) == 0)
+				m->tmp_end = ft_strdup(m->cmd1[0]);
+			else
 			{
-				error_handle(m, "command not found: ", cmd, 126);
-				return ;
+				m->tmp_end = found_cmd(m, envp, cmd);
+				if (!m->tmp_end)
+				{
+					free_split(m->cmd1);
+					error_handle(m, "command not found: ", cmd, 126);
+					return ;
+				}
 			}
-			if (m->status_append == 1)
+			if (m->status_append == 2)
 			{
 				fd = open(m->out, O_WRONLY | O_CREAT | O_APPEND, 0777);
 				dup2(fd, 1);
 				close(fd);
 			}
-			m->cmd1 = ft_split(cmd, " ");
 			exec = execve(m->tmp_end, m->cmd1, envp);
 			if (exec == -1)
 			{
@@ -61,47 +70,59 @@ void	child_process(t_mini *m, int fd[2], char **envp, char *cmd)
 	int pid;
 
 	exec = 0;
-	pid = fork();
-	if (pid == -1)
+	if (here_doc_check(m, cmd) == 1)
+	{
+		here_doc(m, cmd);
+	}
+	else
+	{
+		pid = fork();
+		if (pid == -1)
 		{
 			close(fd[0]);
 			close(fd[1]);
 			error_handle(m, "error fork", "", 1);
 			return ;
 		}
-	if (pid == 0)
-	{
-		if (build_intern(m, cmd) == 1)
+		if (pid == 0)
 		{
-			close(fd[0]);
-			dup2(fd[1], 1);
-			close(fd[1]);
-			ft_exec_builtin(m, cmd, envp);
-			exit(0);
-		}
-		else
-		{
-			m->tmp_child = found_cmd(m, envp, cmd);
-			if (!m->tmp_child)
+			if (build_intern(m, cmd) == 1)
 			{
-				close(fd[1]);
 				close(fd[0]);
-				error_handle(m, "command not found: ", cmd, 127);
-				return ;
+				dup2(fd[1], 1);
+				close(fd[1]);
+				ft_exec_builtin(m, cmd, envp);
+				exit(0);
 			}
-			close(fd[0]);
-			dup2(fd[1], 1);
-			close(fd[1]);
-			m->cmd1 = ft_split(cmd, " ");
-			exec = execve(m->tmp_child, m->cmd1, envp);
-			if(exec == -1)
+			else
 			{
-				error_handle(m, "error execve", cmd, 126);
-				return ;
+				m->cmd1 = ft_split(cmd, " ");
+				if (access(m->cmd1[0], F_OK) == 0)
+					m->tmp_end = ft_strdup(m->cmd1[0]);
+				else
+				{
+					m->tmp_child = found_cmd(m, envp, cmd);
+					if (!m->tmp_child)
+					{
+						close(fd[1]);
+						close(fd[0]);
+						error_handle(m, "command not found: ", cmd, 127);
+						return ;
+					}
+				}
+				close(fd[0]);
+				dup2(fd[1], 1);
+				close(fd[1]);
+				exec = execve(m->tmp_child, m->cmd1, envp);
+				if(exec == -1)
+				{
+					error_handle(m, "error execve", cmd, 126);
+					return ;
+				}
 			}
 		}
+		waitpid(pid, NULL, 0);
 	}
-	waitpid(pid, NULL, 0);
 }
 
 void	pipex(t_mini *m, char *cmd, char **envp)
@@ -143,66 +164,5 @@ void	ft_exec(t_mini *m, char *input, char **envp)
 		}
 	}
 	stdin_stdout_handle(m, 1);
-	//error_handle(m, "", "", 0);
 	free_split(argv);
 }
-
-	/*else
-	{
-		if (pid == -1)
-		{
-			error_handle(m, "error fork", "", 1);
-			return (free_split(argv));
-		}
-		if (pid == 0)
-		{
-			if (build_intern(m, argv[0]) == 1)
-			{
-				if (ft_strcmp(argv[0], "echo") == 0)
-					ft_echo(m);
-				else if (ft_strcmp(argv[0], "cd") == 0)
-					ft_cd(m);
-				else if (ft_strcmp(argv[0], "pwd") == 0)
-					ft_pwd(m);
-				else if (ft_strcmp(argv[0], "env") == 0)
-					ft_env(m, envp, 1);
-				else if (ft_strcmp(argv[0], "export") == 0)
-					ft_export(m, envp);
-				else if (ft_strcmp(argv[0], "unset") == 0)
-					ft_unset(m);
-				else if (ft_strcmp(argv[0], "exit") == 0)
-					error_handle(m, "", "", 1000);
-				free_split(argv);
-				return ;
-			}
-			else
-			{
-
-				signal(SIGINT, SIG_IGN);
-				if (m->tmp != NULL)
-					free(m->tmp);
-				m->tmp = found_cmd(m, envp, argv[0]);
-				if (!m->tmp)
-				{
-					error_handle(m, "command not found: ", argv[0], 127);
-					return (free_split(argv));
-				}
-				if (m->status_append == 1)
-				{
-					m->out = ft_strjoin(m->out, ".txt");
-					m->status_append = 0;
-				}
-				m->cmd1 = ft_split(argv[0], " ");	
-				i = execve(m->tmp, m->cmd1, envp);
-				if (i == -1)
-				{
-					error_handle(m, "error execve", argv[0], 126);
-					return (free_split(argv));
-				}
-			}
-		}
-		else
-		{
-			waitpid(pid, NULL, 0);
-		}
-	}*/
