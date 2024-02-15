@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 14:15:51 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/14 19:26:38 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/15 16:32:37 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	end(t_mini *m, char *cmd, char **envp)
 				if (!m->tmp_end)
 				{
 					free_split(m->cmd1);
-					error_handle(m, "command not found: ", cmd, 126);
+					error_handle(m, "command not found: ", cmd, 127);
 					return ;
 				}
 			}
@@ -53,93 +53,86 @@ void	end(t_mini *m, char *cmd, char **envp)
 				close(fd);
 			}
 			exec = execve(m->tmp_end, m->cmd1, envp);
+			printf("exec: %d\n", exec);
 			if (exec == -1)
 			{
-				error_handle(m, "error execve", cmd, 127);
+				error_handle(m, "error execve", cmd, 126);
 				return ;
 			}
 		}
 		else
-			waitpid(pid, NULL, 0);
+			waitpid(pid, &m->exit_status, 0);
 	}
 }
 
-void	child_process(t_mini *m, int fd[2], char **envp, char *cmd)
+void	child_process(t_mini *m, char **envp, char *cmd)
 {
 	int	exec;
 	int pid;
 
 	exec = 0;
-	if (here_doc_check(m, cmd) == 1)
+	pid = fork();
+	if (pid == -1)
 	{
-		here_doc(m, cmd);
+		close(m->fd[0]);
+		close(m->fd[1]);
+		error_handle(m, "error fork", "", 1);
+		return ;
 	}
-	else
+	if (pid == 0)
 	{
-		pid = fork();
-		if (pid == -1)
+		if (build_intern(m, cmd) == 1)
 		{
-			close(fd[0]);
-			close(fd[1]);
-			error_handle(m, "error fork", "", 1);
-			return ;
+			close(m->fd[0]);
+			dup2(m->fd[1], 1);
+			close(m->fd[1]);
+			ft_exec_builtin(m, cmd, envp);
+			exit(0);
 		}
-		if (pid == 0)
+		else
 		{
-			if (build_intern(m, cmd) == 1)
-			{
-				close(fd[0]);
-				dup2(fd[1], 1);
-				close(fd[1]);
-				ft_exec_builtin(m, cmd, envp);
-				exit(0);
-			}
+			m->cmd1 = ft_split(cmd, " ");
+			if (access(m->cmd1[0], F_OK) == 0)
+				m->tmp_end = ft_strdup(m->cmd1[0]);
 			else
 			{
-				m->cmd1 = ft_split(cmd, " ");
-				if (access(m->cmd1[0], F_OK) == 0)
-					m->tmp_end = ft_strdup(m->cmd1[0]);
-				else
+				m->tmp_child = found_cmd(m, envp, cmd);
+				if (!m->tmp_child)
 				{
-					m->tmp_child = found_cmd(m, envp, cmd);
-					if (!m->tmp_child)
-					{
-						close(fd[1]);
-						close(fd[0]);
-						error_handle(m, "command not found: ", cmd, 127);
-						return ;
-					}
-				}
-				close(fd[0]);
-				dup2(fd[1], 1);
-				close(fd[1]);
-				exec = execve(m->tmp_child, m->cmd1, envp);
-				if(exec == -1)
-				{
-					error_handle(m, "error execve", cmd, 126);
-					return ;
+					close(m->fd[1]);
+					close(m->fd[0]);
+					error_handle(m, "command not found: ", cmd, 127);
+					exit(0);
 				}
 			}
+			close(m->fd[0]);
+			dup2(m->fd[1], 1);
+			close(m->fd[1]);
+			exec = execve(m->tmp_child, m->cmd1, envp);
+			if (exec == -1)
+			{
+				error_handle(m, "error execve", cmd, 126);
+				return ;
+			}
 		}
-		waitpid(pid, NULL, 0);
 	}
+	else
+		waitpid(pid, &m->exit_status, 0);
 }
 
 void	pipex(t_mini *m, char *cmd, char **envp)
 {
-	int	fd[2];
-
-	if (pipe(fd) == -1)
+	if (pipe(m->fd) == -1)
 	{
-		close(fd[0]);
-		close(fd[1]);
+		close(m->fd[0]);
+		close(m->fd[1]);
 		error_handle(m, "error pipe", "", 1);
 		return ;
 	}
-	child_process(m, fd, envp, cmd);
-	close(fd[1]);
-	dup2(fd[0], 0);
-	close(fd[0]);
+	child_process(m, envp, cmd);
+	close(m->fd[1]);
+	dup2(m->fd[0], 0);
+	close(m->fd[0]);
 }
 
 void	ft_exec(t_mini *m, char *input, char **envp)

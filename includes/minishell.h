@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:54:01 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/14 19:15:13 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/15 16:24:10 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ typedef struct s_mini
 	int		heredoc_status;
 	int		end_status;
 	char	**current_input;
+	int 	fd_doc[2];
+	int 	fd[2];
 
 }				t_mini;
 
@@ -87,6 +89,8 @@ typedef struct s_mini
 
 }			t_pipex;*/
 
+int		check_if_pipe(char **cmd);
+int		ft_space(char *str);
 int		here_doc_check(t_mini *m, char *cmd);
 void	ft_echo(t_mini *m, char **cmd);
 void	ft_exec_builtin(t_mini *m, char *cmd, char **envp);

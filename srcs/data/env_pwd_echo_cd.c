@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 19:51:19 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/14 17:00:59 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/15 17:33:58 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,9 @@ void	ft_env(t_mini *m, char **env, int status)
 void	ft_echo(t_mini *m, char **cmd)
 {
 	int		i;
+	int		status;
 	
+	status = 0;
 	if (cmd[1] == NULL)
 	{
 		printf("\n");
@@ -70,32 +72,59 @@ void	ft_echo(t_mini *m, char **cmd)
 		i = 2;
 		while (cmd[i])
 		{
-			write(1, cmd[i], ft_strlen(cmd[i]));
-			i++;
-		}
-	}
-	else if (ft_strchr(cmd[1], 36) != 0)
-	{
-		i = 1;
-		if (ft_strncmp(cmd[1], "$?", 3) == 0)
-			printf("%d\n", m->exit_status);
-		else
-		{
-			while (cmd[i])
+			if (ft_strchr(cmd[i], '$') != NULL)
 			{
-				if (target_path(m->envm, cmd[i] + 1) != NULL)
-					printf("%s\n", target_path(m->envm, cmd[i] + 1));
+				if (ft_strncmp(cmd[i], "$?", 3) == 0)
+				{
+					if (status == 0)
+					{
+						m->exit_status = m->exit_status >> 8;
+						status = m->exit_status;
+						printf("%d", m->exit_status);
+					}
+					else
+						printf("%d", status);
+				}
+				else if (target_path(m->envm, cmd[i] + 1) != NULL)
+					printf("%s", target_path(m->envm, cmd[i] + 1));
 				else
-					printf("\n");
-				i++;
+					printf("%s", cmd[i]);
 			}
+			else
+				printf("%s", cmd[i]);
+			printf(" ");
+			i++;
 		}
 	}
 	else
 	{
 		i = 1;
 		while (cmd[i])
-			printf("%s\n", cmd[i++]);
+		{
+			if (ft_strchr(cmd[i], '$') != NULL)
+			{
+				if (ft_strncmp(cmd[i], "$?", 3) == 0)
+				{
+					if (status == 0)
+					{
+						m->exit_status = m->exit_status >> 8;
+						status = m->exit_status;
+						printf("%d", m->exit_status);
+					}
+					else
+						printf("%d", status);
+				}
+				else if (target_path(m->envm, cmd[i] + 1) != NULL)
+					printf("%s", target_path(m->envm, cmd[i] + 1));
+				else
+					printf("%s", cmd[i]);
+			}
+			else
+				printf("%s", cmd[i]);
+			printf(" ");
+			i++;
+		}
+		printf("\n");
 	}
 	error_handle(m, "", "", 0);
 }

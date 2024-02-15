@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:56:21 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/14 19:15:00 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/15 16:24:37 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,34 @@ int here_doc_check(t_mini *m, char *cmd)
 	}
 	m->heredoc_status = 0;
 	free_split(tmp);
+	return (0);
+}
+
+int	ft_space(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != ' ')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int check_if_pipe(char **cmd)
+{
+	int i;
+
+	i = 0;
+	while (cmd[i])
+	{
+		if (ft_strcmp(cmd[i], "|") == 0)
+			return (1);
+		i++;
+	}
 	return (0);
 }
 
