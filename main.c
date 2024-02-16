@@ -6,20 +6,35 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:53:49 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/15 16:23:52 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/16 16:18:26 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
+int signal_flag = 0;
+
+void	interrupt_handle(int sig)
+{
+    if (sig == SIGINT)
+    {
+        write(1, "\n$>", 4);
+        signal_flag = 1;
+    }
+    else if (sig == SIGQUIT)
+    {
+        return;
+    }
+}
+
 int	main(int ac, char **av, char **env)
 {
-    struct sigaction sa;
+	struct sigaction sa;
     sa.sa_handler = interrupt_handle;
     sa.sa_flags = SA_RESTART; // to restart functions if interrupted
     sigemptyset(&sa.sa_mask); // to empty the signal set
     sigaction(SIGINT, &sa, NULL); // ctrl + c
-  	signal(SIGQUIT, SIG_IGN); // ignore ctrl + backslash
+  	signal(SIGQUIT, SIG_IGN); // ignore ctrl + backslash*/
 
 	(void)ac;
 	(void)av;
@@ -29,12 +44,13 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		//m.input = get_next_line(0);
+		signal_flag = 0;
    	 	m.input = readline("$>");
 		if (m.input)
 			add_history(m.input);
 		if (m.input == NULL) // ctrl + d
 				error_handle(&m, "", "", 1000);
-		else if (ft_space(m.input) == 0)
+		else if (ft_space(m.input) == 0 && signal_flag == 0)
 		{
 			if (ft_strcmp(m.input, "") != 0)
 			{
@@ -44,7 +60,7 @@ int	main(int ac, char **av, char **env)
 				else
 					ft_exec(&m, m.input, env);
 			}
-			free_split(m.cmd);
+			free_split(&m.cmd);
 		}
 		free(m.input);
 	}

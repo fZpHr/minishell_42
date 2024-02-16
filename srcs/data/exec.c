@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 14:15:51 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/15 16:32:37 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/16 15:50:11 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	end(t_mini *m, char *cmd, char **envp)
 	}
 	else
 	{
+		
 		pid = fork();
 		if (pid == -1)
 		{
@@ -41,23 +42,23 @@ void	end(t_mini *m, char *cmd, char **envp)
 				m->tmp_end = found_cmd(m, envp, cmd);
 				if (!m->tmp_end)
 				{
-					free_split(m->cmd1);
+					free_split(&m->cmd1);
 					error_handle(m, "command not found: ", cmd, 127);
-					return ;
+					exit(0);
 				}
 			}
-			if (m->status_append == 2)
+			if (m->status_append == 1)
 			{
+
 				fd = open(m->out, O_WRONLY | O_CREAT | O_APPEND, 0777);
 				dup2(fd, 1);
 				close(fd);
 			}
 			exec = execve(m->tmp_end, m->cmd1, envp);
-			printf("exec: %d\n", exec);
 			if (exec == -1)
 			{
 				error_handle(m, "error execve", cmd, 126);
-				return ;
+				exit(0);
 			}
 		}
 		else
@@ -116,8 +117,7 @@ void	child_process(t_mini *m, char **envp, char *cmd)
 			}
 		}
 	}
-	else
-		waitpid(pid, &m->exit_status, 0);
+	waitpid(pid, &m->exit_status, 0);
 }
 
 void	pipex(t_mini *m, char *cmd, char **envp)
@@ -157,5 +157,5 @@ void	ft_exec(t_mini *m, char *input, char **envp)
 		}
 	}
 	stdin_stdout_handle(m, 1);
-	free_split(argv);
+	free_split(&argv);
 }

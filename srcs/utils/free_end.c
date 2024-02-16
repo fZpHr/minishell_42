@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:01:42 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/08 18:59:21 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/16 15:50:37 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,31 +26,33 @@ void	error_status(int status)
 		exit(127);
 }
 
-void	free_split(char **cmd)
+void	free_split(char ***cmd)
 {
 	int	i;
 
 	i = 0;
-	if (cmd[1] && cmd)
+	if ((*cmd)[1] && *cmd)
 	{
-		while (cmd[i])
+		while ((*cmd)[i])
 		{
-			free(cmd[i]);
+			free((*cmd)[i]);
 			i++;
 		}
+		(*cmd)[i] = NULL;
 	}
-	free(cmd[i]);
-	free(cmd);
+	free(*cmd);
+	*cmd = NULL;
+
 }
 
 void	free_end(t_mini *m, int status)
 {
 	if (m->alloc_env == 1)
-		free_split(m->envm);
+		free_split(&m->envm);
 	if (m->alloc_cmd1 == 1)
-		free_split(m->cmd1);
+		free_split(&m->cmd1);
 	if (m->cmd)
-		free_split(m->cmd);
+		free_split(&m->cmd);
 	if (m->input)
 		free(m->input);
 	if (m->tmp)

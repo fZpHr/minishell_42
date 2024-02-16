@@ -319,3 +319,7 @@ TO DO   <br> <br>
 
 PARSING GLOBAL / GESTION ERREUR CORRECT / LEAK / SEGFAULT / NORME
 heredoc strncmp quand y a trop de lettre le prends quand meme
+
+
+EXPORT LES "" SUR LES VARIABLES ENVIRONNEMENTS ?
+ET LE WAIT de certainne commande 

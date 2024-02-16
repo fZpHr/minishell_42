@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 19:51:19 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/15 17:33:58 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/16 18:31:36 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,11 @@ void	ft_echo(t_mini *m, char **cmd)
 						printf("%d", status);
 				}
 				else if (target_path(m->envm, cmd[i] + 1) != NULL)
-					printf("%s", target_path(m->envm, cmd[i] + 1));
+				{
+					char *tmp = target_path(m->envm, cmd[i] + 1);
+					tmp++;
+					printf("%s", tmp);
+				}
 				else
 					printf("%s", cmd[i]);
 			}
@@ -115,7 +119,11 @@ void	ft_echo(t_mini *m, char **cmd)
 						printf("%d", status);
 				}
 				else if (target_path(m->envm, cmd[i] + 1) != NULL)
-					printf("%s", target_path(m->envm, cmd[i] + 1));
+				{
+					char *tmp = target_path(m->envm, cmd[i] + 1);
+					tmp++;
+					printf("%s", tmp);
+				}
 				else
 					printf("%s", cmd[i]);
 			}

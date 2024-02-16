@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:54:01 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/15 16:24:10 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/16 15:50:02 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,14 @@ typedef struct s_mini
 
 }				t_mini;
 
+typedef struct	s_sig
+{
+	int				sigint;
+	int				sigquit;
+	int				exit_status;
+	pid_t			pid;
+}				t_sig;
+
 /*typedef struct s_pipex
 {
 	char	**cmd1;
@@ -105,7 +113,7 @@ void	ft_unset(t_mini *m);
 void	ft_export(t_mini *m, char **env);
 void	error_handle(t_mini *m, char *str, char *target, int status);
 void	free_end(t_mini *m, int status);
-void	free_split(char **cmd);
+void	free_split(char ***cmd);
 void	init(t_mini *m);
 void	stdin_stdout_handle(t_mini *m, int status);
 void	ft_env(t_mini *m, char **env, int status);

@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:31:16 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/15 18:15:07 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/16 15:50:05 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char **ft_strdup_double_char(char **src, char *add, int i)
 			dst[j] = ft_strdup(src[j]);
 			j++;
 		}
-		free_split(src);
+		free_split(&src);
 	}
 	dst[j] = ft_strdup(add);
 	dst[j + 1] = NULL;
@@ -44,9 +44,9 @@ void	infinite_loop(t_mini *m, char *end)
 	i = 0;
 	while (1)
 	{
-		//ft_putstr_fd("heredoc> ", 0);
-		//input = get_next_line(0);
-		input = readline("heredoc> ");
+		ft_putstr_fd("heredoc> ", 0);
+		input = get_next_line(0);
+		//input = readline("heredoc> ");
 		if (ft_strncmp(input, end, ft_strlen(end)) == 0)
 		{
 			free(input);
@@ -70,7 +70,7 @@ void	infinite_loop(t_mini *m, char *end)
 		{
 			while (m->current_input[i])
 				printf("%s", m->current_input[i++]);
-			free_split(m->current_input);
+			free_split(&m->current_input);
 		}
 
 }

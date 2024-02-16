@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 10:29:51 by hbelle            #+#    #+#             */
-/*   Updated: 2023/12/21 18:38:35 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/16 18:22:40 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	ft_checkline(char *str)
 	return (0);
 }
 
-char	*ft_strdup_gnl(char *buff)
+char	*ft_strgdup_gnl(char *buff)
 {
 	char	*dest;
 	int		lenght;

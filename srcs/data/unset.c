@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 14:10:17 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/02 14:13:30 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/16 15:50:14 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,6 @@ void	ft_unset(t_mini *m)
 		i++;
 	}
 	env_cp[j] = NULL;
-	free_split(m->envm);
+	free_split(&m->envm);
 	m->envm = env_cp;
 }
