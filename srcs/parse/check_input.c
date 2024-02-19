@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:56:21 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/16 15:50:18 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/19 16:12:05 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,75 +18,43 @@
 	ft_memset(&m->cmd[m->count_cmd - m->intern_last], 0, m->intern_last * sizeof(m->cmd[0]));
 }*/
 
-void	ft_exec_builtin(t_mini *m, char *cmd, char **envp)
+void	ft_exec_builtin(t_mini *m, char **envp)
 {
-	char **tmp;
-
-	tmp = ft_split(cmd, " ");
-	if (ft_strcmp(tmp[0], "echo") == 0)
-		ft_echo(m, tmp);
-	else if (ft_strcmp(tmp[0], "cd") == 0)
-		ft_cd(m, tmp);
-	else if (ft_strcmp(tmp[0], "pwd") == 0)
+	if (ft_strcmp(m->cmd[0], "echo") == 0)
+		ft_echo(m, m->cmd);
+	else if (ft_strcmp(m->cmd[0], "cd") == 0)
+		ft_cd(m, m->cmd);
+	else if (ft_strcmp(m->cmd[0], "pwd") == 0)
 		ft_pwd(m);
-	else if (ft_strcmp(tmp[0], "env") == 0)
+	else if (ft_strcmp(m->cmd[0], "env") == 0)
 		ft_env(m, envp, 1);
-	else if (ft_strcmp(tmp[0], "export") == 0)
+	else if (ft_strcmp(m->cmd[0], "export") == 0)
 		ft_export(m, envp);
-	else if (ft_strcmp(tmp[0], "unset") == 0)
+	else if (ft_strcmp(m->cmd[0], "unset") == 0)
 		ft_unset(m);
-	else if (ft_strcmp(tmp[0], "exit") == 0)
+	else if (ft_strcmp(m->cmd[0], "exit") == 0)
 		error_handle(m, "", "", 9999);
-	else if (ft_strcmp(tmp[0], "<<") == 0)
-		here_doc(m, tmp[1]);
-	free_split(&tmp);
+	else if (ft_strcmp(m->cmd[0], "<<") == 0)
+		here_doc(m, m->cmd[1]);
 }
-int		build_intern(t_mini *m, char *c)
+int		build_intern(t_mini *m)
 {
-	char **tmp;
-
-	(void)m;
-	tmp = ft_split(c, " ");
-	if (ft_strcmp(tmp[0], "echo") == 0)
-	{
-		free_split(&tmp);
+	if (ft_strcmp(m->cmd[0], "echo") == 0)
 		return (1);
-	}
-	else if (ft_strcmp(tmp[0], "cd") == 0)
-	{
-		free_split(&tmp);
+	else if (ft_strcmp(m->cmd[0], "cd") == 0)
 		return (1);
-	}
-	else if (ft_strcmp(tmp[0], "pwd") == 0)
-	{
-		free_split(&tmp);
+	else if (ft_strcmp(m->cmd[0], "pwd") == 0)
 		return (1);
-	}
-	else if (ft_strcmp(tmp[0], "env") == 0)
-	{
-		free_split(&tmp);
+	else if (ft_strcmp(m->cmd[0], "env") == 0)
 		return (1);
-	}
-	else if (ft_strcmp(tmp[0], "export") == 0)
-	{
-		free_split(&tmp);
+	else if (ft_strcmp(m->cmd[0], "export") == 0)
 		return (1);
-	}
-	else if (ft_strcmp(tmp[0], "unset") == 0)
-	{
-		free_split(&tmp);
+	else if (ft_strcmp(m->cmd[0], "unset") == 0)
 		return (1);
-	}
-	else if (ft_strcmp(tmp[0], "exit") == 0)
-	{
-		free_split(&tmp);
+	else if (ft_strcmp(m->cmd[0], "exit") == 0)
 		return (1);
-	}
-	else if (ft_strcmp(tmp[0], "<<") == 0)
-	{
-		free_split(&tmp);
+	else if (ft_strcmp(m->cmd[0], "<<") == 0)
 		return (1);
-	}
 	return (0);
 }
 

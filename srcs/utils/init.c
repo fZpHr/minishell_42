@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:36:39 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/14 15:45:42 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/19 17:42:33 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,9 @@ void	init(t_mini *m)
 	m->heredoc_status = 0;
 	m->exit_fork = 0;
 	m->end_status = 0;
+	m->current_input = NULL;
+	m->parse = 0;
+	
 }
 
 

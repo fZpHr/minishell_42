@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:58:56 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/15 16:45:05 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/19 17:39:14 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ void	error_handle(t_mini *m, char *str, char *target, int status)
 	else
 		m->exit_status = status << 8;
 	if (status > 0)
+	{
+		//ft_putstr_fd(str, 2);
 		printf("%s %s\n", str, target);
+	}
     ft_putstr_fd("\033[0m", 2);
 	if (status >= 1000)
     	free_end(m, m->exit_status);

@@ -66,6 +66,18 @@ void free_token_list(t_token_list *head)
 		free(temp);
 	}
 }
+int	count_pipe(t_token_list *current)
+{
+	int count = 0;
+	
+	while (current->token != END)
+	{
+		if (current->token == PIPE)
+			count++;
+		current = current->next;
+	}
+	return count;
+}
 
 void print_list(t_token_list *head)
 {

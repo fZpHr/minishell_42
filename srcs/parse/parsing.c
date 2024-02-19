@@ -39,7 +39,6 @@ bool check_wrong_command(t_token_list* current)
 {
 	bool	command;
 
-	command = false;
 	while (current && current->token != END) {
 		command = false;
 		while (current && current->token != PIPE) 

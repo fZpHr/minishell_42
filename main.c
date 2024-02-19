@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:53:49 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/19 15:20:30 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/19 17:48:12 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,31 @@ void	interrupt_handle(int sig)
     }
 }
 
-void	init_parsing(t_mini *m, t_token_list *current, t_token_list *head)
+t_token_list	*init_parsing(t_mini *m, t_token_list *current, t_token_list *head)
 {
 	char			**command_split;
 
 	command_split = ft_split_command(m->input);
-	current = head;
+	//head = current;
 	add_token(command_split, &head);
 	current = head;
 	while (current->token != END)
 	{
 		current->value = quote_things(current->value);
+		if (check_wrong_command(current) == false)
+		{
+			error_handle(m, "error", "", 1);
+			m->parse = 1;
+			return (NULL);
+		}
 		current = current->next;
 	}
 	current = head;
-	print_list(head);
+	m->ac = count_pipe(current);
+	current = head;
+	//print_list(head);
+	return (head);
+	
 }
 
 int	main(int ac, char **av, char **env)
@@ -59,7 +69,7 @@ int	main(int ac, char **av, char **env)
 	t_mini	m;
 	t_token_list	*head;
 	t_token_list *current;
-
+	
 	current = NULL;
 	head = NULL;
 	init(&m);
@@ -67,9 +77,10 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		//m.input = get_next_line(0);
+		m.parse = 0;
 		signal_flag = 0;
    	 	m.input = readline("$>");
-		init_parsing(&m, current, head);
+		current = init_parsing(&m, current, head);
 		if (m.input)
 			add_history(m.input);
 		if (m.input == NULL) // ctrl + d
@@ -78,11 +89,18 @@ int	main(int ac, char **av, char **env)
 		{
 			if (ft_strcmp(m.input, "") != 0)
 			{
-				m.cmd = ft_split(m.input, " ");
-				if ((ft_strcmp(m.cmd[0], "exit") == 0 ) && (check_if_pipe(m.cmd) == 0))
-						error_handle(&m, "", "", 1000);
-				else
-					ft_exec(&m, m.input, env);
+				
+				current = group_command_args(current, &m);
+				//m.cmd = ft_split(m.input, " ");
+				if (m.parse == 0)
+				{
+					if ((ft_strcmp(m.cmd[0], "exit") == 0 ) && (check_if_pipe(m.cmd) == 0))
+							error_handle(&m, "", "", 1000);
+					else
+						ft_exec(&m, current, env);
+					if (current && current->token != END)
+						current = current->next;
+				}
 			}
 			free_split(&m.cmd);
 		}

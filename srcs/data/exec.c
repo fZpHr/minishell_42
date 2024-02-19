@@ -6,26 +6,25 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 14:15:51 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/16 15:50:11 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/19 17:40:30 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	end(t_mini *m, char *cmd, char **envp)
+void	end(t_mini *m, char **envp)
 {
 	int	fd;
 	int	exec;
 	int pid;
-
+	
 	m->end_status = 1;
-	if (build_intern(m, cmd) == 1)
+	if (build_intern(m) == 1)
 	{
-		ft_exec_builtin(m, cmd, envp);
+		ft_exec_builtin(m, envp);
 	}
 	else
 	{
-		
 		pid = fork();
 		if (pid == -1)
 		{
@@ -34,16 +33,14 @@ void	end(t_mini *m, char *cmd, char **envp)
 		}
 		if (pid == 0)
 		{
-			m->cmd1 = ft_split(cmd, " ");
-			if (access(m->cmd1[0], F_OK) == 0)
-				m->tmp_end = ft_strdup(m->cmd1[0]);
+			if (access(m->cmd[0], F_OK) == 0)
+				m->tmp_end = ft_strdup(m->cmd[0]);
 			else
 			{
-				m->tmp_end = found_cmd(m, envp, cmd);
+				m->tmp_end = found_cmd(m, envp);
 				if (!m->tmp_end)
 				{
-					free_split(&m->cmd1);
-					error_handle(m, "command not found: ", cmd, 127);
+					error_handle(m, "command not found: ", m->cmd[0], 127);
 					exit(0);
 				}
 			}
@@ -54,10 +51,10 @@ void	end(t_mini *m, char *cmd, char **envp)
 				dup2(fd, 1);
 				close(fd);
 			}
-			exec = execve(m->tmp_end, m->cmd1, envp);
+			exec = execve(m->tmp_end, m->cmd, envp);
 			if (exec == -1)
 			{
-				error_handle(m, "error execve", cmd, 126);
+				error_handle(m, "error execve",  m->cmd[0], 126);
 				exit(0);
 			}
 		}
@@ -66,7 +63,7 @@ void	end(t_mini *m, char *cmd, char **envp)
 	}
 }
 
-void	child_process(t_mini *m, char **envp, char *cmd)
+void	child_process(t_mini *m, char **envp)
 {
 	int	exec;
 	int pid;
@@ -82,37 +79,36 @@ void	child_process(t_mini *m, char **envp, char *cmd)
 	}
 	if (pid == 0)
 	{
-		if (build_intern(m, cmd) == 1)
+		if (build_intern(m) == 1)
 		{
 			close(m->fd[0]);
 			dup2(m->fd[1], 1);
 			close(m->fd[1]);
-			ft_exec_builtin(m, cmd, envp);
+			ft_exec_builtin(m, envp);
 			exit(0);
 		}
 		else
 		{
-			m->cmd1 = ft_split(cmd, " ");
-			if (access(m->cmd1[0], F_OK) == 0)
-				m->tmp_end = ft_strdup(m->cmd1[0]);
+			if (access(m->cmd[0], F_OK) == 0)
+				m->tmp_end = ft_strdup(m->cmd[0]);
 			else
 			{
-				m->tmp_child = found_cmd(m, envp, cmd);
+				m->tmp_child = found_cmd(m, envp);
 				if (!m->tmp_child)
 				{
 					close(m->fd[1]);
 					close(m->fd[0]);
-					error_handle(m, "command not found: ", cmd, 127);
+					error_handle(m, "command not found: ", m->cmd[0], 127);
 					exit(0);
 				}
 			}
 			close(m->fd[0]);
 			dup2(m->fd[1], 1);
 			close(m->fd[1]);
-			exec = execve(m->tmp_child, m->cmd1, envp);
+			exec = execve(m->tmp_child, m->cmd, envp);
 			if (exec == -1)
 			{
-				error_handle(m, "error execve", cmd, 126);
+				error_handle(m, "error execve", m->cmd[0], 126);
 				return ;
 			}
 		}
@@ -120,7 +116,7 @@ void	child_process(t_mini *m, char **envp, char *cmd)
 	waitpid(pid, &m->exit_status, 0);
 }
 
-void	pipex(t_mini *m, char *cmd, char **envp)
+void	pipex(t_mini *m, char **envp)
 {
 	if (pipe(m->fd) == -1)
 	{
@@ -129,33 +125,31 @@ void	pipex(t_mini *m, char *cmd, char **envp)
 		error_handle(m, "error pipe", "", 1);
 		return ;
 	}
-	child_process(m, envp, cmd);
+	child_process(m, envp);
 	close(m->fd[1]);
 	dup2(m->fd[0], 0);
 	close(m->fd[0]);
 }
 
-void	ft_exec(t_mini *m, char *input, char **envp)
+void	ft_exec(t_mini *m, t_token_list *current, char **envp)
 {
 	int		i;
-	int argc;
-	char **argv;
 
-	i = 0;
-	argc = ft_count_cmd(input, '|');
-	argv = ft_split(input, "|");
+	i = 0; 
 	stdin_stdout_handle(m, 0);
-	if (argc == 1)
-		end(m, argv[0], envp);
+	if (m->ac == 0)
+		end(m, envp);
 	else
 	{
-		if (argc > 1)
+		while (i < m->ac)
 		{
-			while (i < argc - 1)
-				pipex(m, argv[i++], envp);
-			end(m, argv[i], envp);
+			pipex(m, envp);
+			if (current)
+				current = current->next;
+			current = group_command_args(current, m);
+			i++;
 		}
+		end(m, envp);
 	}
 	stdin_stdout_handle(m, 1);
-	free_split(&argv);
 }

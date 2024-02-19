@@ -78,7 +78,7 @@ int		get_number_of_args(t_token_list *current)
 	int		i;
 
 	i = 0;
-	while (current->token != END && current->token != PIPE)
+	while (current && current->token != END && current->token != PIPE)
 	{
 		if (current->token == COMMAND)
 		{

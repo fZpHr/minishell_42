@@ -323,3 +323,16 @@ heredoc strncmp quand y a trop de lettre le prends quand meme
 
 EXPORT LES "" SUR LES VARIABLES ENVIRONNEMENTS ?
 ET LE WAIT de certainne commande 
+
+$? + $? segfault
+print $PATH
+gerer \ echo
+gerer \ parsing
+CTRL + D segfault
+CTRL + C HERE_DOC
+cat sans args puis ctrl + c TRUC CHELOU
+copier envp et modifier copie partout
+awk truc bizarre parsing
+variable env sans echo
+redirections
+regler pb error

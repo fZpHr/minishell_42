@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:54:01 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/19 15:20:35 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/19 17:42:13 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,37 @@
 #include <readline/readline.h> // Pour readline
 #include <readline/history.h> // Pour add_history, rl_clear_history, rl_on_new_line, rl_replace_line, rl_redisplay
 #include "../libft/libft.h"
+
+// Parsing
+typedef struct s_split_command 
+{
+	char** result;
+    char* current_group;
+    int i;
+    int j;
+    int result_index;
+}				t_split_command;
+
+typedef enum s_token
+{
+	COMMAND,
+	ARGS,
+	PIPE,
+	REDIR_IN,
+	REDIR_OUT,
+	APPEND,
+	HERE_DOC,
+	END
+}				t_token;
+
+typedef struct s_token_list
+{
+	t_token				token;
+	char				*value;
+	struct s_token_list	*next;
+}				t_token_list;
+
+// Data
 
 typedef struct s_mini
 {
@@ -73,8 +104,11 @@ typedef struct s_mini
 	char	**current_input;
 	int 	fd_doc[2];
 	int 	fd[2];
+	int		parse;
 
 }				t_mini;
+
+// Signals
 
 typedef struct	s_sig
 {
@@ -84,28 +118,17 @@ typedef struct	s_sig
 	pid_t			pid;
 }				t_sig;
 
-/*typedef struct s_pipex
-{
-	char	**cmd1;
-	char	**cmd2;
-	char	**envp;
-	char	*tmp;
-	char	*tmp_child;
-	char	*tmp_end;
-	int		exec;
-	int		ac;
-
-}			t_pipex;*/
+// Data
 
 int		check_if_pipe(char **cmd);
 int		ft_space(char *str);
 int		here_doc_check(t_mini *m, char *cmd);
 void	ft_echo(t_mini *m, char **cmd);
-void	ft_exec_builtin(t_mini *m, char *cmd, char **envp);
-int		build_intern(t_mini *m, char *c);
+void	ft_exec_builtin(t_mini *m, char **envp);
+int		build_intern(t_mini *m);
 void	check_input(t_mini *m);
 void	here_doc(t_mini *m, char *end);
-void	ft_exec(t_mini *m, char *input, char **envp);
+void	ft_exec(t_mini *m, t_token_list *current, char **envp);
 int 	ft_count_cmd(char *str, char c);
 void	ft_cd(t_mini *m, char **cmd);
 char	*target_path(char **envp, char *target);
@@ -121,42 +144,16 @@ void	ft_pwd(t_mini *m);
 void	ft_export(t_mini *m, char **env);
 void	interrupt_handle(int sig);
 char	*found_path(char **envp);
-char	*found_cmd(t_mini *m, char **envp, char *cmd);
+char	*found_cmd(t_mini *m, char **envp);
 char	*found_var(char **envp, char *target);
 int		ft_double_char_len(char **env);
 void	cp_env(char **env, char **env_cp);
 
+
+
 // Parsing
-typedef struct s_split_command 
-{
-	char** result;
-    char* current_group;
-    int i;
-    int j;
-    int result_index;
-}				t_split_command;
 
-typedef enum s_token
-{
-	COMMAND,
-	ARGS,
-	PIPE,
-	REDIR_IN,
-	REDIR_OUT,
-	APPEND,
-	HERE_DOC,
-	END
-}				t_token;
-
-typedef struct s_token_list
-{
-	t_token				token;
-	char				*value;
-	struct s_token_list	*next;
-}				t_token_list;
-
-
-
+int		count_pipe(t_token_list *current);
 void	lexing(char *whole_commands);
 int		count_word_command(const char *command);
 void	count_word_command_2(const char *command, int* i, int* count);
@@ -178,5 +175,6 @@ bool	is_between_quotes(char *str, int i);
 char *quote_things(char *str);
 bool is_meta_char_double_quotes(char c);
 bool	is_meta_char_quote(char c, char quote);
-
+t_token_list	*init_parsing(t_mini *m, t_token_list *current, t_token_list *head);
+bool check_wrong_command(t_token_list* current);
 #endif
