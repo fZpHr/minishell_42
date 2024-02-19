@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:54:01 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/16 15:50:02 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/19 15:20:35 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,5 +125,58 @@ char	*found_cmd(t_mini *m, char **envp, char *cmd);
 char	*found_var(char **envp, char *target);
 int		ft_double_char_len(char **env);
 void	cp_env(char **env, char **env_cp);
+
+// Parsing
+typedef struct s_split_command 
+{
+	char** result;
+    char* current_group;
+    int i;
+    int j;
+    int result_index;
+}				t_split_command;
+
+typedef enum s_token
+{
+	COMMAND,
+	ARGS,
+	PIPE,
+	REDIR_IN,
+	REDIR_OUT,
+	APPEND,
+	HERE_DOC,
+	END
+}				t_token;
+
+typedef struct s_token_list
+{
+	t_token				token;
+	char				*value;
+	struct s_token_list	*next;
+}				t_token_list;
+
+
+
+void	lexing(char *whole_commands);
+int		count_word_command(const char *command);
+void	count_word_command_2(const char *command, int* i, int* count);
+void add_group_to_result(t_split_command* context);
+bool is_inside_quotes(const char* command, int index);
+void handle_character(t_split_command* context, const char* command, int command_length);
+char **ft_split_command(const char* command);
+int	skip_char(char c, const char *command, int i);
+void *my_realloc(void* ptr, size_t original_size, size_t new_size);
+void	add_token(char **command_split, t_token_list **head);
+void append_token_node(t_token_list **head, t_token token, char *value);
+t_token_list *create_token_node(t_token token, char *value);
+const char* get_token_name(t_token token);
+void free_token_list(t_token_list *head);
+void print_list(t_token_list *head);
+t_token_list	*group_command_args(t_token_list *current, t_mini *mini);
+int		get_number_of_args(t_token_list *current);
+bool	is_between_quotes(char *str, int i);
+char *quote_things(char *str);
+bool is_meta_char_double_quotes(char c);
+bool	is_meta_char_quote(char c, char quote);
 
 #endif

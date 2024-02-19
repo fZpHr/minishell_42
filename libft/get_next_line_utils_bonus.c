@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 10:29:51 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/16 18:22:40 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/19 15:24:41 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_end_ofthe_line(char *str)
+int	ft_gend_ofthe_line(char *str)
 {
 	int	i;
 
@@ -24,7 +24,7 @@ int	ft_end_ofthe_line(char *str)
 	return (i);
 }
 
-int	ft_checkline(char *str)
+int	ft_gcheckline(char *str)
 {
 	size_t	i;
 
@@ -40,14 +40,14 @@ int	ft_checkline(char *str)
 	return (0);
 }
 
-char	*ft_strgdup_gnl(char *buff)
+char	*ft_gstrdup_gnl(char *buff)
 {
 	char	*dest;
 	int		lenght;
 	int		i;
 
 	i = 0;
-	lenght = ft_end_ofthe_line(buff);
+	lenght = ft_gend_ofthe_line(buff);
 	dest = malloc(sizeof(char) * (lenght + 1));
 	if (!dest)
 		return (NULL);
@@ -60,7 +60,7 @@ char	*ft_strgdup_gnl(char *buff)
 	return (dest);
 }
 
-char	*ft_strjoin_gnl(char *line, char *buff)
+char	*ft_gstrjoin_gnl(char *line, char *buff)
 {
 	char	*tmp;
 	int		i;
@@ -69,7 +69,7 @@ char	*ft_strjoin_gnl(char *line, char *buff)
 
 	i = 0;
 	j = 0;
-	lenght = ft_end_ofthe_line(buff);
+	lenght = ft_gend_ofthe_line(buff);
 	tmp = malloc(sizeof(char) * (ft_strlen(line) + lenght + 1));
 	if (!tmp)
 	{

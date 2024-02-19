@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+         #
+#    By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/05 17:52:23 by hbelle            #+#    #+#              #
-#    Updated: 2024/02/16 16:10:43 by hbelle           ###   ########.fr        #
+#    Updated: 2024/02/19 15:22:33 by tmekhzou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,10 @@ SRCS	=	main.c \
 		srcs/data/export.c \
 		srcs/data/unset.c \
 		srcs/parse/check_input.c \
+		srcs/utils/split.c \
+		srcs/parse/linked_list.c \
+		srcs/parse/liexing.c \
+		srcs/parse/parsing.c \
 
 SRCS_BONUS = 
 
