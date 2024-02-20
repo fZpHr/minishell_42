@@ -39,37 +39,70 @@ void	add_token(char **command_split, t_token_list **head)
 	append_token_node(head, END, 0);
 }
 
+void	do_redir_in(char *file)
+{
+	int		fd;
+	
+	fd = open(file, O_RDONLY);
+	if (fd < 0)
+	{
+		printf("minishell: %s: No such file or directory\n", file);
+		exit(1);
+	}
+	dup2(fd, STDIN_FILENO);
+	close(fd);
+}
+
+void	do_redir_out(char *file)
+{
+	int		fd;
+	
+	fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd < 0)
+	{
+		printf("minishell: %s: No such file or directory\n", file);
+		exit(1);
+	}
+	dup2(fd, STDOUT_FILENO);
+	close(fd);
+}
+
+void do_append(char *file)
+{
+	int		fd;
+	
+	fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (fd < 0)
+	{
+		printf("minishell: %s: No such file or directory\n", file);
+		exit(1);
+	}
+	dup2(fd, STDOUT_FILENO);
+	close(fd);
+}
+
 t_token_list	*group_command_args(t_token_list *current, t_mini *mini)
 {
 	int		i;
-	t_token_list *head;
-	int		count;
 	
-	head = current;
-	count = get_number_of_args(current);
-	current = head;
 	i = 0;
-	mini->cmd = (char **)malloc(sizeof(char *) * (count + 2));
-	while (current && current->token != PIPE)
+	mini->cmd = (char **)malloc(sizeof(char *) * (get_number_of_args(current) + 2));
+	while (current->token != END && current->token != PIPE)
 	{
 		if (current->token == COMMAND)
 		{
 			mini->cmd[i] = ft_strdup(current->value);
 			i++;
-			current = current->next;
-			while (current && current->token == COMMAND)
-			{
-				mini->cmd[i] = ft_strdup(current->value);
-				i++;
-				current = current->next;
-			}
-			mini->cmd[i] = NULL;
-			break;
 		}
+		else if (current->token == REDIR_IN)
+			do_redir_in(current->value);
+		else if (current->token == REDIR_OUT)
+			do_redir_out(current->value);
+		else if (current->token == APPEND)
+			do_append(current->value);
 		current = current->next;
 	}
-	while (current && current->token != PIPE)
-		current = current->next;
+	mini->cmd[i] = NULL;
 	return current;
 }
 

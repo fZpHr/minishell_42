@@ -325,14 +325,14 @@ EXPORT LES "" SUR LES VARIABLES ENVIRONNEMENTS ?
 ET LE WAIT de certainne commande 
 
 $? + $? segfault
-print $PATH
-gerer \ echo
-gerer \ parsing
+print $PATH good sauf '"'$PATH'"'
+gerer \ echo good je pense
+gerer \ parsing good
 CTRL + D segfault
-CTRL + C HERE_DOC
+CTRL + C HERE_DOC // Creer un fork en trop? exit * 2
 cat sans args puis ctrl + c TRUC CHELOU
 copier envp et modifier copie partout
 awk truc bizarre parsing
 variable env sans echo
-redirections
+redirections good sauf certains cas galeres ex : echo 1 > out | echo 2 > out2
 regler pb error

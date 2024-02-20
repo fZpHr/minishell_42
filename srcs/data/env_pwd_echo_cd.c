@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_pwd_echo_cd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 19:51:19 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/16 18:31:36 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/20 07:52:00 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,80 +60,37 @@ void	ft_echo(t_mini *m, char **cmd)
 {
 	int		i;
 	int		status;
+	int		j;
+	bool 	n_flag;
 	
+	j = 0;
 	status = 0;
+	n_flag = false;
 	if (cmd[1] == NULL)
 	{
 		printf("\n");
 		return ;
 	}
 	if (ft_strcmp(cmd[1], "-n") == 0)
-	{
+	{	
 		i = 2;
-		while (cmd[i])
-		{
-			if (ft_strchr(cmd[i], '$') != NULL)
-			{
-				if (ft_strncmp(cmd[i], "$?", 3) == 0)
-				{
-					if (status == 0)
-					{
-						m->exit_status = m->exit_status >> 8;
-						status = m->exit_status;
-						printf("%d", m->exit_status);
-					}
-					else
-						printf("%d", status);
-				}
-				else if (target_path(m->envm, cmd[i] + 1) != NULL)
-				{
-					char *tmp = target_path(m->envm, cmd[i] + 1);
-					tmp++;
-					printf("%s", tmp);
-				}
-				else
-					printf("%s", cmd[i]);
-			}
-			else
-				printf("%s", cmd[i]);
-			printf(" ");
-			i++;
-		}
+		n_flag = true;
 	}
 	else
-	{
 		i = 1;
-		while (cmd[i])
-		{
-			if (ft_strchr(cmd[i], '$') != NULL)
-			{
-				if (ft_strncmp(cmd[i], "$?", 3) == 0)
-				{
-					if (status == 0)
-					{
-						m->exit_status = m->exit_status >> 8;
-						status = m->exit_status;
-						printf("%d", m->exit_status);
-					}
-					else
-						printf("%d", status);
-				}
-				else if (target_path(m->envm, cmd[i] + 1) != NULL)
-				{
-					char *tmp = target_path(m->envm, cmd[i] + 1);
-					tmp++;
-					printf("%s", tmp);
-				}
-				else
-					printf("%s", cmd[i]);
-			}
-			else
-				printf("%s", cmd[i]);
-			printf(" ");
-			i++;
+	while (cmd[i])
+	{
+		while (cmd[i][j] != '\0')
+		{	
+			if (cmd[i][j] == '\\')
+				j++;
+			write(1,&cmd[i][j], 1);
+			j++;
 		}
-		printf("\n");
+		i++;
 	}
+	if (n_flag == false)
+		printf("\n");
 	error_handle(m, "", "", 0);
 }
 

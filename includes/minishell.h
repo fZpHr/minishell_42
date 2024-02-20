@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:54:01 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/19 17:42:13 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/20 07:24:39 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ typedef struct s_mini
 	int 	fd_doc[2];
 	int 	fd[2];
 	int		parse;
-
+	int		savefd[2];
 }				t_mini;
 
 // Signals
@@ -158,6 +158,7 @@ void	lexing(char *whole_commands);
 int		count_word_command(const char *command);
 void	count_word_command_2(const char *command, int* i, int* count);
 void add_group_to_result(t_split_command* context);
+char	*expand_variable(char *str, t_mini *m);
 bool is_inside_quotes(const char* command, int index);
 void handle_character(t_split_command* context, const char* command, int command_length);
 char **ft_split_command(const char* command);
@@ -177,4 +178,10 @@ bool is_meta_char_double_quotes(char c);
 bool	is_meta_char_quote(char c, char quote);
 t_token_list	*init_parsing(t_mini *m, t_token_list *current, t_token_list *head);
 bool check_wrong_command(t_token_list* current);
+void	do_redir_in(char *file);
+void	do_redir_out(char *file);
+void do_append(char *file);
+bool	is_between_quotes(char *str, int i);
+bool	is_between_double_quotes(char *str, int i);
+
 #endif

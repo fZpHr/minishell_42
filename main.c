@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:53:49 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/19 17:48:12 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/20 08:10:56 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,28 @@ t_token_list	*init_parsing(t_mini *m, t_token_list *current, t_token_list *head)
 	current = head;
 	while (current->token != END)
 	{
+		current->value = expand_variable(current->value, m);
+		//ft_putstr_fd(current->value, 1);
+		current = current->next;
+	}
+	current = head;
+	while (current->token != END)
+	{
 		current->value = quote_things(current->value);
-		if (check_wrong_command(current) == false)
+		/* if (check_wrong_command(current) == false)
 		{
 			error_handle(m, "error", "", 1);
 			m->parse = 1;
 			return (NULL);
-		}
+		} */
 		current = current->next;
 	}
+
 	current = head;
 	m->ac = count_pipe(current);
 	current = head;
 	//print_list(head);
 	return (head);
-	
 }
 
 int	main(int ac, char **av, char **env)
@@ -74,6 +81,8 @@ int	main(int ac, char **av, char **env)
 	head = NULL;
 	init(&m);
 	ft_env(&m, env, 0);
+	m.savefd[0] = dup(0);
+	m.savefd[1] = dup(1);
 	while (1)
 	{
 		//m.input = get_next_line(0);
@@ -89,7 +98,6 @@ int	main(int ac, char **av, char **env)
 		{
 			if (ft_strcmp(m.input, "") != 0)
 			{
-				
 				current = group_command_args(current, &m);
 				//m.cmd = ft_split(m.input, " ");
 				if (m.parse == 0)
@@ -105,6 +113,8 @@ int	main(int ac, char **av, char **env)
 			free_split(&m.cmd);
 		}
 		free(m.input);
+		dup2(m.savefd[0], 0);
+		dup2(m.savefd[1], 1);
 	}
 	return (0);
 }

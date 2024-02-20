@@ -91,3 +91,71 @@ char *quote_things(char *str)
     new_str[j] = '\0';
     return new_str;
 }
+
+bool	is_between_quotes(char *str, int i)
+{
+	int	quote;
+	int	j;
+
+	quote = 0;
+	j = 0;
+	while (j < i)
+	{
+		if (str[j] == '\'')
+			quote++;
+		j++;
+	}
+	return (quote % 2 == 1);
+}
+
+bool	is_between_double_quotes(char *str, int i)
+{
+	int	quote;
+	int	j;
+
+	quote = 0;
+	j = 0;
+	while (j < i)
+	{
+		if (str[j] == '\"')
+			quote++;
+		j++;
+	}
+	return (quote % 2 == 1);
+}
+
+char	*expand_variable(char *str, t_mini *m)
+{
+	int		i;
+	int		j;
+	char	*var;
+	char	*value;
+	char	*new_str;
+	
+	 if (!str)
+		return (NULL); 
+	i = 0;
+	j = 0;
+	while (str && str[i])
+	{
+		if (str[i] == '\\')
+			i++;
+		else if (str[i] == '$' && is_between_quotes(str, i) == false)
+		{
+			var = ft_strdup(str + i + 1);
+			while (var[j] && (ft_isalnum(var[j]) || var[j] == '_'))
+				j++;
+			var[j] = '\0';
+			value = target_path(m->envm, var);
+			if (value)
+			{
+				new_str = ft_strjoin(ft_substr(str, 0, i), value + 1);
+				free(str);
+				str = new_str;
+			}
+			free(var);
+		}
+		i++;
+	}
+	return (str);
+}
