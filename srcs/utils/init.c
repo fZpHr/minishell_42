@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:36:39 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/19 17:42:33 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/20 18:43:09 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	init(t_mini *m)
 	m->end_status = 0;
 	m->current_input = NULL;
 	m->parse = 0;
+	m->status_redir_out = 0;
 	
 }
 

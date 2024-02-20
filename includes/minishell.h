@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:54:01 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/20 07:24:39 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/20 18:56:44 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ typedef struct s_mini
 	int		ac;
 	int		exit_status;
 	int		status_append;
+	int		status_redir_out;
 	char	*out;
 	int		append_left;
 	int		append_right;
@@ -105,7 +106,7 @@ typedef struct s_mini
 	int 	fd_doc[2];
 	int 	fd[2];
 	int		parse;
-	int		savefd[2];
+	int		savefd[4];
 }				t_mini;
 
 // Signals
@@ -120,15 +121,16 @@ typedef struct	s_sig
 
 // Data
 
+//void	ft_exec(t_mini *m, char **envp);
 int		check_if_pipe(char **cmd);
 int		ft_space(char *str);
 int		here_doc_check(t_mini *m, char *cmd);
 void	ft_echo(t_mini *m, char **cmd);
-void	ft_exec_builtin(t_mini *m, char **envp);
+void	ft_exec_builtin(t_mini *m);
 int		build_intern(t_mini *m);
 void	check_input(t_mini *m);
 void	here_doc(t_mini *m, char *end);
-void	ft_exec(t_mini *m, t_token_list *current, char **envp);
+void	ft_exec(t_mini *m, t_token_list *current);
 int 	ft_count_cmd(char *str, char c);
 void	ft_cd(t_mini *m, char **cmd);
 char	*target_path(char **envp, char *target);
@@ -164,7 +166,7 @@ void handle_character(t_split_command* context, const char* command, int command
 char **ft_split_command(const char* command);
 int	skip_char(char c, const char *command, int i);
 void *my_realloc(void* ptr, size_t original_size, size_t new_size);
-void	add_token(char **command_split, t_token_list **head);
+void	add_token(char **command_split, t_token_list **head, t_mini *m);
 void append_token_node(t_token_list **head, t_token token, char *value);
 t_token_list *create_token_node(t_token token, char *value);
 const char* get_token_name(t_token token);

@@ -153,6 +153,8 @@ char	*expand_variable(char *str, t_mini *m)
 				free(str);
 				str = new_str;
 			}
+			else
+				return (NULL);
 			free(var);
 		}
 		i++;

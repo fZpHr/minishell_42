@@ -322,16 +322,16 @@ heredoc strncmp quand y a trop de lettre le prends quand meme
 
 
 EXPORT LES "" SUR LES VARIABLES ENVIRONNEMENTS ?
-ET LE WAIT de certainne commande 
+ET LE WAIT de certainne commande  cat cat ls
 
 $? + $? segfault
 print $PATH good sauf '"'$PATH'"'
 gerer \ echo good je pense
 gerer \ parsing good
-CTRL + D segfault
+~~CTRL + D segfault~~
 CTRL + C HERE_DOC // Creer un fork en trop? exit * 2
-cat sans args puis ctrl + c TRUC CHELOU
-copier envp et modifier copie partout
+~~cat sans args puis ctrl + c TRUC CHELOU~~
+~~copier envp et modifier copie partout~~  <----- Jcrois cbon, mais j'ai oublie le test
 awk truc bizarre parsing
 variable env sans echo
 redirections good sauf certains cas galeres ex : echo 1 > out | echo 2 > out2

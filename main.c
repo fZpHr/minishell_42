@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:53:49 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/20 08:10:56 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/20 19:13:38 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-int signal_flag = 0;
+volatile sig_atomic_t signal_flag = 0;
 
 void	interrupt_handle(int sig)
 {
     if (sig == SIGINT)
     {
-        write(1, "\n$>", 4);
-        signal_flag = 1;
+		signal_flag = 1;
+		ft_putstr_fd("\n$>", 2);
     }
     else if (sig == SIGQUIT)
     {
@@ -33,7 +33,7 @@ t_token_list	*init_parsing(t_mini *m, t_token_list *current, t_token_list *head)
 
 	command_split = ft_split_command(m->input);
 	//head = current;
-	add_token(command_split, &head);
+	add_token(command_split, &head, m);
 	current = head;
 	while (current->token != END)
 	{
@@ -81,40 +81,40 @@ int	main(int ac, char **av, char **env)
 	head = NULL;
 	init(&m);
 	ft_env(&m, env, 0);
-	m.savefd[0] = dup(0);
-	m.savefd[1] = dup(1);
+ 	m.savefd[0] = dup(0);
+	m.savefd[1] = dup(1); 
+	m.savefd[2] = dup(0);
+	m.savefd[3] = dup(1); 
 	while (1)
 	{
-		//m.input = get_next_line(0);
 		m.parse = 0;
 		signal_flag = 0;
    	 	m.input = readline("$>");
-		current = init_parsing(&m, current, head);
 		if (m.input)
 			add_history(m.input);
 		if (m.input == NULL) // ctrl + d
 				error_handle(&m, "", "", 1000);
 		else if (ft_space(m.input) == 0 && signal_flag == 0)
 		{
+			current = init_parsing(&m, current, head);
 			if (ft_strcmp(m.input, "") != 0)
 			{
 				current = group_command_args(current, &m);
-				//m.cmd = ft_split(m.input, " ");
 				if (m.parse == 0)
 				{
 					if ((ft_strcmp(m.cmd[0], "exit") == 0 ) && (check_if_pipe(m.cmd) == 0))
 							error_handle(&m, "", "", 1000);
 					else
-						ft_exec(&m, current, env);
+						ft_exec(&m, current);
 					if (current && current->token != END)
 						current = current->next;
 				}
 			}
 			free_split(&m.cmd);
-		}
+		} 
 		free(m.input);
-		dup2(m.savefd[0], 0);
-		dup2(m.savefd[1], 1);
+		dup2(m.savefd[2], 0);
+		dup2(m.savefd[3], 1);
 	}
 	return (0);
 }

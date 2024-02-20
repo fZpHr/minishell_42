@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-void	add_token(char **command_split, t_token_list **head)
+void	add_token(char **command_split, t_token_list **head, t_mini *m)
 {
 	int		i;
 	int		j;
@@ -11,8 +11,11 @@ void	add_token(char **command_split, t_token_list **head)
 	{
 		if (command_split[i][j] == '<')
 		{	
-			if (command_split[i][j + 1] == '<')	
+			if (command_split[i][j + 1] == '<')
+			{
 				append_token_node(head, HERE_DOC, command_split[i + 1]);
+				m->heredoc_status = 1;
+			}
 			else
 				append_token_node(head, REDIR_IN, command_split[i + 1]);
 			i++;
@@ -22,11 +25,13 @@ void	add_token(char **command_split, t_token_list **head)
 			if (command_split[i][j + 1] == '>')
 			{
 				append_token_node(head, APPEND, command_split[i + 1]);
+				m->status_append = 1;
 				i++;
 			}
 			else
 			{
 				append_token_node(head, REDIR_OUT, command_split[i + 1]);
+				m->status_redir_out = 1;
 				i++;
 			}
 		}
@@ -90,16 +95,15 @@ t_token_list	*group_command_args(t_token_list *current, t_mini *mini)
 	while (current->token != END && current->token != PIPE)
 	{
 		if (current->token == COMMAND)
-		{
-			mini->cmd[i] = ft_strdup(current->value);
-			i++;
-		}
+			mini->cmd[i++] = ft_strdup(current->value);
 		else if (current->token == REDIR_IN)
 			do_redir_in(current->value);
 		else if (current->token == REDIR_OUT)
 			do_redir_out(current->value);
 		else if (current->token == APPEND)
 			do_append(current->value);
+		else if (current->token == HERE_DOC)
+			mini->cmd[i++] = ft_strdup(current->value);
 		current = current->next;
 	}
 	mini->cmd[i] = NULL;
