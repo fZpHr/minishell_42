@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:53:49 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/20 19:13:38 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/21 13:17:04 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	main(int ac, char **av, char **env)
 	{
 		m.parse = 0;
 		signal_flag = 0;
-   	 	m.input = readline("$>");
+		m.input = readline("$>");
 		if (m.input)
 			add_history(m.input);
 		if (m.input == NULL) // ctrl + d
@@ -111,7 +111,9 @@ int	main(int ac, char **av, char **env)
 				}
 			}
 			free_split(&m.cmd);
-		} 
+		}
+		while (waitpid(-1, &m.exit_status, WNOHANG) == 0)
+			;
 		free(m.input);
 		dup2(m.savefd[2], 0);
 		dup2(m.savefd[3], 1);

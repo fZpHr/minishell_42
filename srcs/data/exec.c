@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 14:15:51 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/20 19:23:52 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/21 13:14:09 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,6 @@ void	ft_exec(t_mini *m, t_token_list *current)
 			i++;
 		}
 		end(m);
-		waitpid(m->pid, &m->exit_status, 0);
+		//waitpid(m->pid, &m->exit_status, 0);
 	}
 }
