@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:53:49 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/21 13:17:04 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:35:30 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	interrupt_handle(int sig)
     if (sig == SIGINT)
     {
 		signal_flag = 1;
-		ft_putstr_fd("\n$>", 2);
+		return;
     }
     else if (sig == SIGQUIT)
     {
@@ -112,8 +112,7 @@ int	main(int ac, char **av, char **env)
 			}
 			free_split(&m.cmd);
 		}
-		while (waitpid(-1, &m.exit_status, WNOHANG) == 0)
-			;
+		while (waitpid(-1, &m.exit_status, WNOHANG) == 0);
 		free(m.input);
 		dup2(m.savefd[2], 0);
 		dup2(m.savefd[3], 1);

@@ -6,13 +6,11 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:31:16 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/20 17:27:45 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/21 14:18:05 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-extern volatile sig_atomic_t signal_flag;
 
 char **ft_strdup_double_char(char **src, char *add, int i)
 {

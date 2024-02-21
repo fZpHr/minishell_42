@@ -91,6 +91,8 @@ t_token_list	*group_command_args(t_token_list *current, t_mini *mini)
 	int		i;
 	
 	i = 0;
+	mini->status_redir_out = 0;
+	mini->status_append = 0;
 	mini->cmd = (char **)malloc(sizeof(char *) * (get_number_of_args(current) + 2));
 	while (current->token != END && current->token != PIPE)
 	{
@@ -99,9 +101,15 @@ t_token_list	*group_command_args(t_token_list *current, t_mini *mini)
 		else if (current->token == REDIR_IN)
 			do_redir_in(current->value);
 		else if (current->token == REDIR_OUT)
+		{
+			mini->status_redir_out = 1;
 			do_redir_out(current->value);
+		}
 		else if (current->token == APPEND)
+		{
+			mini->status_append = 1;
 			do_append(current->value);
+		}
 		else if (current->token == HERE_DOC)
 			mini->cmd[i++] = ft_strdup(current->value);
 		current = current->next;

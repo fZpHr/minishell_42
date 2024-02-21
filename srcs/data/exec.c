@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 14:15:51 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/21 13:14:09 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:07:36 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	child_process(t_mini *m)
 			if (exec == -1)
 			{
 				error_handle(m, "error execve", m->cmd[0], 126);
-				return ;
+				exit(0);
 			}
 		}
 	}
@@ -125,6 +125,12 @@ void	pipex(t_mini *m)
 	close(m->fd[0]);
 }
 
+/* int	check_redir(t_mini *m)
+{
+
+} */
+
+
 void	ft_exec(t_mini *m, t_token_list *current)
 {
 	int		i;
@@ -137,14 +143,24 @@ void	ft_exec(t_mini *m, t_token_list *current)
 		while (i < m->ac)
 		{
 			pipex(m);
-			dup2(m->savefd[0], 0);
-			dup2(m->savefd[1], 1);
+			if (m->status_redir_out == 1 || m->status_append == 1)
+			{
+				dup2(m->savefd[0], 0);
+				dup2(m->savefd[1], 1);
+			}
 			if (current)
 				current = current->next;
 			current = group_command_args(current, m);
 			i++;
 		}
 		end(m);
+		if (m->status_redir_out == 1 || m->status_append == 1)
+		{
+			dup2(m->savefd[0], 0);
+			dup2(m->savefd[1], 1);
+		}
 		//waitpid(m->pid, &m->exit_status, 0);
 	}
 }
+
+

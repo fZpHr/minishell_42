@@ -24,6 +24,30 @@
               }
           ],
           "preLaunchTask": "build"
+      },
+      {
+        "name": "Debug minishell follow child",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/minishell",
+        "args": [],
+        "stopAtEntry": false,
+        "cwd": "${workspaceFolder}",
+        "environment": [],
+        "externalConsole": false,
+        "MIMode": "gdb",
+        "setupCommands": [
+          {
+            "description": "Enable pretty-printing for gdb",
+            "text": "-enable-pretty-printing",
+            "ignoreFailures": true
+          },
+          {
+            "text": "set follow-fork-mode child",
+            "ignoreFailures": true
+          }
+        ],
+        "preLaunchTask": "build",
       }
   ]
 }

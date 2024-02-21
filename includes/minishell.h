@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:54:01 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/20 18:56:44 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/21 14:18:04 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 #include <readline/history.h> // Pour add_history, rl_clear_history, rl_on_new_line, rl_replace_line, rl_redisplay
 #include "../libft/libft.h"
 
+extern volatile sig_atomic_t signal_flag;
 // Parsing
 typedef struct s_split_command 
 {
