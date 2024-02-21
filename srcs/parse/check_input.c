@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:56:21 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/20 16:56:06 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/21 19:29:52 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	ft_exec_builtin(t_mini *m)
 		error_handle(m, "", "", 9999);
 	else if (m->heredoc_status == 1)
 	{
+		m->heredoc_status = 1;
 		here_doc(m, m->cmd[0]);
-		m->heredoc_status = 0;
 	}
 }
 int		build_intern(t_mini *m)

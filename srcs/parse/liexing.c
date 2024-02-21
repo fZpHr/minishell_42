@@ -14,6 +14,7 @@ void	add_token(char **command_split, t_token_list **head, t_mini *m)
 			if (command_split[i][j + 1] == '<')
 			{
 				append_token_node(head, HERE_DOC, command_split[i + 1]);
+				append_token_node(head, PIPE, 0);
 				m->heredoc_status = 1;
 			}
 			else
@@ -93,7 +94,8 @@ t_token_list	*group_command_args(t_token_list *current, t_mini *mini)
 	i = 0;
 	mini->status_redir_out = 0;
 	mini->status_append = 0;
-	mini->cmd = (char **)malloc(sizeof(char *) * (get_number_of_args(current) + 2));
+	mini->heredoc_status = 0;
+	mini->cmd = (char **)malloc(sizeof(char *) * (get_number_of_args(current)));
 	while (current->token != END && current->token != PIPE)
 	{
 		if (current->token == COMMAND)
@@ -111,7 +113,10 @@ t_token_list	*group_command_args(t_token_list *current, t_mini *mini)
 			do_append(current->value);
 		}
 		else if (current->token == HERE_DOC)
+		{
+			mini->heredoc_status = 1;
 			mini->cmd[i++] = ft_strdup(current->value);
+		}
 		current = current->next;
 	}
 	mini->cmd[i] = NULL;
@@ -134,5 +139,6 @@ int		get_number_of_args(t_token_list *current)
 		}
 		current = current->next;
 	}
+	i = i + 3;
 	return (i);
 }

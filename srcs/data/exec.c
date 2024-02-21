@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 14:15:51 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/21 14:07:36 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/21 19:38:33 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,54 +60,59 @@ void	child_process(t_mini *m)
 	int pid;
 
 	exec = 0;
-	pid = fork();
-	if (pid == -1)
+	if (m->heredoc_status == 1)
+		ft_exec_builtin(m);
+	else
 	{
-		close(m->fd[0]);
-		close(m->fd[1]);
-		error_handle(m, "error fork", "", 1);
-		return ;
-	}
-	if (pid == 0)
-	{
-		if (build_intern(m) == 1)
+		pid = fork();
+		if (pid == -1)
 		{
 			close(m->fd[0]);
-			dup2(m->fd[1], 1);
 			close(m->fd[1]);
-			ft_exec_builtin(m);
-			exit(0);
+			error_handle(m, "error fork", "", 1);
+			return ;
 		}
-		else
+		if (pid == 0)
 		{
-			if (access(m->cmd[0], F_OK) == 0)
-				m->tmp_end = ft_strdup(m->cmd[0]);
-			else
-			{
-				m->tmp_child = found_cmd(m, m->envm);
-				if (!m->tmp_child)
-				{
-					close(m->fd[1]);
-					close(m->fd[0]);
-					error_handle(m, "command not found: ", m->cmd[0], 127);
-					exit(0);
-				}
-			}
-			if (m->status_append == 0 && m->status_redir_out == 0)
+			if (build_intern(m) == 1)
 			{
 				close(m->fd[0]);
 				dup2(m->fd[1], 1);
 				close(m->fd[1]);
-			}
-			exec = execve(m->tmp_child, m->cmd, m->envm);
-			if (exec == -1)
-			{
-				error_handle(m, "error execve", m->cmd[0], 126);
+				ft_exec_builtin(m);
 				exit(0);
+			}
+			else
+			{
+				if (access(m->cmd[0], F_OK) == 0)
+					m->tmp_end = ft_strdup(m->cmd[0]);
+				else
+				{
+					m->tmp_child = found_cmd(m, m->envm);
+					if (!m->tmp_child)
+					{
+						close(m->fd[1]);
+						close(m->fd[0]);
+						error_handle(m, "command not found: ", m->cmd[0], 127);
+						exit(0);
+					}
+				}
+				if (m->status_append == 0 && m->status_redir_out == 0)
+				{
+					close(m->fd[0]);
+					dup2(m->fd[1], 1);
+					close(m->fd[1]);
+				}
+				exec = execve(m->tmp_child, m->cmd, m->envm);
+				if (exec == -1)
+				{
+					error_handle(m, "error execve", m->cmd[0], 126);
+					exit(0);
+				}
 			}
 		}
 	}
-	//waitpid(pid, &m->exit_status, 0);
+	m->status_child = 0;
 }
 
 void	pipex(t_mini *m)
@@ -121,15 +126,12 @@ void	pipex(t_mini *m)
 	}
 	child_process(m);
 	close(m->fd[1]);
-	dup2(m->fd[0], 0);
+	if (m->heredoc_status == 0)
+		dup2(m->fd[0], 0);
+	else
+		m->heredoc_status = 0;
 	close(m->fd[0]);
 }
-
-/* int	check_redir(t_mini *m)
-{
-
-} */
-
 
 void	ft_exec(t_mini *m, t_token_list *current)
 {
@@ -143,7 +145,7 @@ void	ft_exec(t_mini *m, t_token_list *current)
 		while (i < m->ac)
 		{
 			pipex(m);
-			if (m->status_redir_out == 1 || m->status_append == 1)
+			if (m->status_redir_out == 1 || m->status_append == 1 || m->heredoc_status == 1)
 			{
 				dup2(m->savefd[0], 0);
 				dup2(m->savefd[1], 1);
@@ -154,7 +156,7 @@ void	ft_exec(t_mini *m, t_token_list *current)
 			i++;
 		}
 		end(m);
-		if (m->status_redir_out == 1 || m->status_append == 1)
+		if (m->status_redir_out == 1 || m->status_append == 1 || m->heredoc_status == 1)
 		{
 			dup2(m->savefd[0], 0);
 			dup2(m->savefd[1], 1);

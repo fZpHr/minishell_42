@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_pwd_echo_cd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 19:51:19 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/21 18:26:48 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/21 19:47:36 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,9 @@ void	ft_echo(t_mini *m, char **cmd)
 			write(1, &cmd[i][j], 1);
 			j++;
 		}
+		j = 0;
+		if (cmd[i + 1] != NULL)
+			write(1, " ", 1);
 		i++;
 	}
 	if (n_flag == false)

@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:31:16 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/21 16:24:34 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/21 19:25:57 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,24 @@ char **ft_strdup_double_char(char **src, char *add, int i)
 	return (dst);
 }
 
-void	infinite_loop(int fd[2], char *end)
+void	infinite_loop(int fd[2], char *end, t_mini *m)
 {
 	char	*input;
 
+	(void)m;
 	while (1)
 	{
 		input = readline("heredoc> ");
 		if (signal_flag[2] == 1 || ft_strncmp(input, end, ft_strlen(end)) == 0)
 		{
 			free(input);
-			return;
+			exit(0);	
 		}
+		//if (m->status_child == 0)
 		write(fd[1], input, ft_strlen(input));
+		write(fd[1], "\n", 1);
+/* 		else
+			write(m->fd[1], input, ft_strlen(input)); */
 		free(input);
 	}
 }
@@ -110,7 +115,6 @@ void	infinite_loop(int fd[2], char *end)
 
 void	here_doc(t_mini *m, char *end)
 {	
-	m->heredoc_status = 1;
 	int	fd[2];
 	int	pid;
 
@@ -120,12 +124,17 @@ void	here_doc(t_mini *m, char *end)
 	if (pid == -1)
 		error_handle(m, "pipex: error fork", "", 1);
 	if (pid == 0)
-	infinite_loop(fd, end);
+		infinite_loop(fd, end, m);
  	else
 	{
-		dup2(fd[0], 0);
 		waitpid(pid, NULL, 0);
+		close(fd[1]);
+		dup2(fd[0], 0);
+		close(fd[0]);
 	}
-	close(fd[0]);
-	close(fd[1]);
+	if (m->status_child == 0)
+	{
+		close(fd[0]);
+		close(fd[1]);
+	}
 }
