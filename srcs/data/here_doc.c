@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:31:16 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/21 14:18:05 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/21 16:24:34 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,8 @@ void	infinite_loop(int fd[2], char *end)
 
 	while (1)
 	{
-		//ft_printf("heredoc> ");
-		//input = get_next_line(0);
-		ft_putnbr_fd(signal_flag, 2);
 		input = readline("heredoc> ");
-		//ft_putnbr_fd(signal_flag, 2);
-		if (signal_flag == 1 || ft_strncmp(input, end, ft_strlen(end)) == 0)
+		if (signal_flag[2] == 1 || ft_strncmp(input, end, ft_strlen(end)) == 0)
 		{
 			free(input);
 			return;
@@ -113,24 +109,23 @@ void	infinite_loop(int fd[2], char *end)
 } */
 
 void	here_doc(t_mini *m, char *end)
-{
-	printf("%s\n", end);	
+{	
 	m->heredoc_status = 1;
 	int	fd[2];
-	/* int	pid;
+	int	pid;
 
 	if (pipe(fd) == -1)
 		error_handle(m, "pipex: error pipe", "", 1);
 	pid = fork();
 	if (pid == -1)
 		error_handle(m, "pipex: error fork", "", 1);
-	if (pid == 0) */
+	if (pid == 0)
 	infinite_loop(fd, end);
-/* 	else
+ 	else
 	{
 		dup2(fd[0], 0);
 		waitpid(pid, NULL, 0);
-	} */
+	}
 	close(fd[0]);
 	close(fd[1]);
 }

@@ -6,20 +6,25 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:53:49 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/21 14:35:30 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/21 16:19:24 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-volatile sig_atomic_t signal_flag = 0;
+volatile sig_atomic_t signal_flag[3];
 
 void	interrupt_handle(int sig)
 {
     if (sig == SIGINT)
     {
-		signal_flag = 1;
-		return;
+		signal_flag[0] = 1;
+		signal_flag[1] = 1;
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 1);
+		rl_redisplay();
+		signal_flag[0] = 0;
     }
     else if (sig == SIGQUIT)
     {
@@ -88,19 +93,22 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		m.parse = 0;
-		signal_flag = 0;
-		m.input = readline("$>");
+		if (signal_flag[1] == 0)
+			m.input = readline("$>");
+		else
+			m.input = readline("");
+		signal_flag[1] = 0;
 		if (m.input)
 			add_history(m.input);
 		if (m.input == NULL) // ctrl + d
 				error_handle(&m, "", "", 1000);
-		else if (ft_space(m.input) == 0 && signal_flag == 0)
+		else if (ft_space(m.input) == 0)
 		{
 			current = init_parsing(&m, current, head);
 			if (ft_strcmp(m.input, "") != 0)
 			{
 				current = group_command_args(current, &m);
-				if (m.parse == 0)
+				if (m.parse == 0 && m.cmd[0] != NULL)
 				{
 					if ((ft_strcmp(m.cmd[0], "exit") == 0 ) && (check_if_pipe(m.cmd) == 0))
 							error_handle(&m, "", "", 1000);

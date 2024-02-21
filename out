@@ -1,1 +1,9 @@
-slt
+includes
+libft
+main.c
+Makefile
+minishell
+out
+README.md
+srcs
+vsupp
