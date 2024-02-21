@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:53:49 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/21 16:19:24 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/21 18:35:22 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,14 @@ t_token_list	*init_parsing(t_mini *m, t_token_list *current, t_token_list *head)
 	while (current->token != END)
 	{
 		current->value = expand_variable(current->value, m);
-		//ft_putstr_fd(current->value, 1);
 		current = current->next;
 	}
 	current = head;
 	while (current->token != END)
 	{
+		/* if (ft_strncmp(current->value, "awk", 3) == 0)
+			current = current->next->next; */
 		current->value = quote_things(current->value);
-		/* if (check_wrong_command(current) == false)
-		{
-			error_handle(m, "error", "", 1);
-			m->parse = 1;
-			return (NULL);
-		} */
 		current = current->next;
 	}
 
