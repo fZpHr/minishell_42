@@ -6,13 +6,13 @@
 /*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:58:56 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/22 12:27:40 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/22 13:14:01 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	error_handle(t_mini *m, char *str, char *target, int status, t_token_list *list)
+void	error_handle(t_mini *m, char *str, char *target, int status)
 {
 	ft_putstr_fd("\033[0;31m", 2);
 	if (status == 9999)
@@ -28,7 +28,7 @@ void	error_handle(t_mini *m, char *str, char *target, int status, t_token_list *
 	}
     ft_putstr_fd("\033[0m", 2);
 	if (status >= 1000)
-    	free_end(m, m->exit_status, list);
+    	free_end(m, m->exit_status);
 }
 
 /*void handle_error(t_pipex *p, char *str, char *target, int status)

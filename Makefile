@@ -6,7 +6,7 @@
 #    By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/05 17:52:23 by hbelle            #+#    #+#              #
-#    Updated: 2024/02/19 15:22:33 by tmekhzou         ###   ########.fr        #
+#    Updated: 2024/02/22 13:43:51 by tmekhzou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SRCS	=	main.c \
 		srcs/parse/linked_list.c \
 		srcs/parse/liexing.c \
 		srcs/parse/parsing.c \
+		srcs/parse/quotes.c \
 
 SRCS_BONUS = 
 
