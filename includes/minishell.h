@@ -6,7 +6,7 @@
 /*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:54:01 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/22 13:15:37 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/22 13:50:03 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,5 +190,6 @@ bool	is_between_quotes(char *str, int i);
 bool	is_between_double_quotes(char *str, int i);
 void	ft_free_tab(char **tab);
 char	*expand_variable_value(char *str, int i, int j, t_mini *m);
+void handle_token(t_token_list *current, t_mini *mini, int *i);
 
 #endif
