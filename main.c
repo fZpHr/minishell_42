@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:53:49 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/21 19:40:06 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/22 12:36:19 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int	main(int ac, char **av, char **env)
 		if (m.input)
 			add_history(m.input);
 		if (m.input == NULL) // ctrl + d
-				error_handle(&m, "", "", 1000);
+				error_handle(&m, "", "", 1000, head);
 		else if (ft_space(m.input) == 0)
 		{
 			current = init_parsing(&m, current, head);
@@ -117,7 +117,7 @@ int	main(int ac, char **av, char **env)
 				if (m.parse == 0 && m.cmd[0] != NULL)
 				{
 					if ((ft_strcmp(m.cmd[0], "exit") == 0 ) && (check_if_pipe(m.cmd) == 0))
-							error_handle(&m, "", "", 1000);
+							error_handle(&m, "", "", 1000, head);
 					else
 						ft_exec(&m, current);
 					if (current && current->token != END)
@@ -131,5 +131,10 @@ int	main(int ac, char **av, char **env)
 		dup2(m.savefd[2], 0);
 		dup2(m.savefd[3], 1);
 	}
+	free_token_list(head);
+	free_token_list(current);
+	free(head);
+	free(current);
+	free_split(&m.cmd);
 	return (0);
 }

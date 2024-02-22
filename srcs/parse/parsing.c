@@ -59,37 +59,46 @@ bool check_wrong_command(t_token_list* current)
 
 char *quote_things(char *str)
 {
-    int		i;
-    int		j;
-    char	*new_str;
-	char	quote;
+	int i = 0;
+	int j = 0;
+	char *new_str;
+	char quote;
 
-	i = 0;
-	j = 0;
-    if (str == NULL)
-        return NULL; 
-    new_str = (char *)malloc(sizeof(char) * (ft_strlen(str) * 2 + 1));
-    if (new_str == NULL)
-        return NULL;
-    while (str[i] != '\0') 
+	if (str == NULL)
+		return NULL; 
+	new_str = (char *)malloc(sizeof(char) * ((ft_strlen(str) * 2)));
+	if (new_str == NULL)
+		return NULL;
+	while (str[i] != '\0') 
 	{
 		if (str[i] == '\'' || str[i] == '\"')
-		{	
-			quote = str[i];
-			i++;
+		{   
+			quote = str[i++];
 			while (str[i] && str[i] != quote) 
 			{
-				if (is_meta_char_quote(str[i], quote)) 
-					new_str[j++] = '\\';
-				new_str[j++] = str[i++];
+				if (str[i] == '\\' && str[i + 1] == quote)
+					new_str[j++] = str[++i];
+				else if (str[i] == '\\')
+					new_str[j++] = str[i];
+				if (str[i] == '$' && str[i + 1] == quote)
+				{
+					new_str[j++] = str[i++];
+					new_str[j++] = str[i++];
+				}
+				else
+					new_str[j++] = str[i++];
 			}
 			i++;
 		}
-		new_str[j++] = str[i++];
-    }
+		else if (str[i] == '\\' && str[i + 1] == '\"')
+			new_str[j++] = str[++i];
+		else
+			new_str[j++] = str[i++];
+	}
 	free(str);
-    new_str[j] = '\0';
-    return new_str;
+	new_str[j] = '\0';
+	printf("new_str: %s\n", new_str);
+	return new_str;
 }
 
 bool	is_between_quotes(char *str, int i)
@@ -101,7 +110,7 @@ bool	is_between_quotes(char *str, int i)
 	j = 0;
 	while (j < i)
 	{
-		if (str[j] == '\'')
+		if (str[j] == '\'' && is_between_double_quotes(str, j) == false)
 			quote++;
 		j++;
 	}
@@ -150,6 +159,7 @@ char	*expand_variable(char *str, t_mini *m)
 			if (value)
 			{
 				new_str = ft_strjoin(ft_substr(str, 0, i), value + 1);
+				new_str = ft_strjoin(new_str, ft_strdup(str + i + j + 1));
 				free(str);
 				str = new_str;
 			}

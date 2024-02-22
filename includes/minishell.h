@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:54:01 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/21 18:06:59 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/22 12:26:51 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,8 +139,8 @@ void	ft_cd(t_mini *m, char **cmd);
 char	*target_path(char **envp, char *target);
 void	ft_unset(t_mini *m);
 void	ft_export(t_mini *m, char **env);
-void	error_handle(t_mini *m, char *str, char *target, int status);
-void	free_end(t_mini *m, int status);
+void	error_handle(t_mini *m, char *str, char *target, int status, t_token_list *list);
+void	free_end(t_mini *m, int status, t_token_list *lst);
 void	free_split(char ***cmd);
 void	init(t_mini *m);
 void	stdin_stdout_handle(t_mini *m, int status);
@@ -188,5 +188,6 @@ void	do_redir_out(char *file);
 void do_append(char *file);
 bool	is_between_quotes(char *str, int i);
 bool	is_between_double_quotes(char *str, int i);
+void	ft_free_tab(char **tab);
 
 #endif

@@ -7,7 +7,7 @@ int		count_word_command(const char *command)
 
     count = 0;
     i = 0;
-    while (command[i])
+    while (command[i] != '\0')
     {
         if (command[i] == '|' && command[i + 1] != '|')
             count++;
@@ -50,7 +50,6 @@ void	count_word_command_2(const char *command, int* i, int* count)
 
 char** ft_split_command(const char* command)
 {
-	//char** result = NULL;
 	int result_size = 0;
 	int result_capacity = count_word_command(command) + 1;
     char** result = malloc(result_capacity * sizeof(char*));

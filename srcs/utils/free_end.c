@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_end.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:01:42 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/16 15:50:37 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/22 12:29:39 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,9 @@ void	free_split(char ***cmd)
 
 }
 
-void	free_end(t_mini *m, int status)
+void	free_end(t_mini *m, int status, t_token_list *lst)
 {
+	//printf("value = %s\n", lst->value);
 	if (m->alloc_env == 1)
 		free_split(&m->envm);
 	if (m->alloc_cmd1 == 1)
@@ -57,5 +58,6 @@ void	free_end(t_mini *m, int status)
 		free(m->input);
 	if (m->tmp)
 		free(m->tmp);
+	free_token_list(lst);
 	error_status(status);
 }

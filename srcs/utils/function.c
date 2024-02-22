@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   function.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 19:17:21 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/20 18:21:57 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/22 12:11:33 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,17 @@ int 	ft_count_cmd(char *str, char c)
 			i++;
 	}
 	return (count);
+}
+
+void	ft_free_tab(char **tab)
+{
+	int		i;
+
+	i = 0;
+	while (tab[i] != NULL)
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
 }
