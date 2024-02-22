@@ -6,7 +6,7 @@
 /*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:53:49 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/22 12:36:19 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/22 12:38:00 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int	main(int ac, char **av, char **env)
 		if (m.input)
 			add_history(m.input);
 		if (m.input == NULL) // ctrl + d
-				error_handle(&m, "", "", 1000, head);
+				error_handle(&m, "", "", 1000);
 		else if (ft_space(m.input) == 0)
 		{
 			current = init_parsing(&m, current, head);
@@ -117,7 +117,7 @@ int	main(int ac, char **av, char **env)
 				if (m.parse == 0 && m.cmd[0] != NULL)
 				{
 					if ((ft_strcmp(m.cmd[0], "exit") == 0 ) && (check_if_pipe(m.cmd) == 0))
-							error_handle(&m, "", "", 1000, head);
+							error_handle(&m, "", "", 1000);
 					else
 						ft_exec(&m, current);
 					if (current && current->token != END)
