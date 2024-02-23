@@ -3,20 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   check_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:56:21 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/23 15:06:19 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/23 20:06:18 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-/*void	ft_cut_useless(t_mini *m)
-{
-	ft_memmove(&m->cmd[0], &m->cmd[m->intern_last], (m->count_cmd - m->intern_last) * sizeof(m->cmd[0]));
-	ft_memset(&m->cmd[m->count_cmd - m->intern_last], 0, m->intern_last * sizeof(m->cmd[0]));
-}*/
 
 void	ft_exec_builtin(t_mini *m)
 {
@@ -40,7 +34,8 @@ void	ft_exec_builtin(t_mini *m)
 		here_doc(m, m->cmd[0]);
 	}
 }
-int		build_intern(t_mini *m)
+
+int	build_intern(t_mini *m)
 {
 	if (ft_strcmp(m->cmd[0], "echo") == 0)
 		return (1);
@@ -61,9 +56,9 @@ int		build_intern(t_mini *m)
 	return (0);
 }
 
-int here_doc_check(t_mini *m, char *cmd)
+int	here_doc_check(t_mini *m, char *cmd)
 {
-	char **tmp;
+	char	**tmp;
 
 	tmp = ft_split(cmd, " ");
 	if (ft_strcmp(tmp[0], "<<") == 0)
@@ -79,7 +74,7 @@ int here_doc_check(t_mini *m, char *cmd)
 
 int	ft_space(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -91,9 +86,9 @@ int	ft_space(char *str)
 	return (1);
 }
 
-int check_if_pipe(char **cmd)
+int	check_if_pipe(char **cmd)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (cmd[i])
@@ -104,94 +99,3 @@ int check_if_pipe(char **cmd)
 	}
 	return (0);
 }
-
-/*void	check_input(t_mini *m)
-{
-	int i;
-	i = 0;
-	while (m->cmd[i])
-	{
-		m->count_cmd++;
-		if (ft_strcmp(m->cmd[i], ">>") == 0)
-			m->append_right = i;
-		else if (ft_strcmp(m->cmd[i], "<<") == 0)
-			m->append_left = i;
-		else if (ft_strcmp(m->cmd[i], ">") == 0)
-			m->redi_right = i;
-		else if (ft_strcmp(m->cmd[i], "<") == 0)
-			m->redi_left = i;
-		else if (build_intern(m->cmd[i]) == 1)
-			m->intern_last = i;
-		i++;
-	}
-	if (i > 1 && m->intern_last > 0)
-		ft_cut_useless(m);
-}*/
-
-/*void	check_slash(t_mini *m, char *cmd)
-{
-	int i;
-	int j;
-	char *tmp;
-
-	i = 0;
-	j = 0;
-	while (cmd[i])
-	{
-		if (cmd[i] == '/')
-		{
-			i++;
-			j = i;
-			while (cmd[j])
-			{
-			
-		}
-		i++;
-	}
-}
-
-
-void ft_split_path(t_mini *m, char *cmd)
-{
-	int i;
-	int j;
-	int k;
-	char *tmp;
-
-	i = 0;
-	j = 0;
-	k = 0;
-	tmp = (char *)malloc(sizeof(char) * (ft_strlen(cmd) + 1));
-	while (cmd[i])
-	{
-		if (cmd[i] == '/')
-		{
-			tmp[j] = '/';
-			j++;
-			i++;
-			k = i;
-			while (cmd[i] != '/' && cmd[i])
-			{
-				tmp[j] = cmd[i];
-				j++;
-				i++;
-			}
-			tmp[j] = '\0';
-			if (access(tmp, F_OK) == 0)
-			{
-				m->path = ft_strdup(tmp);
-				free(tmp);
-				return ;
-			}
-			else
-			{
-				free(tmp);
-				tmp = (char *)malloc(sizeof(char) * (ft_strlen(cmd) + 1));
-				j = 0;
-				i = k;
-			}
-		}
-		i++;
-	}
-	free(tmp);
-}*/

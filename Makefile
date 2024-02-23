@@ -6,7 +6,7 @@
 #    By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/05 17:52:23 by hbelle            #+#    #+#              #
-#    Updated: 2024/02/22 13:53:27 by tmekhzou         ###   ########.fr        #
+#    Updated: 2024/02/23 19:58:34 by tmekhzou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,11 @@ SRCS	=	main.c \
 		srcs/parse/liexing.c \
 		srcs/parse/parsing.c \
 		srcs/parse/quotes.c \
-
+		srcs/parse/redirections.c \
+		srcs/parse/get_command_args.c \
+		srcs/utils/split_utils.c \
+		srcs/utils/parsing_split.c \
+		
 SRCS_BONUS = 
 
 	

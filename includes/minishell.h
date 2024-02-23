@@ -6,7 +6,7 @@
 /*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:54:01 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/23 18:58:54 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/23 19:59:13 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,6 @@
 
 extern volatile sig_atomic_t	signal_flag[3];
 // Parsing
-typedef struct s_split_command
-{
-	char						**result;
-	char						*current_group;
-	int							i;
-	int							j;
-	int							result_index;
-}								t_split_command;
 
 typedef enum s_token
 {
@@ -122,6 +114,20 @@ typedef struct s_sig
 	pid_t						pid;
 }								t_sig;
 
+
+typedef struct s_split_command
+{
+    int result_size;
+    int result_capacity;
+    char **result;
+    int i;
+    int j;
+    int command_length;
+    char *current_group;
+    int in_single_quotes;
+    int in_double_quotes;
+} t_split_command;
+
 // Data
 char							*cut_cmd_char(t_mini *m, char *cmd);
 void							add_null(char **env, int i, int l);
@@ -159,38 +165,63 @@ void							cp_env(char **env, char **env_cp);
 
 // Parsing
 
-int		count_pipe(t_token_list *current);
-void	lexing(char *whole_commands);
-int		count_word_command(const char *command);
-void	count_word_command_2(const char *command, int* i, int* count);
-void add_group_to_result(t_split_command* context);
-char	*expand_variable(char *str, t_mini *m);
-bool is_inside_quotes(const char* command, int index);
-void handle_character(t_split_command* context, const char* command, int command_length);
-char **ft_split_command(const char* command);
-int	skip_char(char c, const char *command, int i);
-void *my_realloc(void* ptr, size_t original_size, size_t new_size);
-void	add_token(char **command_split, t_token_list **head, t_mini *m);
-void append_token_node(t_token_list **head, t_token token, char *value);
-t_token_list *create_token_node(t_token token, char *value);
-const char* get_token_name(t_token token);
-void free_token_list(t_token_list *head);
-void print_list(t_token_list *head);
-void	group_command_args(t_token_list **current, t_mini *mini);
-int	get_number_of_args(t_token_list **current);
-bool	is_between_quotes(char *str, int i);
-char *quote_things(char *str);
-bool is_meta_char_double_quotes(char c);
-bool	is_meta_char_quote(char c, char quote);
-void	init_parsing(t_mini *m, t_token_list **current);
-bool check_wrong_command(t_token_list* current);
+//redirections.c
 void	do_redir_in(char *file);
 void	do_redir_out(char *file);
-void do_append(char *file);
+void	do_append(char *file);
+
+//quotes.c
+char	*handle_quotes(char *str, char *new_str, int *i, int *j);
+char	*quote_things(char *str);
 bool	is_between_quotes(char *str, int i);
 bool	is_between_double_quotes(char *str, int i);
-void	ft_free_tab(char **tab);
+
+//parsing.c
+bool	is_meta_char_quote(char c, char quote);
+bool	check_wrong_command(t_token_list *current);
 char	*expand_variable_value(char *str, int i, int j, t_mini *m);
-void handle_token(t_token_list *current, t_mini *mini, int *i);
+char	*expand_variable(char *str, t_mini *m);
+
+//linked_list.c
+t_token_list	*create_token_node(t_token token, char *value);
+void	append_token_node(t_token_list **head, t_token token, char *value);
+void	free_token_list(t_token_list *head);
+int		count_pipe(t_token_list *current);
+
+//liexing.c
+void	handle_less_than(char **command_split, t_token_list **head, t_mini *m,
+		int *i);
+void	handle_greater_than(char **command_split, t_token_list **head,
+		t_mini *m, int *i);
+void	add_token(char **command_split, t_token_list **head, t_mini *m);
+
+//get_command_args.c
+void	handle_token(t_token_list *current, t_mini *mini, int *i);
+void	group_command_args(t_token_list **current, t_mini *mini);
+int	get_number_of_args(t_token_list **current);
+
+//check_input.c
+void	ft_exec_builtin(t_mini *m);
+int		build_intern(t_mini *m);
+int		here_doc_check(t_mini *m, char *cmd);
+int		ft_space(char *str);
+int		check_if_pipe(char **cmd);
+
+//utils/split_utils.c
+int		count_word_command(const char *command);
+void	count_word_command_2(const char *command, int *i, int *count);
+void handle_quotes_split(const char *command, t_split_command *sc);
+void handle_special_chars(const char *command, t_split_command *sc);
+char **ft_split_command(const char *command);
+int	skip_char(char c, const char *command, int i);
+
+//utils/parsing_split.c
+void handle_double_chars(const char *command, t_split_command *sc);
+void handle_single_char(const char *command, t_split_command *sc);
+void handle_space(const char *command, t_split_command *sc);
+void handle_regular_char(const char *command, t_split_command *sc);
+void add_current_group_to_result(t_split_command *sc);
+void increase_result_capacity(t_split_command *sc);
+void handle_end(t_split_command *sc);
 
 #endif

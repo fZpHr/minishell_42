@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   quotes.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/23 19:12:40 by tmekhzou          #+#    #+#             */
+/*   Updated: 2024/02/23 20:00:58 by tmekhzou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 char	*handle_quotes(char *str, char *new_str, int *i, int *j)
@@ -47,7 +59,6 @@ char	*quote_things(char *str)
 	}
 	free(str);
 	new_str[j] = '\0';
-	printf("new_str: %s\n", new_str);
 	return (new_str);
 }
 

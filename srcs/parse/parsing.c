@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/23 19:12:49 by tmekhzou          #+#    #+#             */
+/*   Updated: 2024/02/23 20:05:58 by tmekhzou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 bool	is_meta_char_quote(char c, char quote)
@@ -71,7 +83,8 @@ char	*expand_variable(char *str, t_mini *m)
 	{
 		if (str[i] == '\\')
 			i++;
-		else if (str[i] == '$' && is_between_quotes(str, i) == false && str[i + 1] != '?')
+		else if (str[i] == '$' && is_between_quotes(str, i) == false && str[i
+				+ 1] != '?')
 		{
 			str = expand_variable_value(str, i, 0, m);
 			if (!str)
