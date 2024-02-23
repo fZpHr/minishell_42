@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 14:05:30 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/23 16:28:02 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/23 18:32:29 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	loop_export(t_mini *m, int *i)
 	l = 1;
 	while (m->cmd[l] != NULL)
 	{
-		tmp = cut_cmd_char(m->cmd[l]);
+		tmp = cut_cmd_char(m, m->cmd[l]);
 		if (target_path(m, m->envm, tmp, 0) != NULL)
 		{
 			free(m->envm[m->path_count]);
@@ -112,5 +112,8 @@ void	ft_export(t_mini *m, char **env)
 		add_null(m->envm, i, l);
 		loop_export(m, &i);
 	}
-	error_handle(m, "", "", 0);
+	if (m->status_exit == 1)
+		error_handle(m, "export", "not a valid identifier", 1);
+	else
+		error_handle(m, "", "", 0);
 }

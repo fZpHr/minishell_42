@@ -24,7 +24,8 @@
     "functional": "c",
     "tuple": "c",
     "type_traits": "c",
-    "utility": "c"
+    "utility": "c",
+    "string.h": "c"
   },
   "C_Cpp_Runner.msvcBatchPath": "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Auxiliary/Build/vcvarsall.bat",
   "C_Cpp_Runner.cCompilerPath": "gcc",

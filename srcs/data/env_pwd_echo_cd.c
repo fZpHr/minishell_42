@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 19:51:19 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/23 14:27:07 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/23 18:30:42 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	ft_pwd(t_mini *m)
 
 void	ft_env(t_mini *m, char **env, int status)
 {
-	int		i;
-	
+	int	i;
+
 	if (m->alloc_env == 1)
 	{
 		i = 0;
@@ -41,7 +41,8 @@ void	ft_env(t_mini *m, char **env, int status)
 	{
 		m->alloc_env = 1;
 		i = 0;
-		m->envm = (char **)malloc(sizeof(char *) * (ft_double_char_len(env) + 1));
+		m->envm = (char **)malloc(sizeof(char *) * (ft_double_char_len(env)
+					+ 1));
 		while (env[i])
 		{
 			m->envm[i] = ft_strdup(env[i]);
@@ -61,8 +62,8 @@ void	ft_echo(t_mini *m, char **cmd)
 	int		i;
 	int		status;
 	int		j;
-	bool 	n_flag;
-	
+	bool	n_flag;
+
 	j = 0;
 	status = 0;
 	n_flag = false;
@@ -72,7 +73,7 @@ void	ft_echo(t_mini *m, char **cmd)
 		return ;
 	}
 	if (ft_strcmp(cmd[1], "-n") == 0)
-	{	
+	{
 		i = 2;
 		n_flag = true;
 	}
@@ -80,12 +81,26 @@ void	ft_echo(t_mini *m, char **cmd)
 		i = 1;
 	while (cmd[i])
 	{
-		while (cmd[i][j] != '\0')
-		{	
-			if (cmd[i][j] == '\\')
+		if (ft_strncmp(cmd[i], "$?", 3) == 0)
+		{
+			if (status == 0)
+			{
+				m->exit_status = m->exit_status >> 8;
+				status = m->exit_status;
+				printf("%d", m->exit_status);
+			}
+			else
+				printf("%d", status);
+		}
+		else
+		{
+			while (cmd[i][j] != '\0')
+			{
+				if (cmd[i][j] == '\\')
+					j++;
+				write(1, &cmd[i][j], 1);
 				j++;
-			write(1, &cmd[i][j], 1);
-			j++;
+			}
 		}
 		j = 0;
 		if (cmd[i + 1] != NULL)
