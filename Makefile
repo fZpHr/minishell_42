@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+         #
+#    By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/05 17:52:23 by hbelle            #+#    #+#              #
-#    Updated: 2024/02/23 19:58:34 by tmekhzou         ###   ########.fr        #
+#    Updated: 2024/02/23 20:08:09 by hbelle           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,6 @@ SRCS	=	main.c \
 		srcs/utils/free_end.c \
 		srcs/data/here_doc.c \
 		srcs/utils/stdin_stdout_handle.c \
-		srcs/data/env_pwd_echo_cd.c \
 		srcs/utils/function.c \
 		srcs/data/exec.c \
 		srcs/data/found_path.c \
@@ -36,6 +35,10 @@ SRCS	=	main.c \
 		srcs/parse/get_command_args.c \
 		srcs/utils/split_utils.c \
 		srcs/utils/parsing_split.c \
+		srcs/data/env_pwd.c \
+		srcs/data/echo.c \
+		srcs/data/cd.c \
+
 		
 SRCS_BONUS = 
 

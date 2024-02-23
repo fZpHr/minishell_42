@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handle.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:58:56 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/22 13:14:01 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/23 20:05:16 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,35 +22,8 @@ void	error_handle(t_mini *m, char *str, char *target, int status)
 	else
 		m->exit_status = status << 8;
 	if (status > 0)
-	{
-		//ft_putstr_fd(str, 2);
 		printf("%s %s\n", str, target);
-	}
-    ft_putstr_fd("\033[0m", 2);
+	ft_putstr_fd("\033[0m", 2);
 	if (status >= 1000)
-    	free_end(m, m->exit_status);
+		free_end(m, m->exit_status);
 }
-
-/*void handle_error(t_pipex *p, char *str, char *target, int status)
-{
-	//char *error_message;
-
-	(void)p;
-    ft_putstr_fd("\033[0;31m", 2);
-	if (status > 0)
-	{
-		printf("%s", str);
-		printf("%s\n", target);
-   		error_message = strerror(status);
-   		printf("%s: ", str);
-    	if (error_message != NULL)
-    	    printf("%s", error_message);
-  		else
-    	    perror(NULL);*/
-	/**}
-    ft_putstr_fd("\033[0m", 2);
-	exit (status);
-    //free_end(p, status);
-}*/
-
-

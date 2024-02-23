@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 19:17:21 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/23 18:11:13 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/23 20:25:36 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ char	*target_path(t_mini *m, char **envp, char *target, int status)
 	char	*path;
 
 	i = 0;
-	if (status == 1)
-		target = ft_strjoin(target, "=");
 	while (envp[i])
 	{
 		if (ft_strncmp(envp[i], target, ft_strlen(target)) == 0)

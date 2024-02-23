@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 14:15:51 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/23 18:58:13 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/23 20:23:15 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void	end(t_mini *m)
 {
 	int	exec;
-	int pid;
-	
+	int	pid;
+
 	if (build_intern(m) == 1)
 	{
 		ft_exec_builtin(m);
@@ -45,7 +45,7 @@ void	end(t_mini *m)
 			exec = execve(m->tmp_end, m->cmd, m->envm);
 			if (exec == -1)
 			{
-				error_handle(m, "error execve",  m->cmd[0], 126);
+				error_handle(m, "error execve", m->cmd[0], 126);
 				exit(0);
 			}
 		}
@@ -53,11 +53,10 @@ void	end(t_mini *m)
 	}
 }
 
-
 void	child_process(t_mini *m)
 {
 	int	exec;
-	int pid;
+	int	pid;
 
 	exec = 0;
 	if (m->heredoc_status == 1)
@@ -135,9 +134,9 @@ void	pipex(t_mini *m)
 
 void	ft_exec(t_mini *m, t_token_list *current)
 {
-	int		i;
+	int	i;
 
-	i = 0; 
+	i = 0;
 	if (m->ac == 0)
 		end(m);
 	else
@@ -145,7 +144,8 @@ void	ft_exec(t_mini *m, t_token_list *current)
 		while (i < m->ac)
 		{
 			pipex(m);
-			if (m->status_redir_out == 1 || m->status_append == 1 || m->heredoc_status == 1)
+			if (m->status_redir_out == 1 || m->status_append == 1
+				|| m->heredoc_status == 1)
 			{
 				dup2(m->savefd[0], 0);
 				dup2(m->savefd[1], 1);
@@ -156,13 +156,11 @@ void	ft_exec(t_mini *m, t_token_list *current)
 			i++;
 		}
 		end(m);
-		if (m->status_redir_out == 1 || m->status_append == 1 || m->heredoc_status == 1)
+		if (m->status_redir_out == 1 || m->status_append == 1
+			|| m->heredoc_status == 1)
 		{
 			dup2(m->savefd[0], 0);
 			dup2(m->savefd[1], 1);
 		}
-		//waitpid(m->pid, &m->exit_status, 0);
 	}
 }
-
-
