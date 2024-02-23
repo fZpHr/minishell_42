@@ -46,7 +46,7 @@ char	*expand_variable_value(char *str, int i, int j, t_mini *m)
 	value = target_path(m, m->envm, var, 1);
 	if (value)
 	{
-		new_str = ft_strjoin(ft_substr(str, 0, i), value + 1);
+		new_str = ft_strjoin(ft_substr(str, 0, i), value);
 		new_str = ft_strjoin(new_str, ft_strdup(str + i + j + 1));
 		free(str);
 		str = new_str;
@@ -71,8 +71,7 @@ char	*expand_variable(char *str, t_mini *m)
 	{
 		if (str[i] == '\\')
 			i++;
-		else if (str[i] == '$' && is_between_quotes(str, i) == false && str[i
-			+ 1] != '?')
+		else if (str[i] == '$' && is_between_quotes(str, i) == false && str[i + 1] != '?')
 		{
 			str = expand_variable_value(str, i, 0, m);
 			if (!str)

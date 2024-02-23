@@ -108,43 +108,42 @@ void handle_token(t_token_list *current, t_mini *mini, int *i)
         mini->heredoc_status = 1;
         mini->cmd[(*i)++] = ft_strdup(current->value);
     }
+	//mini->cmd[(*i)] = NULL;
 }
 
-t_token_list	*group_command_args(t_token_list *current, t_mini *mini)
+void	group_command_args(t_token_list **current, t_mini *mini)
 {
     int	i;
 
+	if (!(*current) || !(*current)->next)
+		return ;
     i = 0;
     mini->status_redir_out = 0;
     mini->status_append = 0;
     mini->heredoc_status = 0;
-    mini->cmd = (char **)malloc(sizeof(char *) * (get_number_of_args(current)));
-    while (current->token != END && current->token != PIPE)
+    mini->cmd = (char **)malloc(sizeof(char *) * (get_number_of_args(current) + 1));
+    while ((*current)->token != END && (*current)->token != PIPE)
     {
-        handle_token(current, mini, &i);
-        current = current->next;
+        handle_token(*current, mini, &i);
+        (*current) = (*current)->next;
     }
     mini->cmd[i] = NULL;
-    return (current);
 }
 
-int	get_number_of_args(t_token_list *current)
+int	get_number_of_args(t_token_list **current)
 {
 	int	i;
+	t_token_list *head;
 
+	head = *current;
 	i = 0;
-	while (current && current->token != END && current->token != PIPE)
+	while ((*current) && (*current)->token != END && (*current)->token != PIPE)
 	{
-		if (current->token == COMMAND)
-		{
+		if ((*current)->token == COMMAND)
 			i++;
-			current = current->next;
-			while (current->token == ARGS)
-				i++;
-		}
-		current = current->next;
+		(*current) = (*current)->next;
 	}
-	i = i + 3;
+	(*current) = head;
 	return (i);
 }
 

@@ -34,4 +34,5 @@ void	print_list(t_token_list *head)
 			current->value);
 		current = current->next;
 	}
+	current = head;
 }

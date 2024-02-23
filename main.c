@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:53:49 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/23 15:05:58 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/23 18:56:56 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,44 +32,45 @@ void	interrupt_handle(int sig)
     }
 }
 
-t_token_list	*init_parsing(t_mini *m, t_token_list *current, t_token_list *head)
+void	init_parsing(t_mini *m, t_token_list **current)
 {
 	char			**command_split;
+	t_token_list 	*head;
 
 	command_split = ft_split_command(m->input);
-	//head = current;
-	add_token(command_split, &head, m);
-	current = head;
-	while (current->token != END)
+	add_token(command_split, current, m);
+	/* current = head; */
+	head = (*current);
+	m->head = (*current);
+	while ((*current)->token != END)
 	{
-		current->value = expand_variable(current->value, m);
+		(*current)->value = expand_variable((*current)->value, m);
 		//ft_putstr_fd(current->value, 1);
-		current = current->next;
+		(*current) = (*current)->next;
 	}
-	current = head;
-	while (current->token != END)
+	(*current) = head;
+	while ((*current)->token != END)
 	{
-		current->value = quote_things(current->value);
+		(*current)->value = quote_things((*current)->value);
 		/* if (check_wrong_command(current) == false)
 		{
 			error_handle(m, "error", "", 1);
 			m->parse = 1;
 			return (NULL);
 		} */
-		current = current->next;
+		(*current) = (*current)->next;
 	}
-	current = head;
-	m->ac = count_pipe(current);
-	current = head;
-	while (current->token != END)
+	(*current) = head;
+	m->ac = count_pipe(*current);
+	(*current) = head;
+	while ((*current)->token != END)
 	{
-		if (current->token == HERE_DOC && current->next->next->token != COMMAND)
+		if ((*current)->token == HERE_DOC && (*current)->next->next->token != COMMAND)
 			m->ac = 0;
-		current = current->next;
+		(*current) = (*current)->next;
 	}
-	current = head;
-	//print_list(head);
-	return (head);
+	(*current) = head;
+	//print_list(*current);
 }
 
 int	main(int ac, char **av, char **env)
@@ -85,11 +86,9 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	t_mini	m;
-	t_token_list	*head;
 	t_token_list *current;
 	
 	current = NULL;
-	head = NULL;
 	init(&m);
 	ft_env(&m, env, 0);
  	m.savefd[0] = dup(0);
@@ -98,6 +97,7 @@ int	main(int ac, char **av, char **env)
 	m.savefd[3] = dup(1); 
 	while (1)
 	{
+		current = NULL;
 		m.parse = 0;
 		if (signal_flag[1] == 0)
 			m.input = readline("$>");
@@ -110,10 +110,10 @@ int	main(int ac, char **av, char **env)
 				error_handle(&m, "", "", 1000);
 		else if (ft_space(m.input) == 0)
 		{
-			current = init_parsing(&m, current, head);
+			init_parsing(&m, &current);
 			if (ft_strcmp(m.input, "") != 0)
 			{
-				current = group_command_args(current, &m);
+				group_command_args(&current, &m);
 				if (m.parse == 0 && m.cmd[0] != NULL)
 				{
 					if ((ft_strcmp(m.cmd[0], "exit") == 0 ) && (check_if_pipe(m.cmd) == 0))
@@ -125,15 +125,14 @@ int	main(int ac, char **av, char **env)
 				}
 			}
 			free_split(m.cmd);
+			free_token_list(m.head);
 		}
 		while (waitpid(-1, &m.exit_status, WNOHANG) == 0);
 		free(m.input);
 		dup2(m.savefd[2], 0);
 		dup2(m.savefd[3], 1);
 	}
-	free_token_list(head);
 	free_token_list(current);
-	free(head);
 	free(current);
 	free_split(m.cmd);
 	return (0);

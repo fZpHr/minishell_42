@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:54:01 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/23 18:09:53 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/23 18:58:54 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ typedef struct s_mini
 	int							fd[2];
 	int							parse;
 	int							savefd[4];
+	t_token_list				*head;
 }								t_mini;
 
 // Signals
@@ -158,48 +159,38 @@ void							cp_env(char **env, char **env_cp);
 
 // Parsing
 
-int								count_pipe(t_token_list *current);
-void							lexing(char *whole_commands);
-int								count_word_command(const char *command);
-void							count_word_command_2(const char *command,
-									int *i, int *count);
-void							add_group_to_result(t_split_command *context);
-char							*expand_variable(char *str, t_mini *m);
-bool							is_inside_quotes(const char *command,
-									int index);
-void							handle_character(t_split_command *context,
-									const char *command, int command_length);
-char							**ft_split_command(const char *command);
-int								skip_char(char c, const char *command, int i);
-void							*my_realloc(void *ptr, size_t original_size,
-									size_t new_size);
-void							add_token(char **command_split,
-									t_token_list **head, t_mini *m);
-void							append_token_node(t_token_list **head,
-									t_token token, char *value);
-t_token_list					*create_token_node(t_token token, char *value);
-const char						*get_token_name(t_token token);
-void							free_token_list(t_token_list *head);
-void							print_list(t_token_list *head);
-t_token_list					*group_command_args(t_token_list *current,
-									t_mini *mini);
-int								get_number_of_args(t_token_list *current);
-bool							is_between_quotes(char *str, int i);
-char							*quote_things(char *str);
-bool							is_meta_char_double_quotes(char c);
-bool							is_meta_char_quote(char c, char quote);
-t_token_list					*init_parsing(t_mini *m, t_token_list *current,
-									t_token_list *head);
-bool							check_wrong_command(t_token_list *current);
-void							do_redir_in(char *file);
-void							do_redir_out(char *file);
-void							do_append(char *file);
-bool							is_between_quotes(char *str, int i);
-bool							is_between_double_quotes(char *str, int i);
-void							ft_free_tab(char **tab);
-char							*expand_variable_value(char *str, int i, int j,
-									t_mini *m);
-void							handle_token(t_token_list *current,
-									t_mini *mini, int *i);
+int		count_pipe(t_token_list *current);
+void	lexing(char *whole_commands);
+int		count_word_command(const char *command);
+void	count_word_command_2(const char *command, int* i, int* count);
+void add_group_to_result(t_split_command* context);
+char	*expand_variable(char *str, t_mini *m);
+bool is_inside_quotes(const char* command, int index);
+void handle_character(t_split_command* context, const char* command, int command_length);
+char **ft_split_command(const char* command);
+int	skip_char(char c, const char *command, int i);
+void *my_realloc(void* ptr, size_t original_size, size_t new_size);
+void	add_token(char **command_split, t_token_list **head, t_mini *m);
+void append_token_node(t_token_list **head, t_token token, char *value);
+t_token_list *create_token_node(t_token token, char *value);
+const char* get_token_name(t_token token);
+void free_token_list(t_token_list *head);
+void print_list(t_token_list *head);
+void	group_command_args(t_token_list **current, t_mini *mini);
+int	get_number_of_args(t_token_list **current);
+bool	is_between_quotes(char *str, int i);
+char *quote_things(char *str);
+bool is_meta_char_double_quotes(char c);
+bool	is_meta_char_quote(char c, char quote);
+void	init_parsing(t_mini *m, t_token_list **current);
+bool check_wrong_command(t_token_list* current);
+void	do_redir_in(char *file);
+void	do_redir_out(char *file);
+void do_append(char *file);
+bool	is_between_quotes(char *str, int i);
+bool	is_between_double_quotes(char *str, int i);
+void	ft_free_tab(char **tab);
+char	*expand_variable_value(char *str, int i, int j, t_mini *m);
+void handle_token(t_token_list *current, t_mini *mini, int *i);
 
 #endif
