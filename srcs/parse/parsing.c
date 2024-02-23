@@ -43,7 +43,7 @@ char	*expand_variable_value(char *str, int i, int j, t_mini *m)
 	while (var[j] && (ft_isalnum(var[j]) || var[j] == '_'))
 		j++;
 	var[j] = '\0';
-	value = target_path(m->envm, var);
+	value = target_path(m, m->envm, var, 1);
 	if (value)
 	{
 		new_str = ft_strjoin(ft_substr(str, 0, i), value + 1);

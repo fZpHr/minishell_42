@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   function.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 19:17:21 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/22 12:11:33 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/23 15:21:31 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,33 @@ void cp_env(char **env, char **env_cp)
 	env_cp[i] = NULL;
 }
 
-char	*target_path(char **envp, char *target)
+int	ft_strlen_arg(char *str, char c)
+{
+	int		i;
+
+	i = 0;
+	while (str[i] != c && str[i])
+		i++;
+	return (i);
+}
+char	*target_path(t_mini *m, char **envp, char *target, int status)
 {
 	int		i;
 	char	*path;
 
 	i = 0;
-	target = ft_strjoin(target, "=");
+	if (status == 1)
+		target = ft_strjoin(target, "=");
 	while (envp[i])
 	{
 		if (ft_strncmp(envp[i], target, ft_strlen(target)) == 0)
 		{
 			path = ft_substr(envp[i], ft_strlen(target), ft_strlen(envp[i]));
-			return (path);
+			m->path_count = i;
+			if (status == 1)
+				return (path);
+			free(path);
+			return ("ok");
 		}
 		i++;
 	}
@@ -86,4 +100,29 @@ void	ft_free_tab(char **tab)
 		i++;
 	}
 	free(tab);
+}
+
+char *cut_cmd_char(char *cmd)
+{
+	char *tmp;
+	char *find;
+	char l;
+
+	find = ft_strchr(cmd, '=');
+	if (!find)
+		return (NULL);
+	l = ft_strlen_arg(cmd, '=') + 1;
+	tmp = (char *)malloc(sizeof(char) * (l + 1));
+	ft_strlcpy(tmp, cmd, l + 1);
+	return (tmp);
+}
+
+void add_null(char **env, int i, int l)
+{
+	while (l)
+	{
+		env[i] = NULL;
+		i++;
+		l--;
+	}
 }

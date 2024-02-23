@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 19:51:19 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/21 19:47:36 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/23 14:27:07 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	ft_cd(t_mini *m, char **cmd)
 	m->pwd_cd = getcwd(NULL, 0);
 	if (cmd[1] == NULL)
 	{
-		home = target_path(m->envm, "HOME=");
+		home = target_path(m, m->envm, "HOME=", 1);
 		if (home == NULL)
 		{
 			error_handle(m, "env error", "", 1);

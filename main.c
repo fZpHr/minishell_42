@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:53:49 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/22 13:55:47 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/23 15:05:58 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ t_token_list	*init_parsing(t_mini *m, t_token_list *current, t_token_list *head)
 		current = current->next;
 	}
 	current = head;
-	print_list(head);
+	//print_list(head);
 	return (head);
 }
 
@@ -124,7 +124,7 @@ int	main(int ac, char **av, char **env)
 						current = current->next;
 				}
 			}
-			free_split(&m.cmd);
+			free_split(m.cmd);
 		}
 		while (waitpid(-1, &m.exit_status, WNOHANG) == 0);
 		free(m.input);
@@ -135,6 +135,6 @@ int	main(int ac, char **av, char **env)
 	free_token_list(current);
 	free(head);
 	free(current);
-	free_split(&m.cmd);
+	free_split(m.cmd);
 	return (0);
 }

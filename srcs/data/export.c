@@ -6,22 +6,44 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 14:05:30 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/16 19:12:39 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/23 16:28:02 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void printf_env(char **env)
+void	printf_env(char **env)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (env[i])
 		printf("%s\n", env[i++]);
 }
 
-void  sort_ascii(char **env)
+void	loop_sort_ascii(char **env_cp, int *j, char **tmp)
+{
+	int	i;
+
+	i = 0;
+	while (env_cp[i])
+	{
+		*j = i + 1;
+		while (env_cp[*j])
+		{
+			if (ft_strcmp(env_cp[i], env_cp[*j]) > 0)
+			{
+				*tmp = env_cp[i];
+				env_cp[i] = env_cp[*j];
+				env_cp[*j] = *tmp;
+			}
+			(*j)++;
+		}
+		i++;
+	}
+}
+
+void	sort_ascii(char **env)
 {
 	int		i;
 	int		j;
@@ -30,24 +52,8 @@ void  sort_ascii(char **env)
 
 	env_cp = (char **)malloc(sizeof(char *) * (ft_double_char_len(env) + 1));
 	cp_env(env, env_cp);
-
 	i = 0;
-	while (env_cp[i])
-	{
-		j = i + 1;
-		while (env_cp[j])
-		{
-			if (ft_strcmp(env_cp[i], env_cp[j]) > 0)
-			{
-				tmp = env_cp[i];
-				env_cp[i] = env_cp[j];
-				env_cp[j] = tmp;
-			}
-			j++;
-		}
-		i++;
-	}
-	i = 0;
+	loop_sort_ascii(env_cp, &j, &tmp);
 	while (env_cp[i])
 	{
 		tmp = ft_strjoin("declare -x ", env_cp[i]);
@@ -58,9 +64,36 @@ void  sort_ascii(char **env)
 	printf_env(env_cp);
 }
 
+void	loop_export(t_mini *m, int *i)
+{
+	char	*tmp;
+	int		l;
+
+	l = 1;
+	while (m->cmd[l] != NULL)
+	{
+		tmp = cut_cmd_char(m->cmd[l]);
+		if (target_path(m, m->envm, tmp, 0) != NULL)
+		{
+			free(m->envm[m->path_count]);
+			m->envm[m->path_count] = ft_strdup(m->cmd[l]);
+			m->path_count = 0;
+		}
+		else
+		{
+			m->envm[*i] = ft_strdup(m->cmd[l]);
+			(*i)++;
+		}
+		free(tmp);
+		l++;
+	}
+}
+
 void	ft_export(t_mini *m, char **env)
 {
 	int		i;
+	int		l;
+	char	**tmp;
 
 	ft_env(m, env, 0);
 	i = ft_double_char_len(env);
@@ -71,34 +104,13 @@ void	ft_export(t_mini *m, char **env)
 	}
 	else
 	{
-		char **tmp = (char **)malloc(sizeof(char *) * (i + 2));
-		i = 0; 
-		while (m->envm[i])
-		{
-			tmp[i] = ft_strdup(m->envm[i]);
-			i++;
-		}
-		free_split(&m->envm);
+		l = ft_double_char_len(m->cmd);
+		tmp = (char **)malloc(sizeof(char *) * (i + l));
+		cp_env(m->envm, tmp);
+		free_split(m->envm);
 		m->envm = tmp;
-		if (m->cmd[2] == NULL)
-		{
-			if (ft_strchr(m->cmd[1], '=') == NULL)
-			{
-				error_handle(m, "export: ", m->cmd[2], 1);
-				return ;
-			}
-			m->envm[i] = ft_strdup(m->cmd[1]);
-			m->envm[i + 1] = NULL;
-		}
-		else
-		{
-			if (ft_strchr(m->cmd[1], '=') == NULL)
-			{
-				error_handle(m, "export: ", m->cmd[1], 1);
-				return ;
-			}
-			m->envm[i] = ft_strdup(m->cmd[1]);
-			m->envm[i + 1] = NULL;
-		}
+		add_null(m->envm, i, l);
+		loop_export(m, &i);
 	}
+	error_handle(m, "", "", 0);
 }

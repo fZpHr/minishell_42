@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_end.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:01:42 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/22 13:14:45 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/23 15:06:26 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	error_status(int status)
 		exit(127);
 }
 
-void	free_split(char ***cmd)
+/* void	free_split(char ***cmd)
 {
 	int	i;
 
@@ -43,17 +43,34 @@ void	free_split(char ***cmd)
 	free(*cmd);
 	*cmd = NULL;
 
+} */
+void 	free_split(char **cmd)
+{
+	int i;
+
+	i = 0;
+	while (cmd && cmd[i])
+	{
+		if (cmd[i])
+		{
+			free(cmd[i]);
+			cmd[i] = NULL;
+		}
+		i++;
+	}
+	free(cmd);
+	cmd = NULL;
 }
 
 void	free_end(t_mini *m, int status)
 {
 	//printf("value = %s\n", lst->value);
 	if (m->alloc_env == 1)
-		free_split(&m->envm);
+		free_split(m->envm);
 	if (m->alloc_cmd1 == 1)
-		free_split(&m->cmd1);
+		free_split(m->cmd1);
 	if (m->cmd)
-		free_split(&m->cmd);
+		free_split(m->cmd);
 	if (m->input)
 		free(m->input);
 	if (m->tmp)

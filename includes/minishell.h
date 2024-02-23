@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:54:01 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/22 13:50:03 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/23 15:19:32 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct s_token_list
 
 typedef struct s_mini
 {
+	int		path_count;
 	int		fd_save_heredoc[2];
 	int		status_child;
 	int 	exit_fork;
@@ -123,8 +124,9 @@ typedef struct	s_sig
 }				t_sig;
 
 // Data
-
-//void	ft_exec(t_mini *m, char **envp);
+char	*cut_cmd_char(char *cmd);
+void	add_null(char **env, int i, int l);
+int		ft_strlen_arg(char *str, char c);
 int		check_if_pipe(char **cmd);
 int		ft_space(char *str);
 int		here_doc_check(t_mini *m, char *cmd);
@@ -136,12 +138,12 @@ void	here_doc(t_mini *m, char *end);
 void	ft_exec(t_mini *m, t_token_list *current);
 int 	ft_count_cmd(char *str, char c);
 void	ft_cd(t_mini *m, char **cmd);
-char	*target_path(char **envp, char *target);
+char	*target_path(t_mini *m, char **envp, char *target, int status);
 void	ft_unset(t_mini *m);
 void	ft_export(t_mini *m, char **env);
 void	error_handle(t_mini *m, char *str, char *target, int status);
 void	free_end(t_mini *m, int status);
-void	free_split(char ***cmd);
+void	free_split(char **cmd);
 void	init(t_mini *m);
 void	stdin_stdout_handle(t_mini *m, int status);
 void	ft_env(t_mini *m, char **env, int status);

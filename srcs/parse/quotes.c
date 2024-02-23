@@ -47,7 +47,7 @@ char	*quote_things(char *str)
 	}
 	free(str);
 	new_str[j] = '\0';
-	printf("new_str: %s\n", new_str);
+	//printf("new_str: %s\n", new_str);
 	return (new_str);
 }
 

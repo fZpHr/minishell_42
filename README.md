@@ -336,3 +336,10 @@ awk truc bizarre parsing
 variable env sans echo
 redirections good sauf certains cas galeres ex : echo 1 > out | echo 2 > out2
 regler pb error
+
+
+
+
+
+NEW : 
+- ls | << fin grep a ( cut les commandes avant le heredoc)

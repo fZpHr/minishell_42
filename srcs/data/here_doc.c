@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:31:16 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/21 19:25:57 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/23 15:06:08 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char **ft_strdup_double_char(char **src, char *add, int i)
 			dst[j] = ft_strdup(src[j]);
 			j++;
 		}
-		free_split(&src);
+		free_split(src);
 	}
 	dst[j] = ft_strdup(add);
 	dst[j + 1] = NULL;
