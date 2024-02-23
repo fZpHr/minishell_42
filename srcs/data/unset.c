@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 14:10:17 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/23 17:15:35 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/23 19:28:53 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	loop_unset(t_mini *m, char ***env_cp, int *j)
 			i++;
 		}
 		status = 0;
-		i = *j + 1;
 		k++;
 	}
 }
@@ -75,10 +74,14 @@ void	ft_unset(t_mini *m)
 	while (m->cmd[i++])
 		m->cmd[i] = ft_strjoin(m->cmd[i], "=");
 	l = check_if_exist(m, m->cmd) + 1;
-	env_cp = (char **)malloc(sizeof(char *) * (ft_double_char_len(m->envm)
-				+ l));
-	loop_unset(m, &env_cp, &j);
-	env_cp[j] = NULL;
-	free_split(m->envm);
-	m->envm = env_cp;
+	if (l > 0)
+	{
+		env_cp = (char **)malloc(sizeof(char *) * (ft_double_char_len(m->envm)
+					+ l));
+		loop_unset(m, &env_cp, &j);
+		env_cp[j] = NULL;
+		free_split(m->envm);
+		m->envm = env_cp;
+	}
+	error_handle(m, "", "", 0);
 }
