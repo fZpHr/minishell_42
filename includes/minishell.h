@@ -6,7 +6,7 @@
 /*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:54:01 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/24 16:42:25 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/24 17:38:34 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,5 +225,8 @@ void add_current_group_to_result(t_split_command *sc);
 void increase_result_capacity(t_split_command *sc);
 void handle_end(t_split_command *sc);
 void	ft_listclear(t_token_list **lst, void (*del)(void*));
+
+void	print_list(t_token_list *head);
+const char	*get_token_name(t_token token);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:56:21 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/23 20:06:18 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/24 17:54:20 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,7 @@ void	ft_exec_builtin(t_mini *m)
 	else if (ft_strcmp(m->cmd[0], "exit") == 0)
 		error_handle(m, "", "", 9999);
 	else if (m->heredoc_status == 1)
-	{
-		m->heredoc_status = 1;
 		here_doc(m, m->cmd[0]);
-	}
 }
 
 int	build_intern(t_mini *m)

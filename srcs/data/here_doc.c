@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:31:16 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/23 19:36:08 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/24 17:53:57 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ void	infinite_loop(int fd[2], char *end, t_mini *m)
 		if (signal_flag[2] == 1 || ft_strncmp(input, end, ft_strlen(end)) == 0)
 		{
 			free(input);
+			free_split(m->cmd);
+			ft_listclear(&m->head, free);
+			free_split(m->envm);
 			exit(0);
 		}
 		write(fd[1], input, ft_strlen(input));

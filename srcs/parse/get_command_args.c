@@ -6,7 +6,7 @@
 /*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:34:11 by tmekhzou          #+#    #+#             */
-/*   Updated: 2024/02/24 17:01:55 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/24 17:46:52 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	group_command_args(t_token_list **current, t_mini *mini)
 	mini->status_append = 0;
 	mini->heredoc_status = 0;
 	mini->cmd = (char **)malloc(sizeof(char *) * (get_number_of_args(current)
-				+ 1));
+				+ 2));
 	while ((*current)->token != END && (*current)->token != PIPE)
 	{
 		handle_token(*current, mini, &i);
