@@ -6,7 +6,7 @@
 /*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 19:51:19 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/24 10:26:26 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/24 18:51:34 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	ft_pwd(t_mini *m)
 		return ;
 	}
 	printf("%s\n", pwd);
+	free(pwd);
 	error_handle(m, "", "", 0);
 }
 

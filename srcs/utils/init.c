@@ -6,7 +6,7 @@
 /*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:36:39 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/24 17:04:50 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/24 18:43:39 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,5 @@ void	init(t_mini *m)
 	m->fd_save_heredoc[1] = 0;
 	m->head = NULL;
 	m->error_open = 0;
+	m->status_exit = 0;
 }

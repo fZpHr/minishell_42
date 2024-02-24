@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 14:10:17 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/23 19:28:53 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/24 18:50:27 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,20 @@ void	ft_unset(t_mini *m)
 	int		l;
 	int		j;
 	char	**env_cp;
+	char	*save;
 
 	i = 0;
 	j = 0;
 	while (m->cmd[i++])
-		m->cmd[i] = ft_strjoin(m->cmd[i], "=");
+	{	
+		if (m->cmd[i])
+		{	
+			save = ft_strdup(m->cmd[i]);
+			free(m->cmd[i]);
+			m->cmd[i] = ft_strjoin(save, "=");
+			free(save);
+		}
+	}
 	l = check_if_exist(m, m->cmd) + 1;
 	if (l > 0)
 	{
