@@ -6,7 +6,7 @@
 /*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:58:56 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/24 12:05:06 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/24 15:33:42 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,20 @@ void	error_handle(t_mini *m, char *str, char *target, int status)
 		if (m && m->head)
 			ft_listclear(&m->head, free);
 	}
+	else if (status == 27)
+	{	
+		//m->exit_status = 0;
+		if (m && m->head)
+			ft_listclear(&m->head, free);
+		free_split(m->cmd);
+	}
 	else
 		m->exit_status = status << 8;
 	if (status > 0)
 		printf("%s %s\n", str, target);
 	ft_putstr_fd("\033[0m", 2);
+	/* if (m && m->head)
+			ft_listclear(&m->head, free); */
 	if (status == 127)
 		free_end(m, m->exit_status);
 	if (status >= 1000)

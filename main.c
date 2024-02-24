@@ -6,7 +6,7 @@
 /*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:53:49 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/24 11:48:31 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/24 16:45:31 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ int	main(int ac, char **av, char **env)
 	{
 		current = NULL;
 		m.parse = 0;
+		m.error_open = 0;
 		if (signal_flag[1] == 0)
 			m.input = readline("$>");
 		else
@@ -153,6 +154,8 @@ int	main(int ac, char **av, char **env)
 			if (ft_strcmp(m.input, "") != 0)
 			{
 				group_command_args(&current, &m);
+				if (m.error_open == 1)
+					m.parse = 1;
 				if (m.parse == 0 && m.cmd[0] != NULL)
 				{
 					if ((ft_strcmp(m.cmd[0], "exit") == 0 ) && (check_if_pipe(m.cmd) == 0))
@@ -165,8 +168,8 @@ int	main(int ac, char **av, char **env)
 			}
 			//print_list(m.head);
 			free_split(m.cmd);
-			//free_token_list(m.head);
 			ft_listclear(&m.head, free);
+			//free(current);
 			free(m.head);
 		}
 		while (waitpid(-1, &m.exit_status, WNOHANG) == 0);

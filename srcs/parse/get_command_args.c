@@ -6,7 +6,7 @@
 /*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:34:11 by tmekhzou          #+#    #+#             */
-/*   Updated: 2024/02/24 11:41:27 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/24 16:37:32 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,12 @@
 void	handle_token(t_token_list *current, t_mini *mini, int *i)
 {
 	if (current->token == COMMAND)
-		mini->cmd[(*i)++] = ft_strdup(current->value);
+	{	
+		if (current->value)
+			mini->cmd[(*i)++] = ft_strdup(current->value);
+	}
 	else if (current->token == REDIR_IN)
-		do_redir_in(current->value);
+		do_redir_in(mini, current->value);
 	else if (current->token == REDIR_OUT)
 	{
 		mini->status_redir_out = 1;

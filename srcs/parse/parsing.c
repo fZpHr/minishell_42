@@ -6,7 +6,7 @@
 /*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:12:49 by tmekhzou          #+#    #+#             */
-/*   Updated: 2024/02/23 20:05:58 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/24 16:30:30 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ bool	check_wrong_command(t_token_list *current)
 	return (command);
 }
 
-char	*expand_variable_value(char *str, int i, int j, t_mini *m)
+/* char	*expand_variable_value(char *str, int i, int j, t_mini *m)
 {
 	char	*var;
 	char	*value;
@@ -66,10 +66,47 @@ char	*expand_variable_value(char *str, int i, int j, t_mini *m)
 	else
 	{
 		free(var);
+		free(str);
 		return (NULL);
 	}
 	free(var);
 	return (str);
+} */
+
+char	*expand_variable_value(char *str, int i, int j, t_mini *m)
+{
+    char	*var;
+    char	*value;
+    char	*new_str;
+    char    *temp;
+
+    var = ft_strdup(str + i + 1);
+    while (var[j] && (ft_isalnum(var[j]) || var[j] == '_'))
+        j++;
+    var[j] = '\0';
+    value = target_path(m, m->envm, var, 1);
+	free(var);
+    if (value)
+    {
+        temp = ft_substr(str, 0, i);
+        new_str = ft_strjoin(temp, value);
+        free(temp);
+        temp = ft_strdup(str + i + j + 1);
+		var = ft_strdup(new_str);
+		free(new_str);
+        new_str = ft_strjoin(var, temp);
+		free(var);
+        free(temp);
+        free(str);
+    }
+    else
+    {
+        free(str);
+		free(value);
+        return (NULL);
+    }
+	free(value);
+    return (new_str);
 }
 
 char	*expand_variable(char *str, t_mini *m)

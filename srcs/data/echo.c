@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:36:41 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/23 20:11:43 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/24 15:38:55 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,12 @@ void	ft_echo(t_mini *m, char **cmd)
 
 	j = 0;
 	n_flag = false;
-	if (cmd[1] == NULL)
+	/* if (cmd[1] == NULL)
 	{
 		printf("\n");
+		error_handle(m, "", "", 27);
 		return ;
-	}
+	} */
 	if (ft_strcmp(cmd[1], "-n") == 0)
 	{
 		i = 2;

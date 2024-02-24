@@ -6,7 +6,7 @@
 /*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:01:42 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/24 12:02:10 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/24 16:46:12 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,7 @@ void	free_end(t_mini *m, int status)
 	if (m->alloc_cmd1 == 1)
 		free_split(m->cmd1);
 	if (m->cmd)
-	{	
 		free_split(m->cmd);
-		printf("cmd freed\n");
-	}
 	if (m->input)
 		free(m->input);
 	if (m->tmp)

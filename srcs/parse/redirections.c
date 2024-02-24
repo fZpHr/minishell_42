@@ -6,13 +6,13 @@
 /*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:24:54 by tmekhzou          #+#    #+#             */
-/*   Updated: 2024/02/23 19:51:24 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/24 16:42:53 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	do_redir_in(char *file)
+void	do_redir_in(t_mini *m, char *file)
 {
 	int	fd;
 
@@ -20,7 +20,8 @@ void	do_redir_in(char *file)
 	if (fd < 0)
 	{
 		printf("minishell: %s: No such file or directory\n", file);
-		exit(1);
+		m->error_open = 1;
+		return ;
 	}
 	dup2(fd, STDIN_FILENO);
 	close(fd);

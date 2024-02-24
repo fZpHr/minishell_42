@@ -6,7 +6,7 @@
 /*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:54:01 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/24 10:27:53 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/24 16:42:25 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ typedef struct s_mini
 	int							parse;
 	int							savefd[4];
 	t_token_list				*head;
+	int							error_open;
 }								t_mini;
 
 // Signals
@@ -166,7 +167,7 @@ void							cp_env(char **env, char **env_cp);
 // Parsing
 
 //redirections.c
-void	do_redir_in(char *file);
+void	do_redir_in(t_mini *m, char *file);
 void	do_redir_out(char *file);
 void	do_append(char *file);
 
