@@ -6,7 +6,7 @@
 /*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:41:36 by tmekhzou          #+#    #+#             */
-/*   Updated: 2024/02/23 21:33:17 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/24 17:07:16 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ int	count_word_command(const char *command)
 		}
 		else
 			count_word_command_2(command, &i, &count);
-		i++;
+		if (command[i] != '\0')
+			i++;
 	}
 	return (count);
 }

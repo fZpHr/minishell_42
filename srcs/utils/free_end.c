@@ -6,7 +6,7 @@
 /*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:01:42 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/24 16:46:12 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/24 17:08:28 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	free_split(char **cmd)
 	{
 		if (cmd[i])
 		{
-			//printf("freeing %s\n", cmd[i]);
 			free(cmd[i]);
 			cmd[i] = NULL;
 		}

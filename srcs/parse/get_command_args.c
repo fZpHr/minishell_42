@@ -6,7 +6,7 @@
 /*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:34:11 by tmekhzou          #+#    #+#             */
-/*   Updated: 2024/02/24 16:37:32 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/24 17:01:55 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	handle_token(t_token_list *current, t_mini *mini, int *i)
 {
 	if (current->token == COMMAND)
-	{	
+	{
 		if (current->value)
 			mini->cmd[(*i)++] = ft_strdup(current->value);
 	}

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+         #
+#    By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/05 17:52:23 by hbelle            #+#    #+#              #
-#    Updated: 2024/02/23 20:08:09 by hbelle           ###   ########.fr        #
+#    Updated: 2024/02/24 17:06:48 by tmekhzou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ SRCS	=	main.c \
 		srcs/data/env_pwd.c \
 		srcs/data/echo.c \
 		srcs/data/cd.c \
+		srcs/utils/function_bis.c \
 
 		
 SRCS_BONUS = 

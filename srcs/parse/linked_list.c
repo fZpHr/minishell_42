@@ -6,7 +6,7 @@
 /*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:12:53 by tmekhzou          #+#    #+#             */
-/*   Updated: 2024/02/24 11:14:02 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/24 17:01:24 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ t_token_list	*create_token_node(t_token token, char *value)
 			node->value = ft_strdup(value);
 		node->next = NULL;
 	}
-	/* if (value)
-		free(value); */
 	return (node);
 }
 
@@ -56,13 +54,13 @@ void	free_token_list(t_token_list *head)
 	{
 		temp = current;
 		current = current->next;
-		if (temp->value)	
+		if (temp->value)
 			free(temp->value);
 		free(temp);
 	}
 }
 
-void	ft_listclear(t_token_list **lst, void (*del)(void*))
+void	ft_listclear(t_token_list **lst, void (*del)(void *))
 {
 	t_token_list	*tmp;
 
@@ -72,7 +70,7 @@ void	ft_listclear(t_token_list **lst, void (*del)(void*))
 	while (tmp)
 	{
 		tmp = (*lst)->next;
-		if ((*lst)->value)	
+		if ((*lst)->value)
 			del((*lst)->value);
 		free(*lst);
 		*lst = tmp;
