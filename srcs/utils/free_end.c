@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_end.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:01:42 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/23 20:05:44 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/24 12:02:10 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	free_split(char **cmd)
 	{
 		if (cmd[i])
 		{
+			//printf("freeing %s\n", cmd[i]);
 			free(cmd[i]);
 			cmd[i] = NULL;
 		}
@@ -46,12 +47,17 @@ void	free_split(char **cmd)
 
 void	free_end(t_mini *m, int status)
 {
+	if (m->head)
+		ft_listclear(&m->head, free);
 	if (m->alloc_env == 1)
 		free_split(m->envm);
 	if (m->alloc_cmd1 == 1)
 		free_split(m->cmd1);
 	if (m->cmd)
+	{	
 		free_split(m->cmd);
+		printf("cmd freed\n");
+	}
 	if (m->input)
 		free(m->input);
 	if (m->tmp)

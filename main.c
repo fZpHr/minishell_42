@@ -6,7 +6,7 @@
 /*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:53:49 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/23 18:56:56 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/24 11:48:31 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ void	interrupt_handle(int sig)
 void	init_parsing(t_mini *m, t_token_list **current)
 {
 	char			**command_split;
-	t_token_list 	*head;
+	//t_token_list 	*head;
 
 	command_split = ft_split_command(m->input);
 	add_token(command_split, current, m);
 	/* current = head; */
-	head = (*current);
+	//head = (*current);
 	m->head = (*current);
 	while ((*current)->token != END)
 	{
@@ -48,7 +48,7 @@ void	init_parsing(t_mini *m, t_token_list **current)
 		//ft_putstr_fd(current->value, 1);
 		(*current) = (*current)->next;
 	}
-	(*current) = head;
+	(*current) = m->head;
 	while ((*current)->token != END)
 	{
 		(*current)->value = quote_things((*current)->value);
@@ -60,17 +60,56 @@ void	init_parsing(t_mini *m, t_token_list **current)
 		} */
 		(*current) = (*current)->next;
 	}
-	(*current) = head;
+	(*current) = m->head;
 	m->ac = count_pipe(*current);
-	(*current) = head;
+	(*current) = m->head;
 	while ((*current)->token != END)
 	{
 		if ((*current)->token == HERE_DOC && (*current)->next->next->token != COMMAND)
 			m->ac = 0;
 		(*current) = (*current)->next;
 	}
-	(*current) = head;
+	(*current) = m->head;
+	free_split(command_split);
+	//free(command_split);
 	//print_list(*current);
+}
+
+const char	*get_token_name(t_token token)
+{
+	switch (token)
+	{
+	case COMMAND:
+		return ("COMMAND");
+	case PIPE:
+		return ("PIPE");
+	case APPEND:
+		return ("APPEND");
+	case REDIR_IN:
+		return ("REDIR_IN");
+	case REDIR_OUT:
+		return ("REDIR_OUT");
+	case END:
+		return ("END");
+	case HERE_DOC:
+		return ("HERE_DOC");
+	default:
+		return ("UNKNOWN");
+	}
+}
+
+
+void	print_list(t_token_list *head)
+{
+	t_token_list *current = head;
+
+	while (current != NULL)
+	{
+		printf("Token: %s, Value: %s\n", get_token_name(current->token),
+			current->value);
+		current = current->next;
+	}
+	current = head;
 }
 
 int	main(int ac, char **av, char **env)
@@ -124,16 +163,16 @@ int	main(int ac, char **av, char **env)
 						current = current->next;
 				}
 			}
+			//print_list(m.head);
 			free_split(m.cmd);
-			free_token_list(m.head);
+			//free_token_list(m.head);
+			ft_listclear(&m.head, free);
+			free(m.head);
 		}
 		while (waitpid(-1, &m.exit_status, WNOHANG) == 0);
 		free(m.input);
 		dup2(m.savefd[2], 0);
 		dup2(m.savefd[3], 1);
 	}
-	free_token_list(current);
-	free(current);
-	free_split(m.cmd);
 	return (0);
 }
