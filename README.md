@@ -343,3 +343,5 @@ regler pb error
 
 NEW : 
 - ls | << fin grep a ( cut les commandes avant le heredoc)
+- mauvais fichier entree quitte 
+- leak echo $fsdfds

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   function.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 19:17:21 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/23 20:25:36 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/24 13:17:00 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,20 @@ int	ft_strlen_arg(char *str, char c)
 		i++;
 	return (i);
 }
+
 char	*target_path(t_mini *m, char **envp, char *target, int status)
 {
 	int		i;
 	char	*path;
+	int		j;
 
+	j = 0;
 	i = 0;
 	while (envp[i])
 	{
-		if (ft_strncmp(envp[i], target, ft_strlen(target)) == 0)
+		while(envp[i][j] != '=')
+			j++;
+		if (ft_strncmp(envp[i], target, j) == 0)
 		{
 			path = ft_substr(envp[i], ft_strlen(target), ft_strlen(envp[i]));
 			m->path_count = i;
@@ -61,6 +66,7 @@ char	*target_path(t_mini *m, char **envp, char *target, int status)
 			free(path);
 			return ("ok");
 		}
+		j = 0;
 		i++;
 	}
 	return (NULL);
