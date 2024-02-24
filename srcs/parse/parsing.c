@@ -6,7 +6,7 @@
 /*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:12:49 by tmekhzou          #+#    #+#             */
-/*   Updated: 2024/02/24 17:02:48 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/24 19:10:59 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,14 @@ char	*expand_variable_value(char *str, int i, int j, t_mini *m)
 	var = get_variable_name(str, i, &j);
 	value = target_path(m, m->envm, var, 1);
 	free(var);
-	if (!value)
+	if (value)
+	{
+		var = ft_strdup(value);
+		free(value);
+		value = ft_substr(var, 1, ft_strlen(var));
+		free(var);
+	}
+	else
 	{
 		free(str);
 		return (NULL);
@@ -83,7 +90,7 @@ char	*expand_variable(char *str, t_mini *m)
 		if (str[i] == '\\')
 			i++;
 		else if (str[i] == '$' && is_between_quotes(str, i) == false && str[i
-				+ 1] != '?')
+			+ 1] != '?')
 		{
 			str = expand_variable_value(str, i, 0, m);
 			if (!str)
