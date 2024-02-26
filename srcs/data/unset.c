@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 14:10:17 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/26 14:24:51 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/26 14:52:48 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	unset_if(t_mini *m, int l, int j)
 	char	**env_cp;
 
 	env_cp = (char **)malloc(sizeof(char *) * (ft_double_char_len(m->envm)
-				+ l));
+				+ l + 1));
 	loop_unset(m, &env_cp, &j);
 	env_cp[j] = NULL;
 	free_split(m->envm);
@@ -93,7 +93,7 @@ void	ft_unset(t_mini *m)
 			free(save);
 		}
 	}
-	l = check_if_exist(m, m->cmd) + 1;
+	l = check_if_exist(m, m->cmd);
 	if (l > 0)
 		unset_if(m, l, j);
 	error_handle(m, "", "", 0);
