@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 14:05:30 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/23 18:32:29 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/26 15:10:16 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	sort_ascii(char **env)
 		i++;
 	}
 	printf_env(env_cp);
+	free_split(env_cp);
 }
 
 void	loop_export(t_mini *m, int *i)
