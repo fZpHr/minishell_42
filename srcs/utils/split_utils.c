@@ -6,7 +6,7 @@
 /*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:41:36 by tmekhzou          #+#    #+#             */
-/*   Updated: 2024/02/24 17:07:16 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/26 19:52:54 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void	count_word_command_2(const char *command, int *i, int *count)
 		(*count)++;
 		*i = skip_char('\'', command, *i);
 	}
+	else if (command[*i] == ' ' && command[*i + 1] != ' ')
+		(*count)++;
 }
 
 int	skip_char(char c, const char *command, int i)
