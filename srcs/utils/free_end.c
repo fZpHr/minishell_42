@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_end.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:01:42 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/24 18:29:08 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/26 14:13:15 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	free_end(t_mini *m, int status)
 		free(m->input);
 	if (m->tmp)
 		free(m->tmp);
-	if(m->pwd_cd)
+	if (m->pwd_cd)
 		free(m->pwd_cd);
 	error_status(status);
 }

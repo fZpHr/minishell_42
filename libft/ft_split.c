@@ -6,11 +6,11 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 12:49:22 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/09 15:54:41 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/26 14:38:08 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include <stdlib.h>
+#include <stdlib.h>
 
 int	separator(char c, char *charset)
 {
@@ -37,8 +37,8 @@ int	count(char *str, char *charset)
 	count = 0;
 	while (str[i] != 0)
 	{
-		if (separator(str[i + 1], charset) == 1
-			&& separator(str[i], charset) == 0)
+		if (separator(str[i + 1], charset) == 1 && separator(str[i],
+				charset) == 0)
 			count++;
 		i++;
 	}
@@ -89,7 +89,7 @@ char	**ft_split(char *str, char *charset)
 	int		i;
 
 	i = count(str, charset);
-	data = (char **) malloc(sizeof(char *) * (i + 1));
+	data = (char **)malloc(sizeof(char *) * (i + 1));
 	if (data == NULL)
 		return (NULL);
 	data[i] = 0;

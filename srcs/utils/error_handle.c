@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handle.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:58:56 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/24 17:10:11 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/26 14:48:43 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@ void	error_handle(t_mini *m, char *str, char *target, int status)
 	ft_putstr_fd("\033[0;31m", 2);
 	if (status == 9999)
 		m->exit_fork = 1;
-	if (status >= 1000)
+	else if (status == 9001)
 	{
-		m->exit_status = status - 1000;
-		if (m && m->head)
-			ft_listclear(&m->head, free);
+		free_split(m->envm);
+		exit(0);
 	}
+	if (status >= 1000)
+		m->exit_status = status - 1000;
 	else if (status == 27)
 	{
 		if (m && m->head)

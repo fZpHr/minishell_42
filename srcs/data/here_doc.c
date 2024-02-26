@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:31:16 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/24 17:53:57 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/26 14:33:30 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	infinite_loop(int fd[2], char *end, t_mini *m)
 	while (1)
 	{
 		input = readline("heredoc> ");
-		if (signal_flag[2] == 1 || ft_strncmp(input, end, ft_strlen(end)) == 0)
+		if (g_signal_flag[2] == 1
+			|| ft_strncmp(input, end, ft_strlen(end)) == 0)
 		{
 			free(input);
 			free_split(m->cmd);

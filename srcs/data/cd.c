@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:44:55 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/24 18:26:40 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/26 14:25:24 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,8 @@ void	ft_cd(t_mini *m, char **cmd)
 	else
 	{
 		if (chdir(cmd[1]) == -1)
-		{
-			error_handle(m, "cd : no such file or directory:", cmd[1], 1);
-			return ;
-		}
+			return (error_handle(m, "cd : no such file or directory:", cmd[1],
+					1));
 	}
 	free(m->old_pwd_cd);
 	m->old_pwd_cd = m->pwd_cd;

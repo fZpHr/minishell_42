@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:12:49 by tmekhzou          #+#    #+#             */
-/*   Updated: 2024/02/24 19:10:59 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/26 14:28:22 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	*expand_variable(char *str, t_mini *m)
 		if (str[i] == '\\')
 			i++;
 		else if (str[i] == '$' && is_between_quotes(str, i) == false && str[i
-			+ 1] != '?')
+				+ 1] != '?')
 		{
 			str = expand_variable_value(str, i, 0, m);
 			if (!str)

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:36:39 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/24 18:43:39 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/26 14:13:42 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	init(t_mini *m)
+void	init_first(t_mini *m)
 {
 	m->old_pwd_cd = NULL;
 	m->pwd_cd = NULL;
@@ -38,6 +38,11 @@ void	init(t_mini *m)
 	m->alloc_path = 0;
 	m->alloc_pwd = 0;
 	m->status_append = 0;
+}
+
+void	init(t_mini *m)
+{
+	init_first(m);
 	m->out = NULL;
 	m->exec = 0;
 	m->envm = NULL;

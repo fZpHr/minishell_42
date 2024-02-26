@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+         #
+#    By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/05 17:52:23 by hbelle            #+#    #+#              #
-#    Updated: 2024/02/24 17:06:48 by tmekhzou         ###   ########.fr        #
+#    Updated: 2024/02/26 14:04:30 by hbelle           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,8 @@ SRCS	=	main.c \
 		srcs/data/echo.c \
 		srcs/data/cd.c \
 		srcs/utils/function_bis.c \
+		srcs/data/child.c \
+		srcs/data/main_function.c \
 
 		
 SRCS_BONUS = 

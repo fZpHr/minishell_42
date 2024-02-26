@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 16:22:51 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/09 15:54:18 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/26 14:39:07 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdarg.h>
-
 
 int		ft_strcmp(char *s1, char *s2);
 char	*ft_strstr(char *str, char *to_find);

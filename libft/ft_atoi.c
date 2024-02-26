@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 19:32:34 by hbelle            #+#    #+#             */
-/*   Updated: 2023/11/07 11:33:52 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/26 14:41:51 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 int	ft_atoi(const char *nptr)
@@ -20,6 +21,8 @@ int	ft_atoi(const char *nptr)
 	i = 0;
 	res = 0;
 	sign = 1;
+	if (!nptr)
+		return (0);
 	while (nptr[i] == ' ' || nptr[i] == '\f' || nptr[i] == '\n'
 		|| nptr[i] == '\r' || nptr[i] == '\t' || nptr[i] == '\v')
 		i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:36:41 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/24 15:38:55 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/26 14:26:04 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	handle_status(t_mini *m, int *status)
 	else
 		printf("%d", (*status));
 }
+
 void	loop_echo(t_mini *m, char **cmd, int i, int j)
 {
 	int	status;
@@ -57,12 +58,6 @@ void	ft_echo(t_mini *m, char **cmd)
 
 	j = 0;
 	n_flag = false;
-	/* if (cmd[1] == NULL)
-	{
-		printf("\n");
-		error_handle(m, "", "", 27);
-		return ;
-	} */
 	if (ft_strcmp(cmd[1], "-n") == 0)
 	{
 		i = 2;

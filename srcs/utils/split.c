@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:41:43 by tmekhzou          #+#    #+#             */
-/*   Updated: 2024/02/24 17:09:53 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/26 14:38:49 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,6 @@ void	handle_end(t_split_command *sc)
 {
 	if (sc->current_group != NULL)
 	{
-		add_current_group_to_result(sc);
+		add_current_group_result(sc);
 	}
 }
