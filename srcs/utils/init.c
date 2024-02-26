@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:36:39 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/26 16:34:06 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/26 17:25:29 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,10 @@ void	init(t_mini *m)
 	m->saved_stdin = 0;
 	m->saved_stdout = 0;
 	m->heredoc_status = 0;
-	m->exit_fork = 0;
 	m->end_status = 0;
 	m->current_input = NULL;
 	m->parse = 0;
 	m->status_redir_out = 0;
-	m->status_child = 0;
 	m->fd_save_heredoc[0] = 0;
 	m->fd_save_heredoc[1] = 0;
 	m->head = NULL;

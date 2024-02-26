@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:56:21 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/24 17:54:20 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/26 17:27:08 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_exec_builtin(t_mini *m)
 	else if (ft_strcmp(m->cmd[0], "unset") == 0)
 		ft_unset(m);
 	else if (ft_strcmp(m->cmd[0], "exit") == 0)
-		error_handle(m, "", "", 9999);
+		error_handle(m, "", "", 1000 + ft_atoi(m->cmd[1]));
 	else if (m->heredoc_status == 1)
 		here_doc(m, m->cmd[0]);
 }

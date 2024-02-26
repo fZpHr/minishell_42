@@ -6,17 +6,18 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:31:16 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/26 14:33:30 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/26 17:17:42 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	infinite_loop(int fd[2], char *end, t_mini *m)
+void	infinite_loop(char *end, t_mini *m)
 {
 	char	*input;
+	int i = 3;
+	
 
-	(void)m;
 	while (1)
 	{
 		input = readline("heredoc> ");
@@ -27,36 +28,37 @@ void	infinite_loop(int fd[2], char *end, t_mini *m)
 			free_split(m->cmd);
 			ft_listclear(&m->head, free);
 			free_split(m->envm);
+			while(i <= 1023)
+				close(i++);
 			exit(0);
 		}
-		write(fd[1], input, ft_strlen(input));
-		write(fd[1], "\n", 1);
+		write(m->fd_doc[1], input, ft_strlen(input));
+		write(m->fd_doc[1], "\n", 1);
 		free(input);
 	}
 }
 
 void	here_doc(t_mini *m, char *end)
 {
-	int	fd[2];
 	int	pid;
 
-	if (pipe(fd) == -1)
+	if (pipe(m->fd_doc) == -1)
 		error_handle(m, "pipex: error pipe", "", 1);
 	pid = fork();
 	if (pid == -1)
 		error_handle(m, "pipex: error fork", "", 1);
 	if (pid == 0)
-		infinite_loop(fd, end, m);
+	{
+		infinite_loop(end, m);
+		exit(0);
+	}
 	else
 	{
 		waitpid(pid, NULL, 0);
-		close(fd[1]);
-		dup2(fd[0], 0);
-		close(fd[0]);
+		close(m->fd_doc[1]);
+		dup2(m->fd_doc[0], 0);
+		close(m->fd_doc[0]);
 	}
-	if (m->status_child == 0)
-	{
-		close(fd[0]);
-		close(fd[1]);
-	}
+	close(m->fd_doc[0]);
+	close(m->fd_doc[1]);
 }
