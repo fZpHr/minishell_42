@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   function.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 19:17:21 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/24 17:07:05 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/26 16:08:46 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,25 +70,4 @@ char	*target_path(t_mini *m, char **envp, char *target, int status)
 		i++;
 	}
 	return (NULL);
-}
-
-int	ft_count_cmd(char *str, char c)
-{
-	int	i;
-	int	count;
-
-	i = 0;
-	count = 0;
-	while (str[i])
-	{
-		if (str[i] != c)
-		{
-			count++;
-			while (str[i] != c && str[i])
-				i++;
-		}
-		else
-			i++;
-	}
-	return (count);
 }

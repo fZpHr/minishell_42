@@ -6,7 +6,7 @@
 #    By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/05 17:52:23 by hbelle            #+#    #+#              #
-#    Updated: 2024/02/26 14:04:30 by hbelle           ###   ########.fr        #
+#    Updated: 2024/02/26 15:48:44 by hbelle           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,6 @@ SRCS	=	main.c \
 		srcs/utils/init.c \
 		srcs/utils/free_end.c \
 		srcs/data/here_doc.c \
-		srcs/utils/stdin_stdout_handle.c \
 		srcs/utils/function.c \
 		srcs/data/exec.c \
 		srcs/data/found_path.c \

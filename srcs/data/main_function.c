@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 13:59:58 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/26 14:47:45 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/26 16:34:01 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	loop_main(t_mini *m, t_token_list *current)
 		while (waitpid(-1, &m->exit_status, WNOHANG) == 0)
 			;
 		free(m->input);
-		dup2(m->savefd[2], 0);
-		dup2(m->savefd[3], 1);
+		dup2(m->savefd[0], 0);
+		dup2(m->savefd[1], 1);
 	}
 }

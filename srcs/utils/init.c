@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:36:39 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/26 14:13:42 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/26 16:34:06 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,6 @@ void	init(t_mini *m)
 	m->head = NULL;
 	m->error_open = 0;
 	m->status_exit = 0;
+	m->savefd[0] = 0;
+	m->savefd[1] = 0;
 }

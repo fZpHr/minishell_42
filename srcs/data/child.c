@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 13:52:16 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/26 14:27:25 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/26 16:21:26 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	end(t_mini *m)
 {
 	int	pid;
 
+	pid = 0;
 	if (build_intern(m) == 1)
 		ft_exec_builtin(m);
 	else

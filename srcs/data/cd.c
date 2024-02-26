@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:44:55 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/26 14:25:24 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/26 15:20:42 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	cd_flag(t_mini *m, char **home)
 		else
 			printf("%s\n", (*home));
 	}
-	free((*home));
+	//free((*home));
 	return (0);
 }
 

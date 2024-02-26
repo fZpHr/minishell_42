@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:54:01 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/26 14:36:49 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/26 16:34:17 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ typedef struct s_mini
 	int							fd_doc[2];
 	int							fd[2];
 	int							parse;
-	int							savefd[4];
+	int							savefd[2];
 	t_token_list				*head;
 	int							error_open;
 }								t_mini;
@@ -145,7 +145,6 @@ int								build_intern(t_mini *m);
 void							check_input(t_mini *m);
 void							here_doc(t_mini *m, char *end);
 void							ft_exec(t_mini *m, t_token_list *current);
-int								ft_count_cmd(char *str, char c);
 void							ft_cd(t_mini *m, char **cmd);
 char							*target_path(t_mini *m, char **envp,
 									char *target, int status);
@@ -156,7 +155,6 @@ void							error_handle(t_mini *m, char *str, char *target,
 void							free_end(t_mini *m, int status);
 void							free_split(char **cmd);
 void							init(t_mini *m);
-void							stdin_stdout_handle(t_mini *m, int status);
 void							ft_env(t_mini *m, char **env, int status);
 void							ft_pwd(t_mini *m);
 void							ft_export(t_mini *m, char **env);

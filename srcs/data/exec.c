@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 14:15:51 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/26 13:55:47 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/26 16:37:27 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ void	loop_exec(t_mini *m, t_token_list *current)
 			|| m->heredoc_status == 1)
 		{
 			dup2(m->savefd[0], 0);
+			close(m->savefd[0]);
 			dup2(m->savefd[1], 1);
+			close(m->savefd[1]);
 		}
 		free_split(m->cmd);
 		if (current)

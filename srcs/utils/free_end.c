@@ -6,25 +6,11 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:01:42 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/26 14:13:15 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/26 15:40:32 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	error_status(int status)
-{
-	if (status == 0)
-		exit(0);
-	else if (status == 1)
-		exit(1);
-	else if (status == 2)
-		exit(2);
-	else if (status == 126)
-		exit(126);
-	else if (status == 127)
-		exit(127);
-}
 
 void	free_split(char **cmd)
 {
@@ -46,6 +32,8 @@ void	free_split(char **cmd)
 
 void	free_end(t_mini *m, int status)
 {
+	close (m->savefd[0]);
+	close (m->savefd[1]);
 	if (m->head)
 		ft_listclear(&m->head, free);
 	if (m->alloc_env == 1)
@@ -60,5 +48,5 @@ void	free_end(t_mini *m, int status)
 		free(m->tmp);
 	if (m->pwd_cd)
 		free(m->pwd_cd);
-	error_status(status);
+	exit(status);
 }

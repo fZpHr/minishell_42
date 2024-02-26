@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:53:49 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/26 14:41:06 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/26 16:34:39 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ int	main(int ac, char **av, char **env)
 	ft_env(&m, env, 0);
 	m.savefd[0] = dup(0);
 	m.savefd[1] = dup(1);
-	m.savefd[2] = dup(0);
-	m.savefd[3] = dup(1);
 	loop_main(&m, current);
+	close(m.savefd[0]);
+	close(m.savefd[1]);
 	return (0);
 }
