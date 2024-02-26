@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   function.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 19:17:21 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/26 16:08:46 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/26 18:22:37 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,12 @@ char	*target_path(t_mini *m, char **envp, char *target, int status)
 		i++;
 	}
 	return (NULL);
+}
+
+void	close_fds(t_mini *m)
+{
+	close(m->savefd[0]);
+	close(m->savefd[1]);
+	close(m->fd[0]);
+	close(m->fd[1]);
 }

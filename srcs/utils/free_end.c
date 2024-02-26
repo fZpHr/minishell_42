@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_end.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:01:42 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/26 17:22:31 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/26 18:22:46 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ void	free_split(char **cmd)
 
 void	free_end(t_mini *m, int status)
 {
-	int i;
+	int	i;
 
 	i = 3;
 	close(m->savefd[0]);
 	close(m->savefd[1]);
-	while(i <= 1023)
+	while (i <= 1023)
 		close(i++);
 	if (m->head)
 		ft_listclear(&m->head, free);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:44:55 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/26 15:20:42 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/26 18:22:26 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	cd_flag(t_mini *m, char **home)
 		else
 			printf("%s\n", (*home));
 	}
-	//free((*home));
 	return (0);
 }
 

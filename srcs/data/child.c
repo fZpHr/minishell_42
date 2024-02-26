@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 13:52:16 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/26 18:06:14 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/26 18:22:17 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,8 @@ void	child_end(t_mini *m)
 	exec = 0;
 	if (build_intern(m) == 1)
 	{
-		close(m->fd[0]);
-		close(m->fd[1]);
 		ft_exec_builtin(m);
-		close(m->savefd[0]);
-		close(m->savefd[1]);
+		close_fds(m);
 		exit(0);
 	}
 	else
@@ -56,10 +53,7 @@ void	end(t_mini *m)
 		pid = fork();
 		if (pid == -1)
 		{
-			close(m->savefd[0]);
-			close(m->savefd[1]);
-			close(m->fd[0]);
-			close(m->fd[1]);
+			close_fds(m);
 			return (error_handle(m, "error fork", "", 1));
 		}
 		if (pid == 0)
@@ -91,8 +85,7 @@ void	child_of_child_else(t_mini *m)
 		m->tmp_child = found_cmd(m, m->envm);
 		if (!m->tmp_child)
 		{
-			close(m->fd[1]);
-			close(m->fd[0]);
+			close_fds(m);
 			error_handle(m, "command not found: ", m->cmd[0], 1127);
 		}
 	}
@@ -117,7 +110,7 @@ void	child_process(t_mini *m)
 		ft_exec_builtin(m);
 	else
 	{
-		pid = fork();	
+		pid = fork();
 		if (pid == -1)
 		{
 			close(m->fd[0]);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:54:01 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/26 17:38:09 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/26 18:17:54 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ char							*found_cmd(t_mini *m, char **envp);
 char							*found_var(char **envp, char *target);
 int								ft_double_char_len(char **env);
 void							cp_env(char **env, char **env_cp);
-
+void							close_fds(t_mini *m);
 // Parsing
 
 // redirections.c
