@@ -3,27 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   function_bis.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 17:06:14 by tmekhzou          #+#    #+#             */
-/*   Updated: 2024/02/24 17:07:26 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/26 18:10:50 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	ft_free_tab(char **tab)
-{
-	int	i;
-
-	i = 0;
-	while (tab[i] != NULL)
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
-}
 
 char	*cut_cmd_char(t_mini *m, char *cmd)
 {

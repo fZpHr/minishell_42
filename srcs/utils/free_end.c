@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_end.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:01:42 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/26 18:22:46 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/26 18:44:04 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,10 @@ void	free_end(t_mini *m, int status)
 		ft_listclear(&m->head, free);
 	if (m->alloc_env == 1)
 		free_split(m->envm);
-	if (m->alloc_cmd1 == 1)
-		free_split(m->cmd1);
 	if (m->cmd)
 		free_split(m->cmd);
 	if (m->input)
 		free(m->input);
-	if (m->tmp)
-		free(m->tmp);
 	if (m->pwd_cd)
 		free(m->pwd_cd);
 	exit(status);

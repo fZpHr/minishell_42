@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:41:43 by tmekhzou          #+#    #+#             */
-/*   Updated: 2024/02/26 14:38:49 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/26 19:40:52 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ char	**ft_split_command(const char *command)
 
 	sc.result_size = 0;
 	sc.result_capacity = count_word_command(command) + 3;
-	sc.result = malloc(sc.result_capacity * sizeof(char *));
+	printf("result_capacity: %d\n", sc.result_capacity);
+	sc.result = ft_calloc(sc.result_capacity, sizeof(char *) + 1);
 	sc.i = 0;
 	sc.j = 0;
 	sc.command_length = strlen(command);

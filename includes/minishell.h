@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:54:01 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/26 18:17:54 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/26 18:43:37 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,43 +58,20 @@ typedef struct s_mini
 {
 	int							status_exit;
 	int							path_count;
-	int							fd_save_heredoc[2];
 	char						**cmd;
 	char						**envm;
-	char						**env_path;
 	char						*path;
 	char						*input;
-	int							saved_stdin;
-	int							saved_stdout;
 	char						*pwd_cd;
 	char						*old_pwd_cd;
-	int							status;
-	char						**cmd1;
-	char						**cmd2;
-	char						**envp;
-	char						*tmp;
 	char						*tmp_child;
 	char						*tmp_end;
-	int							exec;
 	int							ac;
 	int							exit_status;
 	int							status_append;
 	int							status_redir_out;
-	char						*out;
-	int							append_left;
-	int							append_right;
-	int							redi_left;
-	int							redi_right;
-	int							intern_last;
-	int							count_cmd;
 	int							alloc_env;
-	int							alloc_cmd;
-	int							alloc_cmd1;
-	int							alloc_path;
-	int							alloc_pwd;
 	int							heredoc_status;
-	int							end_status;
-	char						**current_input;
 	int							fd_doc[2];
 	int							fd[2];
 	int							parse;
