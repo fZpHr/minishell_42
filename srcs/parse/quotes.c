@@ -6,7 +6,7 @@
 /*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:12:40 by tmekhzou          #+#    #+#             */
-/*   Updated: 2024/02/23 21:01:45 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/27 13:57:40 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ bool	is_between_double_quotes(char *str, int i)
 	j = 0;
 	while (j < i)
 	{
-		if (str[j] == '\"')
+		if (str[j] == '\"' && is_between_quotes(str, j) == false)
 			quote++;
 		j++;
 	}

@@ -6,7 +6,7 @@
 /*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:53:49 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/26 19:57:25 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/27 14:32:26 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,32 @@ void	interrupt_handle(int sig)
 	{
 		return ;
 	}
+}
+
+void	check_error_quotes(t_mini *m)
+{
+	int	i;
+	int	single_quotes;
+	int	double_quotes;
+
+	single_quotes = 0;
+	double_quotes = 0;
+	i = 0;
+	while (m->input && m->input[i])
+	{
+		if (m->input[i] == '\'' && is_between_double_quotes(m->input, i) == 0)
+			single_quotes++;
+		if (m->input[i] == '\"' && is_between_quotes(m->input, i) == 0)
+			double_quotes++;
+		i++;
+	}
+	if (single_quotes % 2 != 0 || double_quotes % 2 != 0)
+	{
+		ft_putstr_fd("minishell: syntax error\n", 2);
+		m->parse_error = 1;
+	}
+	else
+		m->parse_error = 0;
 }
 
 void	init_parsing(t_mini *m, t_token_list **current)

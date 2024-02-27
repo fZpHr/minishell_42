@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:41:43 by tmekhzou          #+#    #+#             */
-/*   Updated: 2024/02/26 19:40:52 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/27 13:19:06 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ char	**ft_split_command(const char *command)
 	t_split_command	sc;
 
 	sc.result_size = 0;
-	sc.result_capacity = count_word_command(command) + 3;
-	printf("result_capacity: %d\n", sc.result_capacity);
+	sc.result_capacity = count_word_command(command) + 2;
 	sc.result = ft_calloc(sc.result_capacity, sizeof(char *) + 1);
 	sc.i = 0;
 	sc.j = 0;

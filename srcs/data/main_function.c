@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_function.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 13:59:58 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/26 17:55:31 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/27 14:25:15 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,18 @@ void	loop_main(t_mini *m, t_token_list *current)
 			m->input = readline("$>");
 		else
 			m->input = readline("");
+		check_error_quotes(m);
 		g_signal_flag[1] = 0;
 		if (m->input)
 			add_history(m->input);
 		if (m->input == NULL)
 			error_handle(m, "", "", 9001);
-		else if (ft_space(m->input) == 0)
+		else if (ft_space(m->input) == 0 && m->parse_error == 0)
 			else_if_main(m, current);
 		while (waitpid(-1, &m->exit_status, WNOHANG) == 0)
 			;
-		free(m->input);
+		if (m->input)
+			free(m->input);
 		dup2(m->savefd[0], 0);
 		dup2(m->savefd[1], 1);
 	}

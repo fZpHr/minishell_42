@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:54:01 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/26 18:43:37 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/27 14:25:49 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ typedef struct s_mini
 	int							savefd[2];
 	t_token_list				*head;
 	int							error_open;
+	int							parse_error;
 }								t_mini;
 
 // Signals
@@ -160,6 +161,7 @@ bool							check_wrong_command(t_token_list *current);
 char							*expand_variable_value(char *str, int i, int j,
 									t_mini *m);
 char							*expand_variable(char *str, t_mini *m);
+void	check_error_quotes(t_mini *m);
 
 // linked_list.c
 t_token_list					*create_token_node(t_token token, char *value);
