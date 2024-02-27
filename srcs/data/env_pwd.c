@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 19:51:19 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/27 17:30:42 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/27 17:46:37 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int	env_begin(t_mini *m, char **env, int status)
 
 	i = 0;
 	m->alloc_env = 1;
-	m->envm = (char **)ft_malloc(sizeof(char *) * (ft_double_char_len(env) + 1));
+	m->envm = (char **)ft_malloc(sizeof(char *) * (ft_double_char_len(env)
+				+ 1));
 	if (!m->envm)
 	{
 		error_handle(m, "error ft_malloc", "", 1);
