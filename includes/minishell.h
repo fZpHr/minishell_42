@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:54:01 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/27 16:25:59 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/27 17:25:14 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
+# define malloc(n) ft_malloc(n, __FILE__, __LINE__, __FUNCTION__)
 # include "../libft/libft.h"
 # include <curses.h>
 # include <dirent.h>
@@ -142,6 +142,8 @@ char							*found_var(char **envp, char *target);
 int								ft_double_char_len(char **env);
 void							cp_env(char **env, char **env_cp);
 void							close_fds(t_mini *m);
+void							*Malloc(size_t size, const char *file, int line,
+									const char *function);
 // Parsing
 
 // redirections.c

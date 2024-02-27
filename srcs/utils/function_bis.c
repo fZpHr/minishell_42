@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   function_bis.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 17:06:14 by tmekhzou          #+#    #+#             */
-/*   Updated: 2024/02/27 16:02:05 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/27 17:28:14 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,17 @@ void	add_null(char **env, int i, int l)
 		i++;
 		l--;
 	}
+}
+
+void	*ft_malloc(size_t size)
+{
+	void	*ptr;
+
+	ptr = malloc(size);
+	if (!ptr)
+	{
+		ft_putstr_fd("Error: malloc failed\n", 2);
+		exit(1);
+	}
+	return (ptr);
 }
