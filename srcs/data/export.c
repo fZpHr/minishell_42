@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 14:05:30 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/26 15:10:16 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/27 15:27:30 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,13 @@ void	loop_export(t_mini *m, int *i)
 	char	*tmp;
 	int		l;
 
+	m->status_exit = 0;
 	l = 1;
 	while (m->cmd[l] != NULL)
 	{
 		tmp = cut_cmd_char(m, m->cmd[l]);
-		if (target_path(m, m->envm, tmp, 0) != NULL)
+		if (!tmp);
+		else if (target_path(m, m->envm, tmp, 0) != NULL)
 		{
 			free(m->envm[m->path_count]);
 			m->envm[m->path_count] = ft_strdup(m->cmd[l]);
@@ -86,6 +88,7 @@ void	loop_export(t_mini *m, int *i)
 			(*i)++;
 		}
 		free(tmp);
+		tmp = NULL;
 		l++;
 	}
 }

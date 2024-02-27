@@ -6,7 +6,7 @@
 /*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 19:17:21 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/26 18:22:37 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/27 15:42:01 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,19 @@ char	*target_path(t_mini *m, char **envp, char *target, int status)
 	int		i;
 	char	*path;
 	int		j;
+	int		max;
 
+	
 	j = 0;
 	i = 0;
 	while (envp[i])
 	{
-		while (envp[i][j] != '=')
+		max = ft_strlen(target);
+		while (envp[i][j] && envp[i][j] != '=')
 			j++;
-		if (ft_strncmp(envp[i], target, j) == 0)
+		if (j > max)
+			max = j;
+		if (ft_strncmp(envp[i], target, max) == 0)
 		{
 			path = ft_substr(envp[i], ft_strlen(target), ft_strlen(envp[i]));
 			m->path_count = i;
@@ -66,6 +71,7 @@ char	*target_path(t_mini *m, char **envp, char *target, int status)
 			free(path);
 			return ("ok");
 		}
+		max = 0;
 		j = 0;
 		i++;
 	}
