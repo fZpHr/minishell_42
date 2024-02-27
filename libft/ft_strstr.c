@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:52:28 by hbelle            #+#    #+#             */
-/*   Updated: 2023/09/27 13:58:28 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/27 17:39:36 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 void	boucle(int *i, int *j, char *str, char *to_find)
 {

@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 13:25:03 by hbelle            #+#    #+#             */
-/*   Updated: 2023/11/06 13:24:47 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/27 17:39:44 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 static char	*ft_empty(void)
@@ -23,9 +24,9 @@ static char	*ft_empty(void)
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char		*ptr;
-	size_t		i;
-	size_t		s_len;
+	char	*ptr;
+	size_t	i;
+	size_t	s_len;
 
 	i = 0;
 	if (!s)

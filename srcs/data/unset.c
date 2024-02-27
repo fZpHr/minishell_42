@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 14:10:17 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/27 16:58:16 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/27 17:30:42 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ void	unset_if(t_mini *m, int l, int j)
 	int		i;
 	char	**env_cp;
 
-	env_cp = (char **)malloc(sizeof(char *) * (ft_double_char_len(m->envm) + l
-				+ 1));
+	env_cp = (char **)ft_malloc(sizeof(char *) * (ft_double_char_len(m->envm)
+				+ l + 1));
 	i = loop_unset(m, &env_cp, &j);
 	while (m->envm[i])
 	{

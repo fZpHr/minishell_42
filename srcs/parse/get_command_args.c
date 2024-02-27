@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_command_args.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:34:11 by tmekhzou          #+#    #+#             */
-/*   Updated: 2024/02/24 17:46:52 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/27 17:30:42 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	group_command_args(t_token_list **current, t_mini *mini)
 	mini->status_redir_out = 0;
 	mini->status_append = 0;
 	mini->heredoc_status = 0;
-	mini->cmd = (char **)malloc(sizeof(char *) * (get_number_of_args(current)
+	mini->cmd = (char **)ft_malloc(sizeof(char *) * (get_number_of_args(current)
 				+ 2));
 	while ((*current)->token != END && (*current)->token != PIPE)
 	{

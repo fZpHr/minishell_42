@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 14:05:30 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/27 16:01:13 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/27 17:42:14 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	sort_ascii(char **env)
 	char	*tmp;
 	char	**env_cp;
 
-	env_cp = (char **)malloc(sizeof(char *) * (ft_double_char_len(env) + 1));
+	env_cp = (char **)ft_malloc(sizeof(char *) * (ft_double_char_len(env) + 1));
 	cp_env(env, env_cp);
 	i = 0;
 	loop_sort_ascii(env_cp, &j, &tmp);
@@ -110,7 +110,7 @@ void	ft_export(t_mini *m, char **env)
 	else
 	{
 		l = ft_double_char_len(m->cmd);
-		tmp = (char **)malloc(sizeof(char *) * (i + l));
+		tmp = (char **)ft_malloc(sizeof(char *) * (i + l));
 		cp_env(m->envm, tmp);
 		free_split(m->envm);
 		m->envm = tmp;

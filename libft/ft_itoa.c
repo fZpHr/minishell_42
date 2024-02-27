@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 11:55:07 by hbelle            #+#    #+#             */
-/*   Updated: 2023/11/07 11:55:13 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/27 17:36:42 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 static long long int	ft_size(long long int str)
@@ -35,8 +36,8 @@ static char	*ft_writer(long long int nbr, char *str, long long int i)
 	return (str);
 }
 
-static char	*nega(long long int n, char *str,
-		long long int i, long long int len)
+static char	*nega(long long int n, char *str, long long int i,
+		long long int len)
 {
 	i--;
 	n = n * -1;
@@ -48,9 +49,9 @@ static char	*nega(long long int n, char *str,
 
 char	*ft_itoa(int n)
 {
-	long long int		i;
-	long long int		len;
-	char				*str;
+	long long int	i;
+	long long int	len;
+	char			*str;
 
 	len = ft_size(n);
 	if (n == 0)

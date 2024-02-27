@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   function_bis.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 17:06:14 by tmekhzou          #+#    #+#             */
-/*   Updated: 2024/02/27 17:28:14 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/27 17:43:43 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*cut_cmd_char(t_mini *m, char *cmd)
 		return (NULL);
 	}
 	l = ft_strlen_arg(cmd, '=') + 1;
-	tmp = (char *)malloc(sizeof(char) * (l + 1));
+	tmp = (char *)ft_malloc(sizeof(char) * (l + 1));
 	ft_strlcpy(tmp, cmd, l + 1);
 	return (tmp);
 }
@@ -51,12 +51,12 @@ void	add_null(char **env, int i, int l)
 
 void	*ft_malloc(size_t size)
 {
-	void	*ptr;
+	void *ptr;
 
 	ptr = malloc(size);
 	if (!ptr)
 	{
-		ft_putstr_fd("Error: malloc failed\n", 2);
+		ft_putstr_fd("Error: ft_malloc failed\n", 2);
 		exit(1);
 	}
 	return (ptr);
