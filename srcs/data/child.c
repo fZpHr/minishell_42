@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 13:52:16 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/27 14:49:12 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/27 18:18:14 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	child_end(t_mini *m)
 		close(m->savefd[1]);
 		exec = execve(m->tmp_end, m->cmd, m->envm);
 		if (exec == -1)
-			error_handle(m, "error execve", m->cmd[0], 1126);
+			handle_exec(m, m->tmp_end);
 	}
 }
 
@@ -99,7 +99,7 @@ void	child_of_child_else(t_mini *m)
 	close(m->savefd[1]);
 	exec = execve(m->tmp_child, m->cmd, m->envm);
 	if (exec == -1)
-		error_handle(m, "error execve", m->cmd[0], 1126);
+		handle_exec(m, m->tmp_child);
 }
 
 void	child_process(t_mini *m)

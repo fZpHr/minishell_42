@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:58:56 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/27 16:50:29 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/27 18:14:04 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	error_handle(t_mini *m, char *str, char *target, int status)
 		free_split(m->envm);
 		close(m->savefd[0]);
 		close(m->savefd[1]);
-		exit(0);
+		exit(m->exit_status >> 8);
 	}
 	if (status >= 1000)
 		m->exit_status = status - 1000;

@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:54:01 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/27 17:32:08 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/27 18:17:43 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ typedef struct s_split_command
 }								t_split_command;
 
 // Data
+void							handle_exec(t_mini *m, char *path);
 void							init_parsing(t_mini *m, t_token_list **current);
 void							loop_main(t_mini *m, t_token_list *current);
 void							end(t_mini *m);

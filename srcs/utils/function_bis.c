@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 17:06:14 by tmekhzou          #+#    #+#             */
-/*   Updated: 2024/02/27 17:47:10 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/27 18:20:01 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,10 @@ void	*ft_malloc(size_t size)
 		exit(1);
 	}
 	return (ptr);
+}
+
+void	handle_exec(t_mini *m, char *path)
+{
+	free(path);
+	error_handle(m, "error execve", m->cmd[0], 1126);
 }
