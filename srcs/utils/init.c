@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:36:39 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/27 14:26:41 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/27 16:11:59 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,5 @@ void	init(t_mini *m)
 	m->exit_status = 0;
 	m->status_append = 0;
 	m->parse_error = 0;
+	m->max_unset = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:01:42 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/26 18:44:04 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/27 16:30:23 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	free_end(t_mini *m, int status)
 	int	i;
 
 	i = 3;
+	if (status > 255)
+		status = 1;
 	close(m->savefd[0]);
 	close(m->savefd[1]);
 	while (i <= 1023)

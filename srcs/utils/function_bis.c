@@ -6,11 +6,19 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 17:06:14 by tmekhzou          #+#    #+#             */
-/*   Updated: 2024/02/26 18:10:50 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/27 16:02:05 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	close_fds(t_mini *m)
+{
+	close(m->savefd[0]);
+	close(m->savefd[1]);
+	close(m->fd[0]);
+	close(m->fd[1]);
+}
 
 char	*cut_cmd_char(t_mini *m, char *cmd)
 {

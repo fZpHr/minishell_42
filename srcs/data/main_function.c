@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_function.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 13:59:58 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/27 14:25:15 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/27 15:34:10 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	loop_main(t_mini *m, t_token_list *current)
 	while (1)
 	{
 		current = NULL;
+		m->status_exit = 0;
 		m->parse = 0;
 		m->error_open = 0;
 		if (g_signal_flag[1] == 0)

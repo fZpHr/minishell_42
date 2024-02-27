@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 14:05:30 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/27 15:27:30 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/27 16:01:13 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ void	loop_export(t_mini *m, int *i)
 	while (m->cmd[l] != NULL)
 	{
 		tmp = cut_cmd_char(m, m->cmd[l]);
-		if (!tmp);
+		if (!tmp)
+			;
 		else if (target_path(m, m->envm, tmp, 0) != NULL)
 		{
 			free(m->envm[m->path_count]);

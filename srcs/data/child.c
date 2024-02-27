@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 13:52:16 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/26 18:22:17 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/27 14:49:12 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	child_of_child_else(t_mini *m)
 
 	exec = 0;
 	if (access(m->cmd[0], F_OK) == 0)
-		m->tmp_end = ft_strdup(m->cmd[0]);
+		m->tmp_child = ft_strdup(m->cmd[0]);
 	else
 	{
 		m->tmp_child = found_cmd(m, m->envm);

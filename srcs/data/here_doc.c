@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:31:16 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/26 18:12:07 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/27 14:51:54 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	infinite_loop(char *end, t_mini *m)
 	i = 3;
 	while (1)
 	{
-		input = readline("heredoc> ");
+		if (g_signal_flag[2] == 0)
+			input = readline("heredoc> ");
 		if (g_signal_flag[2] == 1 || ft_strncmp(input, end,
 				ft_strlen(end)) == 0)
 		{

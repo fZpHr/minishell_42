@@ -6,7 +6,7 @@
 #    By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/05 17:52:23 by hbelle            #+#    #+#              #
-#    Updated: 2024/01/29 14:27:26 by hbelle           ###   ########.fr        #
+#    Updated: 2024/02/27 15:18:54 by hbelle           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,6 +68,10 @@ SRCS	=	ft_atoi.c \
 	ft_strstr.c \
 	ft_strcmp.c \
 	ft_swap.c \
+	printf_format.c \
+	printf_putstr.c \
+	printf_utilis.c \
+	printf.c \
 
 OBJTS	=	${SRCS:.c=.o} 
 

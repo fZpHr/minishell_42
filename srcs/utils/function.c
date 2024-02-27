@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   function.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 19:17:21 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/27 15:42:01 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/27 16:47:09 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,17 @@ int	ft_strlen_arg(char *str, char c)
 	return (i);
 }
 
+void	j_handle_target(char **envp, int i, int *j, char *target)
+{
+	char	max;
+
+	max = ft_strlen(target);
+	while (envp[i][*j] && envp[i][*j] != '=')
+		(*j)++;
+	if ((*j > max))
+		max = *j;
+}
+
 char	*target_path(t_mini *m, char **envp, char *target, int status)
 {
 	int		i;
@@ -52,16 +63,12 @@ char	*target_path(t_mini *m, char **envp, char *target, int status)
 	int		j;
 	int		max;
 
-	
 	j = 0;
 	i = 0;
 	while (envp[i])
 	{
 		max = ft_strlen(target);
-		while (envp[i][j] && envp[i][j] != '=')
-			j++;
-		if (j > max)
-			max = j;
+		j_handle_target(envp, i, &j, target);
 		if (ft_strncmp(envp[i], target, max) == 0)
 		{
 			path = ft_substr(envp[i], ft_strlen(target), ft_strlen(envp[i]));
@@ -71,17 +78,8 @@ char	*target_path(t_mini *m, char **envp, char *target, int status)
 			free(path);
 			return ("ok");
 		}
-		max = 0;
 		j = 0;
 		i++;
 	}
 	return (NULL);
-}
-
-void	close_fds(t_mini *m)
-{
-	close(m->savefd[0]);
-	close(m->savefd[1]);
-	close(m->fd[0]);
-	close(m->fd[1]);
 }

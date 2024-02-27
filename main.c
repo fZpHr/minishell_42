@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:53:49 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/27 14:32:26 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/27 17:06:06 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	interrupt_handle(int sig)
 	{
 		g_signal_flag[0] = 1;
 		g_signal_flag[1] = 1;
+		g_signal_flag[2] = 1;
 		printf("\n");
 		rl_on_new_line();
 		rl_replace_line("", 1);
@@ -91,12 +92,16 @@ int	main(int ac, char **av, char **env)
 	t_mini				m;
 	t_token_list		*current;
 
+	if (ac != 1)
+	{
+		ft_printf_error("minishell: too many arguments\n");
+		return (0);
+	}
 	sa.sa_handler = interrupt_handle;
 	sa.sa_flags = SA_RESTART;
 	sigemptyset(&sa.sa_mask);
 	sigaction(SIGINT, &sa, NULL);
 	signal(SIGQUIT, SIG_IGN);
-	(void)ac;
 	(void)av;
 	current = NULL;
 	init(&m);
