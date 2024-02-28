@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 17:06:14 by tmekhzou          #+#    #+#             */
-/*   Updated: 2024/02/27 18:20:01 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/28 15:52:28 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,8 @@ void	*ft_malloc(size_t size)
 void	handle_exec(t_mini *m, char *path)
 {
 	free(path);
-	error_handle(m, "error execve", m->cmd[0], 1126);
+	if (access(m->cmd[0], F_OK) == 0)
+		error_handle(m, "permission denied: ", m->cmd[0], 1126);
+	else
+		error_handle(m, "error execve", m->cmd[0], 1127);
 }

@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:56:21 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/26 17:27:08 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/28 17:23:00 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,22 +50,6 @@ int	build_intern(t_mini *m)
 		return (1);
 	else if (m->heredoc_status == 1)
 		return (1);
-	return (0);
-}
-
-int	here_doc_check(t_mini *m, char *cmd)
-{
-	char	**tmp;
-
-	tmp = ft_split(cmd, " ");
-	if (ft_strcmp(tmp[0], "<<") == 0)
-	{
-		m->heredoc_status = 1;
-		free_split(tmp);
-		return (1);
-	}
-	m->heredoc_status = 0;
-	free_split(tmp);
 	return (0);
 }
 

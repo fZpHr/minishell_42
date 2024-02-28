@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:12:40 by tmekhzou          #+#    #+#             */
-/*   Updated: 2024/02/27 17:45:58 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/28 14:49:35 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,7 @@ char	*handle_quotes(char *str, char *new_str, int *i, int *j)
 		else if (str[*i] == '\\')
 			new_str[(*j)++] = str[*i];
 		if (str[*i] == '$' && str[*i + 1] == quote)
-		{
 			new_str[(*j)++] = str[(*i)++];
-			new_str[(*j)++] = str[(*i)++];
-		}
 		else
 			new_str[(*j)++] = str[(*i)++];
 	}

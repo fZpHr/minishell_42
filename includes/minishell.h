@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:54:01 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/27 18:17:43 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/28 16:15:50 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ void							add_null(char **env, int i, int l);
 int								ft_strlen_arg(char *str, char c);
 int								check_if_pipe(char **cmd);
 int								ft_space(char *str);
-int								here_doc_check(t_mini *m, char *cmd);
 void							ft_echo(t_mini *m, char **cmd);
 void							ft_exec_builtin(t_mini *m);
 int								build_intern(t_mini *m);
@@ -157,6 +156,12 @@ char							*quote_things(char *str);
 bool							is_between_quotes(char *str, int i);
 bool							is_between_double_quotes(char *str, int i);
 
+// expand_exit_code.c
+char							*expand_exit_code(char *str, t_mini *m);
+char							*get_value(t_mini *m);
+char							*create_new_str(char *str, char *value, int i);
+char							*update_str(char *str, char *new_str, int i);
+
 // parsing.c
 bool							is_meta_char_quote(char c, char quote);
 bool							check_wrong_command(t_token_list *current);
@@ -190,7 +195,6 @@ int								get_number_of_args(t_token_list **current);
 // check_input.c
 void							ft_exec_builtin(t_mini *m);
 int								build_intern(t_mini *m);
-int								here_doc_check(t_mini *m, char *cmd);
 int								ft_space(char *str);
 int								check_if_pipe(char **cmd);
 

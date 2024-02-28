@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 13:59:58 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/27 18:06:46 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/28 15:14:43 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,12 @@ void	else_if_main(t_mini *m, t_token_list *current)
 		{
 			if ((ft_strcmp(m->cmd[0], "exit") == 0)
 				&& (check_if_pipe(m->cmd) == 0))
-				error_handle(m, "", "", 1000 + ft_atoi(m->cmd[1]));
+			{
+				if (m->cmd[1])
+					error_handle(m, "", "", 1000 + ft_atoi(m->cmd[1]));
+				else
+					error_handle(m, "", "", -1);
+			}
 			else
 				ft_exec(m, current);
 			if (current && current->token != END)

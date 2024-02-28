@@ -6,42 +6,27 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:36:41 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/27 15:59:09 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/28 17:27:34 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	handle_status(t_mini *m, int *status)
-{
-	if (*status == 0)
-	{
-		m->exit_status = m->exit_status >> 8;
-		*status = m->exit_status;
-		ft_printf("%d", m->exit_status);
-	}
-	else
-		ft_printf("%d", (*status));
-}
-
-void	loop_echo(t_mini *m, char **cmd, int i, int j)
+void	loop_echo(char **cmd, int i, int j)
 {
 	int	status;
 
 	status = 0;
 	while (cmd[i])
 	{
-		if (ft_strncmp(cmd[i], "$?", 3) == 0)
-			handle_status(m, &status);
-		else
+		if (status == 1)
+			write(1, " ", 1);
+		while (cmd[i][j] != '\0')
 		{
-			while (cmd[i][j] != '\0')
-			{
-				if (cmd[i][j] == '\\')
-					j++;
-				write(1, &cmd[i][j], 1);
+			if (cmd[i][j] == '\\')
 				j++;
-			}
+			write(1, &cmd[i][j], 1);
+			j++;
 		}
 		j = 0;
 		if (cmd[i + 1] != NULL)
@@ -65,7 +50,7 @@ void	ft_echo(t_mini *m, char **cmd)
 	}
 	else
 		i = 1;
-	loop_echo(m, cmd, i, j);
+	loop_echo(cmd, i, j);
 	if (n_flag == false)
 		printf("\n");
 	error_handle(m, "", "", 0);

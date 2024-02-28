@@ -6,7 +6,7 @@
 #    By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/05 17:52:23 by hbelle            #+#    #+#              #
-#    Updated: 2024/02/26 15:48:44 by hbelle           ###   ########.fr        #
+#    Updated: 2024/02/28 16:15:25 by hbelle           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ SRCS	=	main.c \
 		srcs/utils/function_bis.c \
 		srcs/data/child.c \
 		srcs/data/main_function.c \
+		srcs/parse/expand_exit_code.c \
 
 		
 SRCS_BONUS = 

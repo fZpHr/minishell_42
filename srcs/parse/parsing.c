@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:12:49 by tmekhzou          #+#    #+#             */
-/*   Updated: 2024/02/26 14:28:22 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/28 16:34:24 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,15 @@ char	*expand_variable(char *str, t_mini *m)
 	{
 		if (str[i] == '\\')
 			i++;
-		else if (str[i] == '$' && is_between_quotes(str, i) == false && str[i
-				+ 1] != '?')
+		else if (str[i] == '$' && is_between_quotes(str, i)
+			== false && (ft_isalnum(str[i + 1]) || str[i + 1] == '?'))
 		{
-			str = expand_variable_value(str, i, 0, m);
+			if (str[i + 1] == '?')
+			{
+				str = expand_exit_code(str, m);
+			}
+			else
+				str = expand_variable_value(str, i, 0, m);
 			if (!str)
 				return (NULL);
 		}
