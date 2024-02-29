@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:38:34 by tmekhzou          #+#    #+#             */
-/*   Updated: 2024/02/28 17:27:33 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/29 14:01:07 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,8 @@ char	*get_value(t_mini *m)
 		value = ft_itoa(m->exit_status >> 8);
 	else
 	{
-		if (m->exit_status >= 500)
+		if (m->exit_status >= 256)
 			value = ft_itoa(m->exit_status >> 8);
-		else if (m->exit_status == 256)
-			value = ft_itoa(0);
 		else
 			value = ft_itoa(m->exit_status);
 	}

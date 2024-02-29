@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:34:11 by tmekhzou          #+#    #+#             */
-/*   Updated: 2024/02/27 17:30:42 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/29 14:02:26 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ void	handle_token(t_token_list *current, t_mini *mini, int *i)
 	else if (current->token == REDIR_OUT)
 	{
 		mini->status_redir_out = 1;
-		do_redir_out(current->value);
+		do_redir_out(mini, current->value);
 	}
 	else if (current->token == APPEND)
 	{
 		mini->status_append = 1;
-		do_append(current->value);
+		do_append(mini, current->value);
 	}
 	else if (current->token == HERE_DOC)
 	{

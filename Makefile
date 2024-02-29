@@ -6,13 +6,11 @@
 #    By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/05 17:52:23 by hbelle            #+#    #+#              #
-#    Updated: 2024/02/28 16:15:25 by hbelle           ###   ########.fr        #
+#    Updated: 2024/02/29 13:36:21 by hbelle           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	minishell
-
-NAME_BONUS	=	
 
 SRCS	=	main.c \
 		srcs/utils/error_handle.c \
@@ -42,13 +40,8 @@ SRCS	=	main.c \
 		srcs/data/main_function.c \
 		srcs/parse/expand_exit_code.c \
 
-		
-SRCS_BONUS = 
-
-	
 OBJ_DIR = .o
 OBJTS = $(addprefix $(OBJ_DIR)/, $(SRCS:%.c=%.o))
-OBJTS_BONUS = $(addprefix $(OBJ_DIR)/, $(SRCS_BONUS:%.c=%.o))
 LIBFT	=	libft/libft.a
 
 RM	=	rm -f
@@ -76,19 +69,15 @@ $(LIBFT):
 
 all:	${NAME}
 
-bonus: $(OBJTS_BONUS) $(LIBFT)
-	@cc -o $(NAME_BONUS) $(OBJTS_BONUS) $(LIBS) $(CFLAGS) $(HEADER)
-	@echo "\033[01m\033[4;33mCompilation done\033[00m\033[1;31m -->\033[00m\033[1;32m ${NAME_BONUS}\033[00m"
-
 clean:
 	@${RM} -r $(OBJ_DIR) 
 	@echo "\033[01m\033[31mRemoving objects ...\033[00m"
 	@make -C libft/ fclean -s
 
 fclean:	clean
-	@${RM} ${NAME} ${NAME_BONUS}
+	@${RM} ${NAME}
 	@echo "\033[01m\033[31mRemoving exec : ${NAME} ...\033[00m"
 
 re:	fclean $(LIBFT) all
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re

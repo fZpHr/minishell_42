@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 19:41:36 by tmekhzou          #+#    #+#             */
-/*   Updated: 2024/02/26 19:52:54 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/02/29 16:38:02 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,11 @@ void	count_word_command_2(const char *command, int *i, int *count)
 
 int	skip_char(char c, const char *command, int i)
 {
-	i++;
+	if (command[i] != '\0')
+		i++;
 	while (command[i] != '\0' && command[i] != c)
 		i++;
-	i++;
+	if (command[i] != '\0')
+		i++;
 	return (i);
 }

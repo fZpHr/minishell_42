@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:31:16 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/27 14:51:54 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/29 17:33:37 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	here_doc(t_mini *m, char *end)
 	}
 	else
 	{
-		waitpid(pid, NULL, 0);
+		waitpid(pid, &m->exit_status, 0);
 		close(m->fd_doc[1]);
 		dup2(m->fd_doc[0], 0);
 		close(m->fd_doc[0]);

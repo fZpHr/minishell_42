@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:54:01 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/28 16:15:50 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/29 19:15:32 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,8 +146,8 @@ void							*ft_malloc(size_t size);
 
 // redirections.c
 void							do_redir_in(t_mini *m, char *file);
-void							do_redir_out(char *file);
-void							do_append(char *file);
+void							do_redir_out(t_mini *m, char *file);
+void							do_append(t_mini *m, char *file);
 
 // quotes.c
 char							*handle_quotes(char *str, char *new_str, int *i,

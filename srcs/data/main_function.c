@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 13:59:58 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/28 15:14:43 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/29 19:28:15 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,17 @@ void	loop_main(t_mini *m, t_token_list *current)
 			m->input = readline("$>");
 		else
 			m->input = readline("");
-		check_error_quotes(m);
 		g_signal_flag[1] = 0;
+		g_signal_flag[2] = 0;
+		check_error_quotes(m);
 		if (m->input)
 			add_history(m->input);
 		if (m->input == NULL)
 			error_handle(m, "", "", 9001);
-		else if (ft_space(m->input) == 0 && m->parse_error == 0)
+		else if (ft_space(m->input) == 0 && m->parse_error == 0
+			&& g_signal_flag[1] == 0)
 			else_if_main(m, current);
-		while (waitpid(-1, &m->exit_status, WNOHANG) == 0)
+		while (waitpid(-1, &m->exit_status, WNOHANG) >= 0)
 			;
 		if (m->input)
 			free(m->input);

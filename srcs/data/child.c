@@ -6,7 +6,7 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 13:52:16 by hbelle            #+#    #+#             */
-/*   Updated: 2024/02/28 15:54:02 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/02/29 15:22:44 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,10 @@ void	end(t_mini *m)
 
 void	child_of_child_if(t_mini *m)
 {
-	close(m->fd[0]);
 	dup2(m->fd[1], 1);
-	close(m->fd[1]);
 	ft_exec_builtin(m);
+	close(m->fd[0]);
+	close(m->fd[1]);
 	close(m->savefd[0]);
 	close(m->savefd[1]);
 	error_handle(m, "", "", 1000);
@@ -106,7 +106,8 @@ void	child_process(t_mini *m)
 {
 	int	pid;
 
-	if (m->heredoc_status == 1)
+	if (m->heredoc_status == 1 || m->status_redir_out == 1
+		|| m->status_append == 1)
 		ft_exec_builtin(m);
 	else
 	{
