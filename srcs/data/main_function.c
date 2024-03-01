@@ -52,7 +52,10 @@ void	loop_main(t_mini *m, t_token_list *current)
 		if (g_signal_flag[1] == 0)
 			m->input = readline("$>");
 		else
-			m->input = readline("");
+		{
+			m->input = get_next_line(0);
+			cut_extra_char(m->input);
+		}
 		g_signal_flag[1] = 0;
 		g_signal_flag[2] = 0;
 		check_error_quotes(m);
@@ -60,8 +63,7 @@ void	loop_main(t_mini *m, t_token_list *current)
 			add_history(m->input);
 		if (m->input == NULL)
 			error_handle(m, "", "", 9001);
-		else if (ft_space(m->input) == 0 && m->parse_error == 0
-			&& g_signal_flag[1] == 0)
+		else if (ft_space(m->input) == 0 && m->parse_error == 0)
 			else_if_main(m, current);
 		while (waitpid(-1, &m->exit_status, WNOHANG) >= 0)
 			;

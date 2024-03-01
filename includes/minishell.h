@@ -193,6 +193,7 @@ void							group_command_args(t_token_list **current,
 int								get_number_of_args(t_token_list **current);
 
 // check_input.c
+void							cut_extra_char(char *str);
 void							ft_exec_builtin(t_mini *m);
 int								build_intern(t_mini *m);
 int								ft_space(char *str);

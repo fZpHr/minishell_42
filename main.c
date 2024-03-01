@@ -23,7 +23,7 @@ void	interrupt_handle(int sig)
 		g_signal_flag[2] = 1;
 		printf("\n");
 		rl_on_new_line();
-		rl_replace_line("", 1);
+		rl_replace_line("", 0);
 		rl_redisplay();
 		g_signal_flag[0] = 0;
 	}
