@@ -64,9 +64,23 @@ void	*ft_malloc(size_t size)
 
 void	handle_exec(t_mini *m, char *path)
 {
+	struct stat s;
 	free(path);
-	if (access(m->cmd[0], F_OK) == 0)
-		error_handle(m, "permission denied: ", m->cmd[0], 1126);
-	else
-		error_handle(m, "error execve", m->cmd[0], 1127);
+	if (m->cmd[0][0] == '.' || m->cmd[0][0] == '/')
+	{
+		if (stat(m->cmd[0], &s) == 0)
+		{
+			if (s.st_mode & S_IFDIR)
+				error_handle(m, "Is a directory", m->cmd[0], 1126);
+			else if (access(m->cmd[0], F_OK) != 0)
+				error_handle(m, "No such file or directory", m->cmd[0], 1127);
+			else if (access(m->cmd[0], R_OK) != 0)
+				error_handle(m, "Permission denied", m->cmd[0], 1126);
+			else if (access(m->cmd[0], W_OK) != 0)
+				error_handle(m, "Permission denied", m->cmd[0], 1126);
+			else if (printf("%d", access(m->cmd[0], X_OK) != 0))
+				error_handle(m, "Not a executable", m->cmd[0], 1126);
+		}
+	}
+	error_handle(m, "Command not found", m->cmd[0], 1127);
 }

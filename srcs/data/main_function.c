@@ -12,15 +12,30 @@
 
 #include "../../includes/minishell.h"
 
+void	group_loop(t_mini *m, t_token_list **current)
+{
+	group_command_args(current, m);
+	while (m->error_open == 1)
+	{
+		free_split(m->cmd);
+		m->cmd = NULL;
+		if ((*current))
+			(*current) = (*current)->next;
+		m->ac = m->ac - 1;
+		group_command_args(current, m);
+		if (m->cmd == NULL|| m->error_open == 0)
+			break ;
+	}
+}
 void	else_if_main(t_mini *m, t_token_list *current)
 {
 	init_parsing(m, &current);
 	if (ft_strcmp(m->input, "") != 0)
 	{
-		group_command_args(&current, m);
+		group_loop(m, &current);
 		if (m->error_open == 1)
 			m->parse = 1;
-		if (m->parse == 0 && m->cmd[0] != NULL)
+		if (m->parse == 0 && m->cmd != NULL)
 		{
 			if ((ft_strcmp(m->cmd[0], "exit") == 0)
 				&& (check_if_pipe(m->cmd) == 0))
@@ -30,7 +45,7 @@ void	else_if_main(t_mini *m, t_token_list *current)
 				else
 					error_handle(m, "", "", -1);
 			}
-			else
+			else if (m->cmd && m->cmd[0] && m->cmd[0][0] != '\0')
 				ft_exec(m, current);
 			if (current && current->token != END)
 				current = current->next;
@@ -53,6 +68,7 @@ void	loop_main(t_mini *m, t_token_list *current)
 			m->input = readline("$>");
 		else
 		{
+			m->exit_status = 130;
 			m->input = get_next_line(0);
 			cut_extra_char(m->input);
 		}

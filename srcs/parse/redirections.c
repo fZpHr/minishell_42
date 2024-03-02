@@ -12,6 +12,22 @@
 
 #include "../../includes/minishell.h"
 
+void	check_permission(t_mini *m, char *file)
+{
+	if (access(file, F_OK) != 0)
+	{
+		m->error_open = 1;
+		error_handle(m, "No such file or directory", file, 1);
+		return;
+	}
+	if (access(file, R_OK) != 0)
+	{
+		m->error_open = 1;
+		check_permission(m, file);
+		return;
+	}
+}
+
 void	do_redir_in(t_mini *m, char *file)
 {
 	int	fd;
@@ -19,9 +35,9 @@ void	do_redir_in(t_mini *m, char *file)
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 	{
-		printf("minishell: %s: No such file or directory\n", file);
 		m->error_open = 1;
-		return ;
+		check_permission(m, file);
+		return;
 	}
 	dup2(fd, STDIN_FILENO);
 	close(fd);
@@ -37,8 +53,8 @@ void	do_redir_out(t_mini *m, char *file)
 		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd < 0)
 	{
-		printf("minishell: %s: No such file or directory\n", file);
-		error_handle(m, "", "", 1);
+		check_permission(m, file);
+		return;
 	}
 	dup2(fd, STDOUT_FILENO);
 	close(fd);
@@ -48,15 +64,13 @@ void	do_append(t_mini *m, char *file)
 {
 	int	fd;
 
-	if (access(file, F_OK) == 0)
-		fd = open(file, O_WRONLY | O_APPEND, 0644);
-	else
-		fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd < 0)
 	{
-		printf("minishell: %s: No such file or directory\n", file);
-		error_handle(m, "", "", 1);
+		check_permission(m, file);
+		return;
 	}
 	dup2(fd, STDOUT_FILENO);
 	close(fd);
 }
+

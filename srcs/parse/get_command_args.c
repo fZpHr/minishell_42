@@ -42,6 +42,7 @@ void	group_command_args(t_token_list **current, t_mini *mini)
 {
 	int	i;
 
+	mini->error_open = 0;
 	if (!(*current) || !(*current)->next)
 		return ;
 	i = 0;
