@@ -18,13 +18,13 @@ void	check_permission(t_mini *m, char *file)
 	{
 		m->error_open = 1;
 		error_handle(m, "No such file or directory", file, 1);
-		return;
+		return ;
 	}
 	if (access(file, R_OK) != 0)
 	{
 		m->error_open = 1;
 		check_permission(m, file);
-		return;
+		return ;
 	}
 }
 
@@ -37,7 +37,7 @@ void	do_redir_in(t_mini *m, char *file)
 	{
 		m->error_open = 1;
 		check_permission(m, file);
-		return;
+		return ;
 	}
 	dup2(fd, STDIN_FILENO);
 	close(fd);
@@ -54,8 +54,9 @@ void	do_redir_out(t_mini *m, char *file)
 	if (fd < 0)
 	{
 		check_permission(m, file);
-		return;
+		return ;
 	}
+	m->status_redir_out = 1;
 	dup2(fd, STDOUT_FILENO);
 	close(fd);
 }
@@ -68,9 +69,9 @@ void	do_append(t_mini *m, char *file)
 	if (fd < 0)
 	{
 		check_permission(m, file);
-		return;
+		return ;
 	}
+	m->status_append = 1;
 	dup2(fd, STDOUT_FILENO);
 	close(fd);
 }
-

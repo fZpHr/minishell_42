@@ -22,15 +22,9 @@ void	handle_token(t_token_list *current, t_mini *mini, int *i)
 	else if (current->token == REDIR_IN)
 		do_redir_in(mini, current->value);
 	else if (current->token == REDIR_OUT)
-	{
-		mini->status_redir_out = 1;
 		do_redir_out(mini, current->value);
-	}
 	else if (current->token == APPEND)
-	{
-		mini->status_append = 1;
 		do_append(mini, current->value);
-	}
 	else if (current->token == HERE_DOC)
 	{
 		mini->heredoc_status = 1;

@@ -31,13 +31,13 @@ void	child_end(t_mini *m)
 		{
 			m->tmp_end = found_cmd(m, m->envm);
 			if (!m->tmp_end)
-				error_handle(m, "command not found: ", m->cmd[0], 1127);
+				handle_exec(m, 3);
 		}
 		close(m->savefd[0]);
 		close(m->savefd[1]);
 		exec = execve(m->tmp_end, m->cmd, m->envm);
 		if (exec == -1)
-			handle_exec(m, m->tmp_end);
+			handle_exec(m, 2);
 	}
 }
 
@@ -86,7 +86,7 @@ void	child_of_child_else(t_mini *m)
 		if (!m->tmp_child)
 		{
 			close_fds(m);
-			error_handle(m, "command not found: ", m->cmd[0], 1127);
+			handle_exec(m, 3);
 		}
 	}
 	if (m->status_append == 0 && m->status_redir_out == 0)
@@ -99,7 +99,7 @@ void	child_of_child_else(t_mini *m)
 	close(m->savefd[1]);
 	exec = execve(m->tmp_child, m->cmd, m->envm);
 	if (exec == -1)
-		handle_exec(m, m->tmp_child);
+		handle_exec(m, 1);
 }
 
 void	child_process(t_mini *m)

@@ -22,16 +22,16 @@ void	status_handle(t_mini *m, int *status, char *target, char *str)
 			{
 				if (m->cmd[2])
 				{
-					ft_printf_error("exit\nexit : too many arguments\n");
+					printf("exit\nexit : too many arguments\n");
 					*status = *status - 1000;
 					m->exit_status = 1;
 				}
 			}
 		}
 		else if (ft_strncmp(target, "$?", 3) == 0)
-			ft_printf_error("%s %d\n", str, m->exit_status);
+			printf("%s %d\n", str, m->exit_status);
 		else
-			ft_printf_error("%s %s\n", str, target);
+			printf("%s %s\n", str, target);
 	}
 }
 
@@ -50,7 +50,6 @@ void	monitor_status(t_mini *m, int *status, char *target, char *str)
 		m->exit_status = *status;
 	if (*status > 0)
 		status_handle(m, status, target, str);
-	ft_putstr_fd("\033[0m", 2);
 	if (*status >= 1000)
 		free_end(m, m->exit_status);
 }
@@ -65,17 +64,12 @@ void	ctrl_d_handle(t_mini *m)
 
 void	error_handle(t_mini *m, char *str, char *target, int status)
 {
-	ft_putstr_fd("\033[0;31m", 2);
 	if (status == 9001)
-	{
-		ft_putstr_fd("\033[0m", 2);
 		ctrl_d_handle(m);
-	}
 	if (status >= 0)
 		monitor_status(m, &status, target, str);
 	else
 	{
-		ft_putstr_fd("\033[0m", 2);
 		m->exit_status = m->exit_status >> 8;
 		free_end(m, m->exit_status);
 	}

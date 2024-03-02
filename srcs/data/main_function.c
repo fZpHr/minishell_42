@@ -12,6 +12,16 @@
 
 #include "../../includes/minishell.h"
 
+void	init_main(t_mini *m, t_token_list **current)
+{
+	*current = NULL;
+	m->status_exit = 0;
+	m->parse = 0;
+	m->error_open = 0;
+	g_signal_flag[1] = 0;
+	g_signal_flag[2] = 0;
+}
+
 void	group_loop(t_mini *m, t_token_list **current)
 {
 	group_command_args(current, m);
@@ -23,10 +33,11 @@ void	group_loop(t_mini *m, t_token_list **current)
 			(*current) = (*current)->next;
 		m->ac = m->ac - 1;
 		group_command_args(current, m);
-		if (m->cmd == NULL|| m->error_open == 0)
+		if (m->cmd == NULL || m->error_open == 0)
 			break ;
 	}
 }
+
 void	else_if_main(t_mini *m, t_token_list *current)
 {
 	init_parsing(m, &current);
@@ -60,10 +71,7 @@ void	loop_main(t_mini *m, t_token_list *current)
 {
 	while (1)
 	{
-		current = NULL;
-		m->status_exit = 0;
-		m->parse = 0;
-		m->error_open = 0;
+		init_main(m, &current);
 		if (g_signal_flag[1] == 0)
 			m->input = readline("$>");
 		else
@@ -72,8 +80,6 @@ void	loop_main(t_mini *m, t_token_list *current)
 			m->input = get_next_line(0);
 			cut_extra_char(m->input);
 		}
-		g_signal_flag[1] = 0;
-		g_signal_flag[2] = 0;
 		check_error_quotes(m);
 		if (m->input)
 			add_history(m->input);

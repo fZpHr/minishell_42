@@ -12,27 +12,33 @@
 
 #include "../../includes/minishell.h"
 
-void	infinite_loop(char *end, t_mini *m)
+void	here_doc_exit(t_mini *m)
 {
-	char	*input;
 	int		i;
 
 	i = 3;
+	free_split(m->cmd);
+	ft_listclear(&m->head, free);
+	free_split(m->envm);
+	while (i <= 1023)
+		close(i++);
+	exit(0);
+}
+
+void	infinite_loop(char *end, t_mini *m)
+{
+	char	*input;
+
 	while (1)
 	{
 		if (g_signal_flag[2] == 0)
-			input = readline("heredoc> ");
+		{
+			write(1, "heredoc> ", 9);
+			input = get_next_line(0);
+		}
 		if (g_signal_flag[2] == 1 || ft_strncmp(input, end,
 				ft_strlen(end)) == 0)
-		{
-			free(input);
-			free_split(m->cmd);
-			ft_listclear(&m->head, free);
-			free_split(m->envm);
-			while (i <= 1023)
-				close(i++);
-			exit(0);
-		}
+			here_doc_exit(m);
 		write(m->fd_doc[1], input, ft_strlen(input));
 		write(m->fd_doc[1], "\n", 1);
 		free(input);

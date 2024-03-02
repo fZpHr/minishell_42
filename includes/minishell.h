@@ -105,7 +105,7 @@ typedef struct s_split_command
 }								t_split_command;
 
 // Data
-void							handle_exec(t_mini *m, char *path);
+void							handle_exec(t_mini *m, int status);
 void							init_parsing(t_mini *m, t_token_list **current);
 void							loop_main(t_mini *m, t_token_list *current);
 void							end(t_mini *m);

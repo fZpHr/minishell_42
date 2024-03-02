@@ -35,9 +35,12 @@ void	loop_exec(t_mini *m, t_token_list *current)
 	int	i;
 
 	i = 0;
-	while (i < m->ac)
+	while (i < m->ac && m->parse == 0)
 	{
-		pipex(m);
+		if (m->error_open == 0)
+			pipex(m);
+		else
+			m->error_open = 0;
 		if (m->status_redir_out == 1 || m->status_append == 1
 			|| m->heredoc_status == 1)
 		{
@@ -59,7 +62,8 @@ void	ft_exec(t_mini *m, t_token_list *current)
 	else
 	{
 		loop_exec(m, current);
-		end(m);
+		if (m->error_open == 0)
+			end(m);
 		if (m->status_redir_out == 1 || m->status_append == 1
 			|| m->heredoc_status == 1)
 		{
