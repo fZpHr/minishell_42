@@ -61,7 +61,6 @@ void	loop_exec(t_mini *m, t_token_list *current)
 
 void	ft_exec(t_mini *m, t_token_list *current)
 {
-	m->ac = 1;
 	if (m->ac == 0)
 		end(m);
 	else

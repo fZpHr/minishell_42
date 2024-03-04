@@ -50,24 +50,20 @@ void	end(t_mini *m)
 	int pid;
 
 	pid = 0;
-	/* 	if (build_intern(m) == 1)
-			ft_exec_builtin(m);
-		else
-		{ */
-	pid = fork();
-	if (pid == -1)
+	if (build_intern(m) == 1 && m->ac == 0)
+		ft_exec_builtin(m);
+	else
 	{
-		close_fds(m);
-		return (error_handle(m, "error fork", "", 1));
-	}
-	if (pid == 0)
-	{
-		if (build_intern(m) == 1)
-			ft_exec_builtin(m);
-		else
+		pid = fork();
+		if (pid == -1)
+		{
+			close_fds(m);
+			return (error_handle(m, "error fork", "", 1));
+		}
+		if (pid == 0)
 			child_end(m);
+		waitpid(pid, &m->exit_status, 0);
 	}
-	waitpid(0, &m->exit_status, 0);
 }
 
 void	child_of_child_if(t_mini *m)
