@@ -2,15 +2,19 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   check_input.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+
+	+:+     */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+
+	+#+        */
+/*                                                +#+#+#+#+#+
+	+#+           */
 /*   Created: 2024/02/07 13:56:21 by hbelle            #+#    #+#             */
 /*   Updated: 2024/02/28 17:23:00 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
 
 void	ft_exec_builtin(t_mini *m)
 {
@@ -30,6 +34,8 @@ void	ft_exec_builtin(t_mini *m)
 		error_handle(m, "", "", 1000 + ft_atoi(m->cmd[1]));
 	else if (m->heredoc_status == 1)
 		here_doc(m, m->cmd[0]);
+	else
+		error_handle(m, "Command not found", m->cmd[0], 127);
 }
 
 int	build_intern(t_mini *m)
@@ -55,7 +61,7 @@ int	build_intern(t_mini *m)
 
 int	ft_space(char *str)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (str[i])
@@ -69,7 +75,7 @@ int	ft_space(char *str)
 
 int	check_if_pipe(char **cmd)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (cmd[i])
@@ -83,7 +89,7 @@ int	check_if_pipe(char **cmd)
 
 void	cut_extra_char(char *str)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (str[i] != '\0')

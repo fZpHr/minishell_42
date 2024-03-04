@@ -2,9 +2,12 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   child.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+
+	+:+     */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+
+	+#+        */
+/*                                                +#+#+#+#+#+
+	+#+           */
 /*   Created: 2024/02/26 13:52:16 by hbelle            #+#    #+#             */
 /*   Updated: 2024/02/29 15:22:44 by hbelle           ###   ########.fr       */
 /*                                                                            */
@@ -12,9 +15,10 @@
 
 #include "../../includes/minishell.h"
 
+
 void	child_end(t_mini *m)
 {
-	int	exec;
+	int exec;
 
 	exec = 0;
 	if (build_intern(m) == 1)
@@ -43,23 +47,27 @@ void	child_end(t_mini *m)
 
 void	end(t_mini *m)
 {
-	int	pid;
+	int pid;
 
 	pid = 0;
-	if (build_intern(m) == 1)
-		ft_exec_builtin(m);
-	else
+	/* 	if (build_intern(m) == 1)
+			ft_exec_builtin(m);
+		else
+		{ */
+	pid = fork();
+	if (pid == -1)
 	{
-		pid = fork();
-		if (pid == -1)
-		{
-			close_fds(m);
-			return (error_handle(m, "error fork", "", 1));
-		}
-		if (pid == 0)
-			child_end(m);
-		waitpid(pid, &m->exit_status, 0);
+		close_fds(m);
+		return (error_handle(m, "error fork", "", 1));
 	}
+	if (pid == 0)
+	{
+		if (build_intern(m) == 1)
+			ft_exec_builtin(m);
+		else
+			child_end(m);
+	}
+	waitpid(0, &m->exit_status, 0);
 }
 
 void	child_of_child_if(t_mini *m)
@@ -75,7 +83,7 @@ void	child_of_child_if(t_mini *m)
 
 void	child_of_child_else(t_mini *m)
 {
-	int	exec;
+	int exec;
 
 	exec = 0;
 	if (access(m->cmd[0], F_OK) == 0)
@@ -104,7 +112,7 @@ void	child_of_child_else(t_mini *m)
 
 void	child_process(t_mini *m)
 {
-	int	pid;
+	int pid;
 
 	if (m->heredoc_status == 1 || m->status_redir_out == 1
 		|| m->status_append == 1)

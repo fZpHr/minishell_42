@@ -2,15 +2,19 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   error_handle.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+        
+	+:+     */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+      
+	+#+        */
+/*                                                +#+#+#+#+#+  
+	+#+           */
 /*   Created: 2024/01/16 13:58:56 by hbelle            #+#    #+#             */
 /*   Updated: 2024/02/28 17:23:00 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
 
 void	status_handle(t_mini *m, int *status, char *target, char *str)
 {
@@ -22,16 +26,16 @@ void	status_handle(t_mini *m, int *status, char *target, char *str)
 			{
 				if (m->cmd[2])
 				{
-					printf("exit\nexit : too many arguments\n");
+					ft_printf_error("exit\nexit : too many arguments\n");
 					*status = *status - 1000;
 					m->exit_status = 1;
 				}
 			}
 		}
 		else if (ft_strncmp(target, "$?", 3) == 0)
-			printf("%s %d\n", str, m->exit_status);
+			ft_printf_error("%s %d\n", str, m->exit_status);
 		else
-			printf("%s %s\n", str, target);
+			ft_printf_error("%s %s\n", str, target);
 	}
 }
 

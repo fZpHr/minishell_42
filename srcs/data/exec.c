@@ -2,15 +2,19 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+
+	+:+     */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+
+	+#+        */
+/*                                                +#+#+#+#+#+
+	+#+           */
 /*   Created: 2024/02/01 14:15:51 by hbelle            #+#    #+#             */
 /*   Updated: 2024/02/29 16:32:57 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
 
 void	pipex(t_mini *m)
 {
@@ -32,7 +36,7 @@ void	pipex(t_mini *m)
 
 void	loop_exec(t_mini *m, t_token_list *current)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (i < m->ac && m->parse == 0)
@@ -57,6 +61,7 @@ void	loop_exec(t_mini *m, t_token_list *current)
 
 void	ft_exec(t_mini *m, t_token_list *current)
 {
+	m->ac = 1;
 	if (m->ac == 0)
 		end(m);
 	else

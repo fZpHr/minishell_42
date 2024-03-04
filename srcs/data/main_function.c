@@ -2,9 +2,12 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   main_function.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+        
+	+:+     */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+      
+	+#+        */
+/*                                                +#+#+#+#+#+  
+	+#+           */
 /*   Created: 2024/02/26 13:59:58 by hbelle            #+#    #+#             */
 /*   Updated: 2024/02/29 19:28:15 by hbelle           ###   ########.fr       */
 /*                                                                            */
@@ -12,14 +15,13 @@
 
 #include "../../includes/minishell.h"
 
+
 void	init_main(t_mini *m, t_token_list **current)
 {
 	*current = NULL;
 	m->status_exit = 0;
 	m->parse = 0;
 	m->error_open = 0;
-	g_signal_flag[1] = 0;
-	g_signal_flag[2] = 0;
 }
 
 void	group_loop(t_mini *m, t_token_list **current)
@@ -80,6 +82,8 @@ void	loop_main(t_mini *m, t_token_list *current)
 			m->input = get_next_line(0);
 			cut_extra_char(m->input);
 		}
+		g_signal_flag[1] = 0;
+		g_signal_flag[2] = 0;
 		check_error_quotes(m);
 		if (m->input)
 			add_history(m->input);
