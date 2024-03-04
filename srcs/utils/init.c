@@ -2,15 +2,19 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+
+	+:+     */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+
+	+#+        */
+/*                                                +#+#+#+#+#+
+	+#+           */
 /*   Created: 2024/01/16 14:36:39 by hbelle            #+#    #+#             */
 /*   Updated: 2024/02/29 19:15:36 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
 
 void	init(t_mini *m)
 {
@@ -36,4 +40,5 @@ void	init(t_mini *m)
 	m->status_append = 0;
 	m->parse_error = 0;
 	m->max_unset = 0;
+	m->heredoc_delimiter = NULL;
 }

@@ -33,7 +33,12 @@ void	ft_exec_builtin(t_mini *m)
 	else if (ft_strcmp(m->cmd[0], "exit") == 0)
 		error_handle(m, "", "", 1000 + ft_atoi(m->cmd[1]));
 	else if (m->heredoc_status == 1)
-		here_doc(m, m->cmd[0]);
+	{
+		dup2(m->savefd[0], 0);
+		dup2(m->savefd[1], 1);
+		here_doc(m, m->heredoc_delimiter);
+		free(m->heredoc_delimiter);
+	}
 	else
 		error_handle(m, "Command not found", m->cmd[0], 127);
 }

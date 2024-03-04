@@ -2,15 +2,19 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   get_command_args.c                                 :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+
+	+:+     */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+
+	+#+        */
+/*                                                +#+#+#+#+#+
+	+#+           */
 /*   Created: 2024/02/23 19:34:11 by tmekhzou          #+#    #+#             */
 /*   Updated: 2024/02/29 14:02:26 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
 
 void	handle_token(t_token_list *current, t_mini *mini, int *i)
 {
@@ -28,13 +32,14 @@ void	handle_token(t_token_list *current, t_mini *mini, int *i)
 	else if (current->token == HERE_DOC)
 	{
 		mini->heredoc_status = 1;
+		mini->heredoc_delimiter = ft_strdup(current->value);
 		mini->cmd[(*i)++] = ft_strdup(current->value);
 	}
 }
 
 void	group_command_args(t_token_list **current, t_mini *mini)
 {
-	int	i;
+	int i;
 
 	mini->error_open = 0;
 	if (!(*current) || !(*current)->next)
@@ -55,8 +60,8 @@ void	group_command_args(t_token_list **current, t_mini *mini)
 
 int	get_number_of_args(t_token_list **current)
 {
-	int				i;
-	t_token_list	*head;
+	int i;
+	t_token_list *head;
 
 	head = *current;
 	i = 0;

@@ -6,26 +6,81 @@
 /*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:53:49 by hbelle            #+#    #+#             */
-/*   Updated: 2024/03/04 15:41:08 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/03/04 20:27:10 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-volatile sig_atomic_t	g_signal_flag[3];
+volatile sig_atomic_t	g_signal_flag[4];
+
+void	print_token(t_token token)
+{
+	switch (token)
+	{
+	case COMMAND:
+		printf("COMMAND");
+		break ;
+	case ARGS:
+		printf("ARGS");
+		break ;
+	case PIPE:
+		printf("PIPE");
+		break ;
+	case REDIR_IN:
+		printf("REDIR_IN");
+		break ;
+	case REDIR_OUT:
+		printf("REDIR_OUT");
+		break ;
+	case APPEND:
+		printf("APPEND");
+		break ;
+	case HERE_DOC:
+		printf("HERE_DOC");
+		break ;
+	case END:
+		printf("END");
+		break ;
+	default:
+		printf("UNKNOWN");
+		break ;
+	}
+}
+
+void	print_token_list(t_token_list *head)
+{
+	t_token_list	*current;
+
+	current = head;
+	while (current != NULL)
+	{
+		print_token(current->token);
+		printf(": %s\n", current->value);
+		current = current->next;
+	}
+}
 
 void	interrupt_handle(int sig)
 {
 	if (sig == SIGINT)
 	{
-		g_signal_flag[0] = 1;
-		g_signal_flag[1] = 1;
-		g_signal_flag[2] = 1;
-		printf("\n");
-		rl_on_new_line();
-		rl_replace_line("", 1);
-		rl_redisplay();
-		g_signal_flag[0] = 0;
+		printf("g_signal_flag[2] = %d\n", g_signal_flag[2]);
+		if (g_signal_flag[2] == 1)
+		{
+			g_signal_flag[3] = 1;
+			g_signal_flag[2] = 0;
+		}
+		else if (g_signal_flag[3] == 0)
+		{
+			g_signal_flag[0] = 1;
+			g_signal_flag[1] = 1;
+			printf("\n");
+			rl_on_new_line();
+			rl_replace_line("", 1);
+			rl_redisplay();
+			g_signal_flag[0] = 0;
+		}
 	}
 	else if (sig == SIGQUIT)
 	{
@@ -77,12 +132,13 @@ void	init_parsing(t_mini *m, t_token_list **current)
 	(*current) = m->head;
 	while ((*current)->token != END)
 	{
-		if ((*current)->token == HERE_DOC
-			&& (*current)->next->next->token != COMMAND)
-			m->ac = 0;
+		/* 	if ((*current)->token == HERE_DOC
+				&& (*current)->next->next->token != COMMAND)
+				m->ac = 0; */
 		(*current) = (*current)->next;
 	}
 	(*current) = m->head;
+	// print_token_list(*current);
 	free_split(command_split);
 }
 

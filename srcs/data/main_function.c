@@ -2,11 +2,11 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   main_function.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+        
+/*                                                    +:+ +:+
 	+:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+      
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+
 	+#+        */
-/*                                                +#+#+#+#+#+  
+/*                                                +#+#+#+#+#+
 	+#+           */
 /*   Created: 2024/02/26 13:59:58 by hbelle            #+#    #+#             */
 /*   Updated: 2024/02/29 19:28:15 by hbelle           ###   ########.fr       */
@@ -22,6 +22,10 @@ void	init_main(t_mini *m, t_token_list **current)
 	m->status_exit = 0;
 	m->parse = 0;
 	m->error_open = 0;
+	g_signal_flag[0] = 0;
+	g_signal_flag[1] = 0;
+	g_signal_flag[2] = 0;
+	g_signal_flag[3] = 0;
 }
 
 void	group_loop(t_mini *m, t_token_list **current)
@@ -75,7 +79,11 @@ void	loop_main(t_mini *m, t_token_list *current)
 	{
 		init_main(m, &current);
 		if (g_signal_flag[1] == 0)
+		{
+			// printf("1");
 			m->input = readline("$>");
+			// printf("input: %s", m->input);
+		}
 		else
 		{
 			m->exit_status = 130;
@@ -83,7 +91,6 @@ void	loop_main(t_mini *m, t_token_list *current)
 			cut_extra_char(m->input);
 		}
 		g_signal_flag[1] = 0;
-		g_signal_flag[2] = 0;
 		check_error_quotes(m);
 		if (m->input)
 			add_history(m->input);
@@ -93,6 +100,7 @@ void	loop_main(t_mini *m, t_token_list *current)
 			else_if_main(m, current);
 		while (waitpid(-1, &m->exit_status, WNOHANG) >= 0)
 			;
+		g_signal_flag[3] = 0;
 		if (m->input)
 			free(m->input);
 		dup2(m->savefd[0], 0);

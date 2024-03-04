@@ -2,9 +2,12 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+
+	+:+     */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+
+	+#+        */
+/*                                                +#+#+#+#+#+
+	+#+           */
 /*   Created: 2024/02/23 19:36:41 by hbelle            #+#    #+#             */
 /*   Updated: 2024/02/29 15:18:53 by hbelle           ###   ########.fr       */
 /*                                                                            */
@@ -12,9 +15,10 @@
 
 #include "../../includes/minishell.h"
 
+
 void	loop_echo(t_mini *m, char **cmd, int i, int j)
 {
-	int	status;
+	int status;
 
 	status = 0;
 	while (cmd[i])
@@ -38,9 +42,9 @@ void	loop_echo(t_mini *m, char **cmd, int i, int j)
 
 void	ft_echo(t_mini *m, char **cmd)
 {
-	int		i;
-	int		j;
-	bool	n_flag;
+	int i;
+	int j;
+	bool n_flag;
 
 	j = 0;
 	n_flag = false;

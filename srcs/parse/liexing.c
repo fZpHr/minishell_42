@@ -2,9 +2,12 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   liexing.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+        
+	+:+     */
+/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+      
+	+#+        */
+/*                                                +#+#+#+#+#+  
+	+#+           */
 /*   Created: 2024/02/23 19:12:56 by tmekhzou          #+#    #+#             */
 /*   Updated: 2024/02/24 11:11:40 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
@@ -12,16 +15,18 @@
 
 #include "../../includes/minishell.h"
 
+
 void	handle_less_than(char **command_split, t_token_list **head, t_mini *m,
 		int *i)
 {
-	int	j;
+	int j;
 
 	j = 0;
 	if (command_split[*i][j + 1] == '<')
 	{
 		append_token_node(head, HERE_DOC, command_split[*i + 1]);
-		append_token_node(head, PIPE, 0);
+		if (command_split[*i + 1] && command_split[*i + 2] != 0)
+			append_token_node(head, PIPE, 0);
 		m->heredoc_status = 1;
 	}
 	else
@@ -32,7 +37,7 @@ void	handle_less_than(char **command_split, t_token_list **head, t_mini *m,
 void	handle_greater_than(char **command_split, t_token_list **head,
 		t_mini *m, int *i)
 {
-	int	j;
+	int j;
 
 	j = 0;
 	if (command_split[*i][j + 1] == '>')
@@ -51,8 +56,8 @@ void	handle_greater_than(char **command_split, t_token_list **head,
 
 void	add_token(char **command_split, t_token_list **head, t_mini *m)
 {
-	int	i;
-	int	j;
+	int i;
+	int j;
 
 	i = 0;
 	j = 0;

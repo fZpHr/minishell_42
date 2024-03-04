@@ -50,7 +50,8 @@ void	end(t_mini *m)
 	int pid;
 
 	pid = 0;
-	if (build_intern(m) == 1 && m->ac == 0)
+	if ((((build_intern(m) == 1) && m->heredoc_status == 1))
+		|| ((build_intern(m) == 1) && m->ac == 0))
 		ft_exec_builtin(m);
 	else
 	{
@@ -62,7 +63,7 @@ void	end(t_mini *m)
 		}
 		if (pid == 0)
 			child_end(m);
-		waitpid(pid, &m->exit_status, 0);
+		waitpid(0, &m->exit_status, 0);
 	}
 }
 
