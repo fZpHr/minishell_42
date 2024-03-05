@@ -31,13 +31,23 @@ void	select_reader(t_mini *m)
 	}
 }
 
-void	init_main(t_mini *m, t_token_list **current)
+void	cycle(t_mini *m, t_token_list **current, int status)
 {
-	*current = NULL;
-	m->status_exit = 0;
-	m->parse = 0;
-	m->error_open = 0;
-	m->parse_error = 0;
+	if (status == 0)
+	{
+		*current = NULL;
+		m->status_exit = 0;
+		m->parse = 0;
+		m->error_open = 0;
+		m->parse_error = 0;
+	}
+	else if (status == 1)
+	{
+		free_split(m->cmd);
+		m->cmd = NULL;
+		ft_listclear(&m->head, free);
+		free(m->head);
+	}
 }
 
 void	group_loop(t_mini *m, t_token_list **current)
@@ -80,17 +90,14 @@ void	else_if_main(t_mini *m, t_token_list *current)
 				current = current->next;
 		}
 	}
-	free_split(m->cmd);
-	m->cmd = NULL;
-	ft_listclear(&m->head, free);
-	free(m->head);
+	cycle(m, &current, 1);
 }
 
 void	loop_main(t_mini *m, t_token_list *current)
 {
 	while (1)
 	{
-		init_main(m, &current);
+		cycle(m, &current, 0);
 		select_reader(m);
 		g_signal_flag[0] = 0;
 		g_signal_flag[1] = 0;
