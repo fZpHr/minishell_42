@@ -2,9 +2,12 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+
+	+:+     */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+
+	+#+        */
+/*                                                +#+#+#+#+#+
+	+#+           */
 /*   Created: 2024/03/05 16:21:08 by hbelle            #+#    #+#             */
 /*   Updated: 2024/03/05 16:21:08 by hbelle           ###   ########.fr       */
 /*                                                                            */
@@ -209,10 +212,9 @@ void	increase_result_capacity(t_split_command *sc);
 void	handle_end(t_split_command *sc);
 void	ft_listclear(t_token_list **lst, void (*del)(void *));
 
-//parse check_errors.c
+// parse check_errors.c
 void	check_error_quotes(t_mini *m);
 void	error_syntax(t_mini *m, char *str);
-void	check_error_syntax_command(char **cmd, t_mini *m);
 void	check_error_parsing_list(t_mini *m, t_token_list *head);
 
 // parse/modify_linked_list.c
@@ -221,6 +223,11 @@ void	rearrange_token_list(t_token_list **current);
 void	add_pipes_here_doc(t_token_list **head);
 void	modify_linked_list(t_token_list *head, t_mini *m, char **cmd);
 
+// parse/check_error_syntax.c
+void	check_error_syntax_command(char **cmd, t_mini *m);
+void	process_less_than(char **cmd, int *i, int *j, t_mini *m);
+void	process_greater_than(char **cmd, int *i, int *j, t_mini *m);
+void	check_error(char **cmd, int *i, t_mini *m);
 
 void	print_list(t_token_list *head);
 const char	*get_token_name(t_token token);

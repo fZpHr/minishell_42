@@ -6,7 +6,7 @@
 /*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:17:12 by tmekhzou          #+#    #+#             */
-/*   Updated: 2024/03/05 17:24:01 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/03/05 18:23:08 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	rearrange_token_list(t_token_list **current)
 	t_token_list	*tmp_after_heredoc;
 	t_token_list	*next_here_doc;
 	t_token_list	*save_next_last_hd;
-	
+
 	tmp = (*current);
 	while (tmp->token != PIPE && tmp->token != END)
 	{
@@ -44,7 +44,8 @@ void	rearrange_token_list(t_token_list **current)
 				tmp_after_heredoc = tmp->next;
 				tmp->next = next_here_doc;
 				next_here_doc->next = tmp_after_heredoc;
-				while ((tmp->token != COMMAND || tmp->next->token == COMMAND) && tmp->token != END)
+				while ((tmp->token != COMMAND || tmp->next->token == COMMAND)
+					&& tmp->token != END)
 					tmp = tmp->next;
 				tmp->next = save_next_last_hd;
 			}
@@ -61,7 +62,8 @@ void	add_pipes_here_doc(t_token_list **head)
 	current = (*head);
 	while (current->token != END)
 	{
-		if (current->token == HERE_DOC && current->next->token != END && current->next->token != PIPE)
+		if (current->token == HERE_DOC && current->next->token != END
+			&& current->next->token != PIPE)
 		{
 			save = current->next;
 			current->next = create_token_node(PIPE, 0);

@@ -6,7 +6,7 @@
 /*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:15:14 by tmekhzou          #+#    #+#             */
-/*   Updated: 2024/03/05 17:30:45 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/03/05 18:24:40 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,53 +24,6 @@ void	check_error_parsing_list(t_mini *m, t_token_list *current)
 	}
 }
 
-void	check_error_syntax_command(char **cmd, t_mini *m)
-{
-	int	i;
-	int j;
-
-	j = 0;
-	i = 0;
-	while (cmd[i])
-	{
-		if (cmd[i][0] == '<')
-		{
-			while (cmd[i] && cmd[i][0] == '<')
-			{
-				j++;
-				i++;
-				if (cmd[i] && cmd[i][0] == '>')
-					error_syntax(m, cmd[i]);
-				else if (cmd[i] && cmd[i][0] == '|')
-					error_syntax(m, cmd[i]);
-				else if (cmd[i] == 0)
-					error_syntax(m, cmd[i - 1]);
-			}
-		}
-		else if (cmd[i][0] == '>')
-		{
-			while (cmd[i] && cmd[i][0] == '>')
-			{	
-				j++;
-				i++;
-				if (cmd[i] && cmd[i][0] == '<')
-					error_syntax(m, cmd[i]);
-				else if (cmd[i] && cmd[i][0] == '|')
-					error_syntax(m, cmd[i]);
-				else if (cmd[i] == 0)
-					error_syntax(m, cmd[i - 1]);
-			}
-		}
-		if (j > 1)
-		{	
-			error_syntax(m, cmd[i - 1]);
-			return ;
-		}
-		j = 0;
-		i++;
-	}
-}
-
 void	error_syntax(t_mini *m, char *str)
 {
 	ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
@@ -83,9 +36,9 @@ void	error_syntax(t_mini *m, char *str)
 
 void	check_error_quotes(t_mini *m)
 {
-	int	i;
-	int	single_quotes;
-	int	double_quotes;
+	int		i;
+	int		single_quotes;
+	int		double_quotes;
 
 	single_quotes = 0;
 	double_quotes = 0;
