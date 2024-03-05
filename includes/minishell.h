@@ -165,7 +165,6 @@ bool	is_meta_char_quote(char c, char quote);
 bool	check_wrong_command(t_token_list *current);
 char	*expand_variable_value(char *str, int i, int j, t_mini *m);
 char	*expand_variable(char *str, t_mini *m);
-void	check_error_quotes(t_mini *m);
 
 // linked_list.c
 t_token_list	*create_token_node(t_token token, char *value);
@@ -209,6 +208,19 @@ void	add_current_group_result(t_split_command *sc);
 void	increase_result_capacity(t_split_command *sc);
 void	handle_end(t_split_command *sc);
 void	ft_listclear(t_token_list **lst, void (*del)(void *));
+
+//parse check_errors.c
+void	check_error_quotes(t_mini *m);
+void	error_syntax(t_mini *m, char *str);
+void	check_error_syntax_command(char **cmd, t_mini *m);
+void	check_error_parsing_list(t_mini *m, t_token_list *head);
+
+// parse/modify_linked_list.c
+t_token_list	*is_here_doc_after(t_token_list *current);
+void	rearrange_token_list(t_token_list **current);
+void	add_pipes_here_doc(t_token_list **head);
+void	modify_linked_list(t_token_list *head, t_mini *m, char **cmd);
+
 
 void	print_list(t_token_list *head);
 const char	*get_token_name(t_token token);

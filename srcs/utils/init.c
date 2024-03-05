@@ -34,6 +34,7 @@ void	init(t_mini *m)
 	init_char(m);
 	m->heredoc_status = 0;
 	m->parse = 0;
+	m->parse_error = 0;
 	m->status_redir_out = 0;
 	m->error_open = 0;
 	m->status_exit = 0;

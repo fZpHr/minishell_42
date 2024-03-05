@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:53:49 by hbelle            #+#    #+#             */
-/*   Updated: 2024/03/05 16:16:58 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/03/05 17:41:02 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,32 +38,6 @@ void	interrupt_handle(int sig)
 		return ;
 }
 
-void	check_error_quotes(t_mini *m)
-{
-	int	i;
-	int	single_quotes;
-	int	double_quotes;
-
-	single_quotes = 0;
-	double_quotes = 0;
-	i = 0;
-	while (m->input && m->input[i])
-	{
-		if (m->input[i] == '\'' && is_between_double_quotes(m->input, i) == 0)
-			single_quotes++;
-		if (m->input[i] == '\"' && is_between_quotes(m->input, i) == 0)
-			double_quotes++;
-		i++;
-	}
-	if (single_quotes % 2 != 0 || double_quotes % 2 != 0)
-	{
-		ft_putstr_fd("minishell: syntax error\n", 2);
-		m->parse_error = 1;
-	}
-	else
-		m->parse_error = 0;
-}
-
 void	init_parsing(t_mini *m, t_token_list **current)
 {
 	char	**command_split;
@@ -71,6 +45,8 @@ void	init_parsing(t_mini *m, t_token_list **current)
 	command_split = ft_split_command(m->input);
 	add_token(command_split, current, m);
 	m->head = (*current);
+	modify_linked_list(*current, m, command_split);
+	(*current) = m->head;
 	while ((*current)->token != END)
 	{
 		(*current)->value = expand_variable((*current)->value, m);
@@ -79,9 +55,6 @@ void	init_parsing(t_mini *m, t_token_list **current)
 	}
 	(*current) = m->head;
 	m->ac = count_pipe(*current);
-	(*current) = m->head;
-	while ((*current)->token != END)
-		(*current) = (*current)->next;
 	(*current) = m->head;
 	free_split(command_split);
 }

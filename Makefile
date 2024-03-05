@@ -39,6 +39,8 @@ SRCS	=	main.c \
 		srcs/data/child.c \
 		srcs/data/main_function.c \
 		srcs/parse/expand_exit_code.c \
+		srcs/parse/modify_linked_list.c \
+		srcs/parse/check_errors.c \
 
 OBJ_DIR = .o
 OBJTS = $(addprefix $(OBJ_DIR)/, $(SRCS:%.c=%.o))

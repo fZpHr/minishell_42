@@ -37,6 +37,7 @@ void	init_main(t_mini *m, t_token_list **current)
 	m->status_exit = 0;
 	m->parse = 0;
 	m->error_open = 0;
+	m->parse_error = 0;
 }
 
 void	group_loop(t_mini *m, t_token_list **current)
@@ -58,7 +59,7 @@ void	group_loop(t_mini *m, t_token_list **current)
 void	else_if_main(t_mini *m, t_token_list *current)
 {
 	init_parsing(m, &current);
-	if (ft_strcmp(m->input, "") != 0)
+	if (ft_strcmp(m->input, "") != 0 && m->parse == 0)
 	{
 		group_loop(m, &current);
 		if (m->error_open == 1)
@@ -80,6 +81,7 @@ void	else_if_main(t_mini *m, t_token_list *current)
 		}
 	}
 	free_split(m->cmd);
+	m->cmd = NULL;
 	ft_listclear(&m->head, free);
 	free(m->head);
 }
@@ -93,7 +95,6 @@ void	loop_main(t_mini *m, t_token_list *current)
 		g_signal_flag[0] = 0;
 		g_signal_flag[1] = 0;
 		g_signal_flag[3] = 0;
-		check_error_quotes(m);
 		if (m->input)
 			add_history(m->input);
 		if (m->input == NULL)

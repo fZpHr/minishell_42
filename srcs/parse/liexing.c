@@ -24,8 +24,6 @@ void	handle_less_than(char **command_split, t_token_list **head, t_mini *m,
 	if (command_split[*i][j + 1] == '<')
 	{
 		append_token_node(head, HERE_DOC, command_split[*i + 1]);
-		if (command_split[*i + 1] && command_split[*i + 2] != 0)
-			append_token_node(head, PIPE, 0);
 		m->heredoc_status = 1;
 	}
 	else

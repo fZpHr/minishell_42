@@ -19,7 +19,7 @@ void	status_handle(t_mini *m, int *status, char *target, char *str)
 {
 	if (*status > 0)
 	{
-		if (ft_strncmp(m->cmd[0], "exit", 5) == 0)
+		if (m->cmd && m->cmd[0] && ft_strncmp(m->cmd[0], "exit", 5) == 0)
 		{
 			if (m->cmd[1])
 			{
