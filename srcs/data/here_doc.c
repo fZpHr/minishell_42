@@ -81,7 +81,11 @@ void	here_doc(t_mini *m, char *end)
 		exit(1);
 	}
 	else
+	{
+		g_signal_flag[0] = 1;
+		waitpid(0, &m->exit_status, 0);
 		wait_parent(m);
+	}
 	if (g_signal_flag[2] == 0)
 	{
 		dup2(m->savefd[0], 0);

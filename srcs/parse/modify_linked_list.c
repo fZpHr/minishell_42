@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   modify_linked_list.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:17:12 by tmekhzou          #+#    #+#             */
-/*   Updated: 2024/03/05 19:08:56 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/03/05 19:30:32 by hbelle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,29 @@ void	add_pipes_here_doc(t_token_list **head)
 		current = current->next;
 	}
 }
+void print_token(t_token token) {
+    switch(token) {
+        case COMMAND: printf("COMMAND"); break;
+        case ARGS: printf("ARGS"); break;
+        case PIPE: printf("PIPE"); break;
+        case REDIR_IN: printf("REDIR_IN"); break;
+        case REDIR_OUT: printf("REDIR_OUT"); break;
+        case APPEND: printf("APPEND"); break;
+        case HERE_DOC: printf("HERE_DOC"); break;
+        case END: printf("END"); break;
+        default: printf("UNKNOWN"); break;
+    }
+}
+
+void print_token_list(t_token_list *head) {
+    t_token_list *current = head;
+
+    while(current != NULL) {
+        print_token(current->token);
+        printf(": %s\n", current->value);
+        current = current->next;
+    }
+}
 
 void	modify_linked_list(t_token_list *head, t_mini *m, char **cmd)
 {
@@ -49,6 +72,9 @@ void	modify_linked_list(t_token_list *head, t_mini *m, char **cmd)
 	check_error_parsing_list(m, head);
 	check_error_quotes(m);
 	while (is_sorted_command(head) == false)
+	{
+		print_token_list(head);
 		rearrange_token_list(&head);
+	}
 	add_pipes_here_doc(&head);
 }

@@ -129,5 +129,7 @@ void	child_process(t_mini *m)
 			else
 				child_of_child_else(m);
 		}
+		if (m->heredoc_status == 1)
+			waitpid(0, &m->exit_status, 0);
 	}
 }
