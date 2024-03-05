@@ -218,7 +218,6 @@ void			check_error_parsing_list(t_mini *m, t_token_list *head);
 
 // parse/modify_linked_list.c
 t_token_list	*is_here_doc_after(t_token_list *current);
-void			rearrange_token_list(t_token_list **current);
 void			add_pipes_here_doc(t_token_list **head);
 void			modify_linked_list(t_token_list *head, t_mini *m, char **cmd);
 
@@ -228,7 +227,10 @@ void			process_less_than(char **cmd, int *i, int *j, t_mini *m);
 void			process_greater_than(char **cmd, int *i, int *j, t_mini *m);
 void			check_error(char **cmd, int *i, t_mini *m);
 
-void			print_list(t_token_list *head);
-const char		*get_token_name(t_token token);
+// parse/rearrange_token_list.c
+void			rearrange_token_list(t_token_list **current);
+bool			is_sorted_command(t_token_list *current);
+t_token_list 	*process_token(t_token_list *tmp);
+t_token_list 	*rearrange_here_doc(t_token_list *tmp, t_token_list *next_here_doc);
 
 #endif
