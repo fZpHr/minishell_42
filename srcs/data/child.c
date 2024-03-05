@@ -15,10 +15,9 @@
 
 #include "../../includes/minishell.h"
 
-
 void	child_end(t_mini *m)
 {
-	int exec;
+	int	exec;
 
 	exec = 0;
 	if (build_intern(m) == 1)
@@ -47,7 +46,7 @@ void	child_end(t_mini *m)
 
 void	end(t_mini *m)
 {
-	int pid;
+	int	pid;
 
 	pid = 0;
 	if ((((build_intern(m) == 1) && m->heredoc_status == 1))
@@ -80,7 +79,7 @@ void	child_of_child_if(t_mini *m)
 
 void	child_of_child_else(t_mini *m)
 {
-	int exec;
+	int	exec;
 
 	exec = 0;
 	if (access(m->cmd[0], F_OK) == 0)
@@ -109,7 +108,7 @@ void	child_of_child_else(t_mini *m)
 
 void	child_process(t_mini *m)
 {
-	int pid;
+	int	pid;
 
 	if (m->heredoc_status == 1 || m->status_redir_out == 1
 		|| m->status_append == 1)

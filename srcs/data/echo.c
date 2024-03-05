@@ -15,10 +15,9 @@
 
 #include "../../includes/minishell.h"
 
-
 void	loop_echo(t_mini *m, char **cmd, int i, int j)
 {
-	int status;
+	int	status;
 
 	status = 0;
 	while (cmd[i])
@@ -42,9 +41,9 @@ void	loop_echo(t_mini *m, char **cmd, int i, int j)
 
 void	ft_echo(t_mini *m, char **cmd)
 {
-	int i;
-	int j;
-	bool n_flag;
+	int		i;
+	int		j;
+	bool	n_flag;
 
 	j = 0;
 	n_flag = false;

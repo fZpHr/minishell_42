@@ -15,7 +15,6 @@
 
 #include "../../includes/minishell.h"
 
-
 void	handle_token(t_token_list *current, t_mini *mini, int *i)
 {
 	if (current->token == COMMAND)
@@ -39,7 +38,7 @@ void	handle_token(t_token_list *current, t_mini *mini, int *i)
 
 void	group_command_args(t_token_list **current, t_mini *mini)
 {
-	int i;
+	int	i;
 
 	mini->error_open = 0;
 	if (!(*current) || !(*current)->next)
@@ -60,8 +59,8 @@ void	group_command_args(t_token_list **current, t_mini *mini)
 
 int	get_number_of_args(t_token_list **current)
 {
-	int i;
-	t_token_list *head;
+	int				i;
+	t_token_list	*head;
 
 	head = *current;
 	i = 0;

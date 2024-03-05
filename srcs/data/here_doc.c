@@ -15,10 +15,9 @@
 
 #include "../../includes/minishell.h"
 
-
 void	here_doc_exit(t_mini *m)
 {
-	int i;
+	int	i;
 
 	i = 3;
 	free_split(m->cmd);
@@ -30,11 +29,19 @@ void	here_doc_exit(t_mini *m)
 	exit(0);
 }
 
+void	wait_parent(t_mini *m)
+{
+	g_signal_flag[0] = 1;
+	waitpid(0, &m->exit_status, 0);
+	close(m->fd_doc[1]);
+	dup2(m->fd_doc[0], 0);
+	close(m->fd_doc[0]);
+}
+
 void	infinite_loop(char *end, t_mini *m)
 {
-	char *input;
+	char	*input;
 
-	// g_signal_flag[2] = 1;
 	while (1)
 	{
 		if (g_signal_flag[2] == 1)
@@ -60,7 +67,7 @@ void	infinite_loop(char *end, t_mini *m)
 
 void	here_doc(t_mini *m, char *end)
 {
-	int pid;
+	int	pid;
 
 	g_signal_flag[2] = 1;
 	if (pipe(m->fd_doc) == -1)
@@ -74,12 +81,7 @@ void	here_doc(t_mini *m, char *end)
 		exit(1);
 	}
 	else
-	{
-		waitpid(0, &m->exit_status, 0);
-		close(m->fd_doc[1]);
-		dup2(m->fd_doc[0], 0);
-		close(m->fd_doc[0]);
-	}
+		wait_parent(m);
 	if (g_signal_flag[2] == 0)
 	{
 		dup2(m->savefd[0], 0);

@@ -15,6 +15,17 @@
 
 #include "../../includes/minishell.h"
 
+int	handle_signal_exec(void)
+{
+	if (g_signal_flag[0] == 1)
+	{
+		if (g_signal_flag[2] == 0)
+			return (1);
+		else
+			g_signal_flag[0] = 0;
+	}
+	return (0);
+}
 
 void	pipex(t_mini *m)
 {
@@ -34,9 +45,9 @@ void	pipex(t_mini *m)
 	close(m->fd[0]);
 }
 
-void	loop_exec(t_mini *m, t_token_list *current)
+int	loop_exec(t_mini *m, t_token_list *current)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < m->ac && m->parse == 0)
@@ -51,12 +62,15 @@ void	loop_exec(t_mini *m, t_token_list *current)
 			dup2(m->savefd[0], 0);
 			dup2(m->savefd[1], 1);
 		}
+		if (handle_signal_exec() == 1)
+			return (1);
 		free_split(m->cmd);
 		if (current)
 			current = current->next;
 		group_command_args(&current, m);
 		i++;
 	}
+	return (0);
 }
 
 void	ft_exec(t_mini *m, t_token_list *current)
@@ -65,9 +79,9 @@ void	ft_exec(t_mini *m, t_token_list *current)
 		end(m);
 	else
 	{
-		loop_exec(m, current);
-		if (m->error_open == 0)
-			end(m);
+		if (loop_exec(m, current) == 0)
+			if (m->error_open == 0)
+				end(m);
 		if (m->status_redir_out == 1 || m->status_append == 1
 			|| m->heredoc_status == 1)
 		{

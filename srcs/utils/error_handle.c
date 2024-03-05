@@ -2,11 +2,11 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   error_handle.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+        
+/*                                                    +:+ +:+
 	+:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+      
+/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+
 	+#+        */
-/*                                                +#+#+#+#+#+  
+/*                                                +#+#+#+#+#+
 	+#+           */
 /*   Created: 2024/01/16 13:58:56 by hbelle            #+#    #+#             */
 /*   Updated: 2024/02/28 17:23:00 by hbelle           ###   ########.fr       */
@@ -14,7 +14,6 @@
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
 
 void	status_handle(t_mini *m, int *status, char *target, char *str)
 {

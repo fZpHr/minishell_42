@@ -15,7 +15,6 @@
 
 #include "../../includes/minishell.h"
 
-
 void	ft_exec_builtin(t_mini *m)
 {
 	if (ft_strcmp(m->cmd[0], "echo") == 0)
@@ -66,7 +65,7 @@ int	build_intern(t_mini *m)
 
 int	ft_space(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -80,7 +79,7 @@ int	ft_space(char *str)
 
 int	check_if_pipe(char **cmd)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (cmd[i])
@@ -94,7 +93,7 @@ int	check_if_pipe(char **cmd)
 
 void	cut_extra_char(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i] != '\0')

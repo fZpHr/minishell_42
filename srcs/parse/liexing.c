@@ -15,11 +15,10 @@
 
 #include "../../includes/minishell.h"
 
-
 void	handle_less_than(char **command_split, t_token_list **head, t_mini *m,
 		int *i)
 {
-	int j;
+	int	j;
 
 	j = 0;
 	if (command_split[*i][j + 1] == '<')
@@ -37,7 +36,7 @@ void	handle_less_than(char **command_split, t_token_list **head, t_mini *m,
 void	handle_greater_than(char **command_split, t_token_list **head,
 		t_mini *m, int *i)
 {
-	int j;
+	int	j;
 
 	j = 0;
 	if (command_split[*i][j + 1] == '>')
@@ -56,8 +55,8 @@ void	handle_greater_than(char **command_split, t_token_list **head,
 
 void	add_token(char **command_split, t_token_list **head, t_mini *m)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
