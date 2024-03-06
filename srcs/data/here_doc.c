@@ -15,6 +15,12 @@
 
 #include "../../includes/minishell.h"
 
+void	restore_fd(t_mini *m)
+{
+	dup2(m->savefd[0], 0);
+	dup2(m->savefd[1], 1);
+}
+
 void	here_doc_exit(t_mini *m)
 {
 	int	i;
@@ -87,10 +93,7 @@ void	here_doc(t_mini *m, char *end)
 		wait_parent(m);
 	}
 	if (g_signal_flag[2] == 0)
-	{
-		dup2(m->savefd[0], 0);
-		dup2(m->savefd[1], 1);
-	}
+		restore_fd(m);
 	close(m->fd_doc[0]);
 	close(m->fd_doc[1]);
 }

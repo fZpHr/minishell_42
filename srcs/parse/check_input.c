@@ -96,6 +96,8 @@ void	cut_extra_char(char *str)
 	int	i;
 
 	i = 0;
+	if (str == NULL)
+		return ;
 	while (str[i] != '\0')
 		i++;
 	if (str[i - 1] == '\n')
