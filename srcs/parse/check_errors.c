@@ -6,7 +6,7 @@
 /*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:15:14 by tmekhzou          #+#    #+#             */
-/*   Updated: 2024/03/05 18:24:40 by tmekhzou         ###   ########.fr       */
+/*   Updated: 2024/03/06 15:16:55 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ void	check_error_quotes(t_mini *m)
 	}
 	if (single_quotes % 2 != 0 || double_quotes % 2 != 0)
 	{
-		ft_putstr_fd("minishell: syntax error\n", 2);
-		m->parse_error = 1;
+		if (single_quotes % 2 != 0)
+			error_syntax(m, "\'");
+		else
+			error_syntax(m, "\"");
 	}
-	else
-		m->parse_error = 0;
 }

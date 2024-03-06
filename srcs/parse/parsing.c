@@ -101,7 +101,8 @@ char	*expand_variable(char *str, t_mini *m)
 			if (!str)
 				return (NULL);
 		}
-		i++;
+		if (str[i] != '\0')
+			i++;
 	}
 	return (str);
 }

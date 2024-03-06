@@ -29,7 +29,8 @@ void	loop_echo(t_mini *m, char **cmd, int i, int j)
 			if (cmd[i][j] == '\\')
 				j++;
 			write(1, &cmd[i][j], 1);
-			j++;
+			if (cmd[i][j] != '\0')
+				j++;
 		}
 		j = 0;
 		if (cmd[i + 1] != NULL && m->status_redir_out == 0

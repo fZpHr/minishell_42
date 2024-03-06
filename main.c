@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:53:49 by hbelle            #+#    #+#             */
-/*   Updated: 2024/03/05 19:31:03 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/03/06 15:12:29 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	init_parsing(t_mini *m, t_token_list **current)
 	m->head = (*current);
 	modify_linked_list(*current, m, command_split);
 	(*current) = m->head;
-	while ((*current)->token != END)
+	while (m->parse == 0 && (*current)->token != END)
 	{
 		(*current)->value = expand_variable((*current)->value, m);
 		(*current)->value = quote_things((*current)->value);
