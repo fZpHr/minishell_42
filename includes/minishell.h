@@ -230,7 +230,9 @@ void			check_error(char **cmd, int *i, t_mini *m);
 // parse/rearrange_token_list.c
 void			rearrange_token_list(t_token_list **current);
 bool			is_sorted_command(t_token_list *current);
-t_token_list 	*process_token(t_token_list *tmp);
-t_token_list 	*rearrange_here_doc(t_token_list *tmp, t_token_list *next_here_doc);
+void			process_tokens(t_token_list **current, t_token_list **tmp,
+					t_token_list **next_here_doc);
+t_token_list	*rearrange_here_doc(t_token_list *tmp,
+					t_token_list *next_here_doc);
 
 #endif
