@@ -220,6 +220,7 @@ void			check_error_parsing_list(t_mini *m, t_token_list *head);
 t_token_list	*is_here_doc_after(t_token_list *current);
 void			add_pipes_here_doc(t_token_list **head);
 void			modify_linked_list(t_token_list *head, t_mini *m, char **cmd);
+void			check_error_pipe(t_mini *m, t_token_list *head);
 
 // parse/check_error_syntax.c
 void			check_error_syntax_command(char **cmd, t_mini *m);

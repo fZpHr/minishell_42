@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   modify_linked_list.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbelle <hbelle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmekhzou <tmekhzou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:17:12 by tmekhzou          #+#    #+#             */
-/*   Updated: 2024/03/05 20:47:24 by hbelle           ###   ########.fr       */
+/*   Updated: 2024/03/06 15:42:35 by tmekhzou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,27 @@ void	add_pipes_here_doc(t_token_list **head)
 	}
 }
 
+void	check_error_pipe(t_mini *m, t_token_list *head)
+{
+	t_token_list	*current;
+
+	current = head;
+	if (current->token == PIPE)
+		error_syntax(m, "|");
+	while (current->token != END)
+	{
+		if (current->token == PIPE && current->next->token == END)
+		{
+			error_syntax(m, "|");
+			break ;
+		}
+		current = current->next;
+	}
+}
+
 void	modify_linked_list(t_token_list *head, t_mini *m, char **cmd)
 {
+	check_error_pipe(m, head);
 	check_error_syntax_command(cmd, m);
 	check_error_parsing_list(m, head);
 	check_error_quotes(m);
