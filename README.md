@@ -72,6 +72,7 @@ Minishell supports built-in commands:
 - `unset`: Unset environment variables.
 - `env`: Display environment variables.
 - `pwd`: Print current working directory.
+- `exit`: Exit Minishell.
 
 ### Here Document (Heredoc)
 
