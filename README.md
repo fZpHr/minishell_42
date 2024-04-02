@@ -83,6 +83,12 @@ This is a heredoc example.
 It allows multiline input until the specified delimiter.
 END_OF_INPUT
 ```
+### Signals
+
+Minishell handles signals such as Ctrl+C (SIGINT) and Ctrl+D (EOF):
+
+- Ctrl+C: Interrupts the current command and returns to the shell prompt.
+- Ctrl+D: Indicates end-of-file (EOF) or closes the input stream if used with an empty command line, exiting Minishell.
 
 ## Description
 
