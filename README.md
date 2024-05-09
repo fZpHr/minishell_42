@@ -1,3 +1,5 @@
+##This project was a cooperative project, my teammate was https://github.com/gnoumalin
+
 ## Minishell
 
 Minishell is a 42 project where you create a simple shell program capable of interpreting and executing basic shell commands. The goal is to implement a miniature version of the UNIX shell, allowing users to interact with the system through a command-line interface. This project helps reinforce your understanding of process management, system calls, and command parsing.
