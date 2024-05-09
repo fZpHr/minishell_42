@@ -1,4 +1,4 @@
-## This project was a cooperative project, my teammate was https://github.com/gnoumalin
+## This project was a collaborative one, and my teammate was https://github.com/gnoumalin.
 
 ## Minishell
 
