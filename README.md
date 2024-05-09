@@ -79,7 +79,7 @@ Minishell supports built-in commands:
 You can use heredoc to redirect input from the current command line:
 
 ```bash
-cat << END_OF_INPUT
+<< END_OF_INPUT
 This is a heredoc example.
 It allows multiline input until the specified delimiter.
 END_OF_INPUT
